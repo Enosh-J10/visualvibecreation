@@ -63,7 +63,7 @@ export default function RootLayout({
       className={`${inter.variable} ${outfit.variable} h-full antialiased dark`}
       style={{ colorScheme: "dark" }}
     >
-      <body className="min-h-full flex flex-col bg-bg-primary text-text-primary selection:bg-accent-purple/30 selection:text-white font-sans">
+      <body className="min-h-full flex flex-col bg-bg-primary text-text-primary font-sans">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

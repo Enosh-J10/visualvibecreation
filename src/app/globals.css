@@ -1,58 +1,136 @@
 @import "tailwindcss";
 
+/* 
+  =========================================
+  DESIGN SYSTEM & DESIGN TOKENS (PHASE 2 REFINED)
+  =========================================
+*/
+
 @theme {
-  --color-bg-primary: #08080a;
-  --color-bg-secondary: #121216;
-  --color-accent-purple: #9d4edd;
-  --color-accent-blue: #0077b6;
-  --color-accent-pink: #ff85a1;
+  /* --- 1. Palette Tokens --- */
+  --color-bg-primary: #070708;
+  --color-bg-secondary: #121214;
+  --color-accent-cyan: #a5f3fc;
+  --color-accent-teal: #0d9488;
   --color-text-primary: #ffffff;
-  --color-text-secondary: #9e9eae;
+  --color-text-secondary: #8e8e93;
+
+  /* --- 2. Typography System --- */
   --font-sans: var(--font-inter), sans-serif;
   --font-display: var(--font-outfit), sans-serif;
-  
-  --animate-glow: glow 8s ease-in-out infinite alternate;
-  --animate-float: float 6s ease-in-out infinite;
 
-  @keyframes glow {
-    0% {
-      transform: translate(0px, 0px) scale(1);
-    }
-    33% {
-      transform: translate(30px, -50px) scale(1.1);
-    }
-    66% {
-      transform: translate(-20px, 20px) scale(0.95);
-    }
-    100% {
-      transform: translate(0px, 0px) scale(1);
-    }
-  }
+  /* --- 5. Border Radius System --- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
 
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
+  /* --- 17. Z-Index System (Controlled lower scale) --- */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 20;
+  --z-header: 50;
+  --z-backdrop: 100;
+  --z-modal: 200;
+  --z-toast: 300;
+  --z-debug: 9000;
 }
 
-/* Custom Base Styles */
+/* 
+  =========================================
+  SEMANTIC LAYER & VARIABLES
+  =========================================
+*/
 :root {
   color-scheme: dark;
+
+  /* --- 3. Semantic Token Layer --- */
+  --background: #070708;
+  --background-subtle: #121214;
+  --surface: #121214;
+  --surface-elevated: #1a1a1d;
+  --text-primary: #ffffff;
+  --text-secondary: #8e8e93;
+  --text-muted: #5e5e64;
+  
+  /* 14. Border and Divider System */
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --border-standard: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --border-accent: #0d9488;
+
+  --accent: #0d9488;
+  --accent-hover: #0f766e;
+  --accent-soft: rgba(13, 148, 136, 0.12);
+  --accent-cyan: #a5f3fc;
+  
+  --focus-ring: #0d9488;
+
+  /* 15. Status Colours */
+  --success: #30d158; /* iOS Green (4.5:1 on #070708) */
+  --warning: #ff9f0a; /* iOS Orange (4.5:1 on #070708) */
+  --error: #ff453a;   /* iOS Red (4.5:1 on #070708) */
+  --info: #0a84ff;    /* iOS Blue */
+
+  /* --- 6. Shadow & Glow System --- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+  --shadow-elevated: 0 20px 40px rgba(0, 0, 0, 0.6);
+  --glow-cyan-subtle: 0 0 20px rgba(165, 243, 252, 0.08);
+  --glow-teal-subtle: 0 0 20px rgba(13, 148, 136, 0.08);
+
+  /* --- 7. Spacing System --- */
+  --spacing-2xs: 0.25rem;  /* 4px */
+  --spacing-xs: 0.5rem;    /* 8px */
+  --spacing-sm: 0.75rem;   /* 12px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+  --spacing-3xl: 4rem;     /* 64px */
+  --spacing-section: clamp(4rem, 8vw, 8rem);
+  --spacing-page-top: clamp(6rem, 12vw, 9rem);
+  --spacing-gutter: clamp(1rem, 3vw, 2rem);
+
+  /* --- 10. Motion Token System (CSS & Framer Motion mappings) --- */
+  --duration-instant: 0s;
+  --duration-fast: 0.15s;
+  --duration-standard: 0.3s;
+  --duration-slow: 0.5s;
+  --duration-cinematic: 0.8s;
+  --ease-standard: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1); /* easeOutExpo */
+  --ease-exit: cubic-bezier(0.7, 0, 0.84, 0); /* easeInExpo */
+  --ease-emphasised: cubic-bezier(0.85, 0, 0.15, 1);
 }
 
+/* 
+  =========================================
+  BASE STYLES & CONTRAST
+  =========================================
+*/
 html,
 body {
-  background-color: #08080a;
-  color: #ffffff;
+  background-color: var(--background);
+  color: var(--text-primary);
   min-height: 100%;
   overflow-x: hidden;
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* 12. Focus Styling (Interactive elements only) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex="0"]:focus-visible {
+  outline: 2px solid var(--focus-ring) !important;
+  outline-offset: 4px;
 }
 
 /* Custom Scrollbar */
@@ -60,76 +138,340 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #08080a;
+  background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e1e24;
-  border-radius: 4px;
+  background: var(--surface);
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-subtle);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #9d4edd;
-}
-
-/* Lenis Smooth Scrolling */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-}
-
-/* Premium Styling Helpers */
-.glass-panel {
-  background: rgba(18, 18, 22, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.glass-panel-hover {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.glass-panel-hover:hover {
-  background: rgba(18, 18, 22, 0.85);
-  border-color: rgba(157, 78, 221, 0.25);
-  box-shadow: 0 10px 30px -10px rgba(157, 78, 221, 0.15);
-}
-
-.text-gradient {
-  background: linear-gradient(135deg, #ffffff 30%, #9e9eae 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-accent {
-  background: linear-gradient(135deg, #0077b6 0%, #9d4edd 50%, #ff85a1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.grid-overlay {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background: var(--accent);
 }
 
 /* Selection Highlight */
 ::selection {
-  background-color: rgba(157, 78, 221, 0.3);
-  color: #ffffff;
+  background-color: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+/* 
+  =========================================
+  9. RESPONSIVE TYPOGRAPHY scale
+  =========================================
+*/
+.text-display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.text-display {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.text-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.text-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.text-h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.text-h4 {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.text-lead {
+  font-family: var(--font-sans);
+  font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.text-body-large {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.text-body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.625;
+}
+
+.text-body-small {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.text-label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.text-caption {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+.text-overline {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+
+/* 
+  =========================================
+  13. TOUCH TARGET & BUTTON TOKENS
+  =========================================
+*/
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* 4. Button Variants (Accents corrected for strict a11y contrast) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1.5rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--accent-cyan);
+  color: var(--background); /* Near-black text on cyan (16.1:1 Contrast - AA/AAA Pass) */
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color var(--duration-fast) var(--ease-standard);
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background-color: #8be5ee;
+}
+.btn-primary:active {
+  background-color: #72cbd5;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1.5rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-standard);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: border-color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard);
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  border-color: var(--border-strong);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+.btn-secondary:active {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1.25rem;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard);
+  cursor: pointer;
+}
+.btn-ghost:hover {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.btn-disabled {
+  background-color: var(--surface) !important;
+  color: var(--text-muted) !important;
+  border-color: var(--border-subtle) !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+/* 
+  =========================================
+  5. CARD & SURFACE SYSTEM
+  =========================================
+*/
+.card-standard {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-gutter);
+}
+
+.card-elevated {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-standard);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-gutter);
+}
+
+.card-interactive {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-gutter);
+  transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
+}
+.card-interactive:hover {
+  border-color: rgba(13, 148, 136, 0.2);
+  box-shadow: var(--glow-teal-subtle);
+}
+
+/* Restrained Glass Surface */
+.glass-surface {
+  background: rgba(18, 18, 20, 0.75);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+@media (max-width: 767px) {
+  /* Lower-cost backdrop filter for performance on mobile */
+  .glass-surface {
+    background: rgba(10, 10, 12, 0.95);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* 
+  =========================================
+  8. CONTAINER SYSTEM & 18. 4K BOUNDS
+  =========================================
+*/
+.container-standard {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80rem; /* 1280px */
+  padding-left: var(--spacing-gutter);
+  padding-right: var(--spacing-gutter);
+}
+
+.container-reading {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 44rem; /* 704px - ensures 60 to 75 characters per line limit */
+  padding-left: var(--spacing-gutter);
+  padding-right: var(--spacing-gutter);
+}
+
+.container-wide {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 90rem; /* 1440px max limit for showcase layouts */
+  padding-left: var(--spacing-gutter);
+  padding-right: var(--spacing-gutter);
+}
+
+/* 
+  =========================================
+  16. IMAGE SYSTEM
+  =========================================
+*/
+.image-ratio-portrait { aspect-ratio: 3 / 4; }
+.image-ratio-square { aspect-ratio: 1 / 1; }
+.image-ratio-landscape { aspect-ratio: 3 / 2; }
+.image-ratio-wide { aspect-ratio: 16 / 9; }
+.image-ratio-phone { aspect-ratio: 9 / 19.5; }
+
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background-color: var(--surface-elevated);
+}
+.image-element {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Reusable Grid Overlay Utility */
+.grid-overlay {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+}
+
+/* 
+  =========================================
+  11. REDUCED-MOTION HANDLING
+  =========================================
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: scroll !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+    transition-delay: -1ms !important;
+    transform: none !important;
+  }
+  .lenis {
+    scroll-behavior: auto !important;
+  }
 }
