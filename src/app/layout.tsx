@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/animations/SmoothScroll";
 import CursorGlow from "@/components/animations/CursorGlow";
 import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/Footer";
+import ScrollProgress from "@/components/ui/ScrollProgress";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -100,6 +101,7 @@ export default function RootLayout({
           }}
         />
         <SmoothScroll>
+          <ScrollProgress />
           <CursorGlow />
           <Header />
           <div className="flex flex-col min-h-screen pt-20">
