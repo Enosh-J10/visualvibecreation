@@ -47,10 +47,10 @@ const skillsData = [
 
 export default function Skills() {
   return (
-    <section className="relative px-6 md:px-12 py-24 border-t border-white/[0.03] bg-bg-secondary/20">
+    <section className="relative px-6 md:px-12 py-24 border-t border-border-subtle bg-bg-primary">
       <div className="mx-auto max-w-7xl">
         <div className="text-center max-w-2xl mx-auto space-y-4">
-          <span className="text-xs font-semibold uppercase tracking-wider text-accent-purple">
+          <span className="text-xs font-mono uppercase tracking-wider text-accent-cyan">
             Capabilities
           </span>
           <h2 className="font-display text-3xl font-bold text-white tracking-tight sm:text-4xl">
@@ -69,7 +69,7 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10%" }}
               transition={{ duration: 0.6, delay: groupIndex * 0.1 }}
-              className="rounded-2xl border border-white/[0.05] bg-bg-secondary/40 backdrop-blur-sm p-8"
+              className="rounded-2xl border border-border-standard bg-bg-secondary/40 backdrop-blur-sm p-8"
             >
               <h3 className="font-display text-lg font-bold text-white tracking-tight mb-8">
                 {group.category}
@@ -89,7 +89,7 @@ export default function Skills() {
                         whileInView={{ width: `${skill.level}%` }}
                         viewport={{ once: true }}
                         transition={{ duration: 1, delay: skillIndex * 0.1, ease: "easeOut" }}
-                        className="h-full bg-gradient-to-r from-accent-blue via-accent-purple to-accent-pink rounded-full"
+                        className="h-full bg-gradient-to-r from-accent-teal to-accent-cyan rounded-full"
                       />
                     </div>
                   </div>

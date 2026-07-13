@@ -4,43 +4,36 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ProjectCard from "@/components/ui/ProjectCard";
 
-const categories = ["All", "Web Dev", "Android Apps", "Games", "Graphic Design"];
+const categories = ["All", "Web Dev", "Android Apps", "Future Games", "Concept Stages"];
 
 const projectsList = [
   {
     title: "FinCalc - Financial Calculator",
-    description: "A comprehensive, high-utility financial planning application published on Google Play. Features compounding interest plans, loan amortizations, tax estimators, and clean dark mode charts.",
+    description: "My first published Android calculator application. Features compound interest plans, loan amortizations, profit margins, and custom calculation logic written in Java.",
     category: "Android Apps",
-    tags: ["Kotlin", "Android SDK", "Material Design 3", "Google Play"],
+    tags: ["Java", "Android SDK", "Google Play"],
     link: "https://play.google.com/store/apps/details?id=com.enosh.fincalc",
   },
   {
-    title: "Visual Vibe Creation Studio",
-    description: "The digital studio portal itself. Built from scratch with Next.js App Router, Tailwind CSS, Lenis, and GSAP. Features high-end custom physics transitions and optimized rendering pipelines.",
+    title: "Visual Vibe Creation Portfolio",
+    description: "Official digital identity framework. Built from scratch with Next.js App Router, Tailwind CSS, TypeScript, and Framer Motion visual components.",
     category: "Web Dev",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Lenis"],
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     link: "/",
   },
   {
-    title: "Galactic Odyssey Sandbox",
-    description: "A conceptual retro space flight sandbox game showcasing modular vehicle physics, pathfinders, custom graphic assets, and orbit simulators.",
-    category: "Games",
-    tags: ["C#", "Unity Engine", "3D Math", "Game Design"],
-    link: "https://github.com/Enosh-J10",
+    title: "Upcoming Mobile Game",
+    description: "Currently in the planning and concept stage. Researching graphic layout elements and gameplay logic blueprints.",
+    category: "Future Games",
+    tags: ["Concept Stage", "Planning"],
+    link: "/projects",
   },
   {
-    title: "Minimal Studio Brand Suite",
-    description: "Curated collection of corporate design templates, modern luxury business card designs, social assets, and vector logos designed for digital creators.",
-    category: "Graphic Design",
-    tags: ["Illustrator", "Brand Identity", "Print Media", "Vector Art"],
-    link: "https://www.instagram.com/designer_visual_vibe_creations/",
-  },
-  {
-    title: "VibeSync Systems Controller",
-    description: "Desktop utility featuring dashboard monitors, custom automation pipelines, system monitors, and smooth hardware analytics overlays.",
-    category: "Web Dev",
-    tags: ["Electron", "React", "Node.js", "Chart.js"],
-    link: "https://github.com/Enosh-J10",
+    title: "Micro Web Utilities",
+    description: "Research project focusing on visual representation systems for data structures. Concept stage layout exploration.",
+    category: "Concept Stages",
+    tags: ["Research", "Concept"],
+    link: "/projects",
   },
 ];
 
@@ -52,11 +45,11 @@ export default function ProjectsGrid() {
   );
 
   return (
-    <section className="relative px-6 md:px-12 py-24 border-t border-white/[0.03]">
+    <section className="relative px-6 md:px-12 py-24 border-t border-border-subtle bg-bg-primary">
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-accent-purple">
+            <span className="text-xs font-mono uppercase tracking-wider text-accent-cyan">
               Creative Portfolio
             </span>
             <h2 className="font-display mt-4 text-3xl font-bold text-white tracking-tight sm:text-4xl">
@@ -65,21 +58,21 @@ export default function ProjectsGrid() {
           </div>
 
           {/* Filter Navigation */}
-          <div className="flex flex-wrap items-center gap-2 border border-white/[0.05] bg-bg-secondary/40 backdrop-blur-sm p-1 rounded-full w-fit">
+          <div className="flex flex-wrap items-center gap-2 border border-border-standard bg-bg-secondary/40 backdrop-blur-sm p-1 rounded-full w-fit">
             {categories.map((cat) => {
               const isSelected = activeCategory === cat;
               return (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`relative rounded-full px-5 py-2 text-xs font-medium transition-colors duration-300 ${
-                    isSelected ? "text-bg-primary" : "text-text-secondary hover:text-white"
+                  className={`relative rounded-full px-5 py-2 text-xs font-medium transition-colors duration-300 cursor-pointer ${
+                    isSelected ? "text-bg-primary font-bold" : "text-text-secondary hover:text-white"
                   }`}
                 >
                   {isSelected && (
                     <motion.span
                       layoutId="activeFilterBg"
-                      className="absolute inset-0 rounded-full bg-white"
+                      className="absolute inset-0 rounded-full bg-accent-teal"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -115,15 +108,15 @@ export default function ProjectsGrid() {
         </div>
 
         {/* Integration Callout widgets */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 pt-12 border-t border-white/[0.05]">
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 pt-12 border-t border-border-subtle">
           <a
             href="https://github.com/Enosh-J10"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex items-center justify-between p-6 rounded-2xl border border-white/[0.05] bg-bg-secondary/50 hover:bg-bg-secondary hover:border-accent-purple/20 transition-all duration-300"
+            className="group relative flex items-center justify-between p-6 rounded-2xl border border-border-standard bg-bg-secondary/50 hover:bg-bg-secondary hover:border-accent-teal/20 transition-all duration-300"
           >
             <div>
-              <span className="text-[10px] uppercase font-semibold text-accent-purple tracking-widest">
+              <span className="text-[9px] uppercase font-mono text-accent-cyan tracking-widest">
                 GitHub Repository
               </span>
               <h4 className="font-display text-lg font-bold text-white mt-1">
@@ -133,7 +126,7 @@ export default function ProjectsGrid() {
                 Check active development pipelines, scripts, and structures.
               </p>
             </div>
-            <div className="h-10 w-10 rounded-full bg-white/5 group-hover:bg-white group-hover:text-black flex items-center justify-center transition-all">
+            <div className="h-10 w-10 rounded-full bg-white/5 group-hover:bg-accent-teal group-hover:text-bg-primary flex items-center justify-center transition-all">
               <span className="text-sm font-semibold">&rarr;</span>
             </div>
           </a>
@@ -142,10 +135,10 @@ export default function ProjectsGrid() {
             href="https://play.google.com/store/apps/details?id=com.enosh.fincalc"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex items-center justify-between p-6 rounded-2xl border border-white/[0.05] bg-bg-secondary/50 hover:bg-bg-secondary hover:border-accent-blue/20 transition-all duration-300"
+            className="group relative flex items-center justify-between p-6 rounded-2xl border border-border-standard bg-bg-secondary/50 hover:bg-bg-secondary hover:border-accent-teal/20 transition-all duration-300"
           >
             <div>
-              <span className="text-[10px] uppercase font-semibold text-accent-blue tracking-widest">
+              <span className="text-[9px] uppercase font-mono text-accent-cyan tracking-widest">
                 Google Play Store
               </span>
               <h4 className="font-display text-lg font-bold text-white mt-1">
@@ -155,7 +148,7 @@ export default function ProjectsGrid() {
                 Download and install directly on your Android device.
               </p>
             </div>
-            <div className="h-10 w-10 rounded-full bg-white/5 group-hover:bg-white group-hover:text-black flex items-center justify-center transition-all">
+            <div className="h-10 w-10 rounded-full bg-white/5 group-hover:bg-accent-teal group-hover:text-bg-primary flex items-center justify-center transition-all">
               <span className="text-sm font-semibold">&rarr;</span>
             </div>
           </a>

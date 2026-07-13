@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -6,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
+import { useScrollController } from "@/context/ScrollContext";
 
 const workSubLinks = [
   { name: "Projects Index", href: "/projects" },
@@ -28,6 +30,7 @@ export default function Header() {
   const [isJourneyOpen, setIsJourneyOpen] = useState(false);
 
   const pathname = usePathname();
+  const controller = useScrollController();
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const workRef = useRef<HTMLDivElement>(null);
@@ -56,17 +59,27 @@ export default function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Mobile menu scroll lock
+  // Auto-dismiss dropdowns and mobile menu on pathname transitions
+  useEffect(() => {
+    setIsOpen(false);
+    setIsWorkOpen(false);
+    setIsJourneyOpen(false);
+  }, [pathname]);
+
+  // Mobile menu scroll lock contract coordinating with ScrollController
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      controller.stop();
     } else {
       document.body.style.overflow = "";
+      controller.start();
     }
     return () => {
       document.body.style.overflow = "";
+      controller.start();
     };
-  }, [isOpen]);
+  }, [isOpen, controller]);
 
   // Escape key close & Mobile Focus Trap
   useEffect(() => {
@@ -268,7 +281,7 @@ export default function Header() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.15, ease: "easeOut" }}
-                  className="absolute top-full left-0 mt-2 w-48 rounded-lg border border-border-subtle bg-bg-secondary p-2 shadow-lg shadow-black/40 z-modal"
+                  className="absolute top-full right-0 mt-2 w-48 rounded-lg border border-border-subtle bg-bg-secondary p-2 shadow-lg shadow-black/40 z-modal"
                 >
                   {journeySubLinks.map((sub) => (
                     <Link
@@ -330,11 +343,15 @@ export default function Header() {
 
           <button
             ref={toggleButtonRef}
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => {
+              setIsOpen(!isOpen);
+              setIsWorkOpen(false);
+              setIsJourneyOpen(false);
+            }}
             className="flex xl:hidden touch-target items-center justify-center p-2 rounded-lg border border-border-subtle bg-white/[0.01] text-text-secondary hover:text-white hover:bg-white/[0.03] transition-colors"
             aria-expanded={isOpen}
             aria-label="Toggle Navigation Menu"
-            aria-controls="mobile-navigation-dialog"
+            aria-controls={isOpen ? "mobile-navigation-dialog" : undefined}
           >
             {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>

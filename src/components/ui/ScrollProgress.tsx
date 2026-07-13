@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { motion, useScroll, useSpring, useReducedMotion } from "framer-motion";
@@ -16,13 +17,12 @@ export default function ScrollProgress() {
   });
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 0);
-    return () => clearTimeout(timer);
+    setMounted(true);
   }, []);
 
-  if (!mounted || shouldReduceMotion) return null;
+  const bypass = !mounted || shouldReduceMotion;
+
+  if (bypass) return null;
 
   return (
     <motion.div

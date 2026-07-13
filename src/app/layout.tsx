@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/animations/SmoothScroll";
-import CursorGlow from "@/components/animations/CursorGlow";
 import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/Footer";
 import ScrollProgress from "@/components/ui/ScrollProgress";
@@ -76,11 +75,11 @@ export default function RootLayout({
                   "@id": "https://visualvibecreation.com/#studio",
                   "name": "Visual Vibe Creation",
                   "url": "https://visualvibecreation.com",
-                  "description": "Award-level creative digital studio delivering high-end design, software development, video editing, and motion graphics.",
+                  "description": "Independent creative digital studio of Enosh Jaques delivering design, software development, video editing, and motion graphics.",
                   "founder": {
                     "@type": "Person",
                     "name": "Enosh Jaques",
-                    "jobTitle": "Founder & Lead Architect",
+                    "jobTitle": "Founder & Creative Developer",
                     "sameAs": [
                       "https://github.com/Enosh-J10",
                       "https://www.linkedin.com/in/enosh-jaques-b93817302"
@@ -102,7 +101,6 @@ export default function RootLayout({
         />
         <SmoothScroll>
           <ScrollProgress />
-          <CursorGlow />
           <Header />
           <div className="flex flex-col min-h-screen pt-20">
             {children}

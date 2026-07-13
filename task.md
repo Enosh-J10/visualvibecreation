@@ -1,0 +1,48 @@
+# Task List: Visual Vibe Creation v2.0
+
+- `[x]` **Phase 0: Audit & Cleanup**
+  - `[x]` Audit name, title, education, and experience facts across the site
+  - `[x]` Clean up obsolete purple, blue, and pink styling colors in legacy components
+  - `[x]` Remove unused/duplicate files (`Hero.tsx`, `MagneticButton.tsx`, `MediaShowcase.tsx`, `CursorGlow.tsx`)
+  - `[x]` Run build & lint checks
+  - `[x]` Perform visual & functional static code audit (incorporating manual screenshots)
+  - `[x]` Generate audit report and Phase 1 implementation checklist
+- `[x]` **Phase 1: Foundation & Architecture**
+  - `[x]` Stabilize root configuration layer and directory trees
+  - `[x]` Verify Tailwind setup and design token variables
+  - `[x]` Run build & lint checks
+- `[ ]` **Phase 2: Navigation & Layout**
+  - `[ ]` Stabilize header navigation triggers, active pathing, and mobile drawers
+  - `[ ]` Align structural footer links
+  - `[ ]` Run build & lint checks
+- `[ ]` **Phase 3: Content Rewrite**
+  - `[ ]` Review copywriting inventory and refine editorial structure
+  - `[ ]` Exclude marketing buzzwords and ensure consistent story-driven copy
+  - `[ ]` Run build & lint checks
+- `[ ]` **Phase 4: Home Experience**
+  - `[ ]` Assemble finalized homepage sections with visual components
+  - `[ ]` Run build & lint checks
+- `[ ]` **Phase 5: Projects**
+  - `[ ]` Review Projects index layout and FinCalc Case Study pages
+  - `[ ]` Run build & lint checks
+- `[ ]` **Phase 6: Journey**
+  - `[ ]` Implement vertical timelines, milestones, and credentials
+  - `[ ]` Run build & lint checks
+- `[ ]` **Phase 7: About**
+  - `[ ]` Build biographical chapters and portrait wrappers
+  - `[ ]` Run build & lint checks
+- `[ ]` **Phase 8: Contact**
+  - `[ ]` Integrate clean collaboration channels and clipboard action helpers
+  - `[ ]` Run build & lint checks
+- `[ ]` **Phase 9: Visual Polish**
+  - `[ ]` Refine spring damping physics, mouse tilts, hover states, and staggers
+  - `[ ]` Run build & lint checks
+- `[ ]` **Phase 10: Performance**
+  - `[ ]` Review rendering trees and force GPU compositing transforms
+  - `[ ]` Run build & lint checks
+- `[ ]` **Phase 11: Accessibility**
+  - `[ ]` Audit contrast levels, focus traps, and keyboard scroll behaviors
+  - `[ ]` Run build & lint checks
+- `[ ]` **Phase 12: Production Release**
+  - `[ ]` Setup robots directives, dynamic sitemaps, OpenGraph meta layouts, and publish
+  - `[ ]` Run build & lint checks

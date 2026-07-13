@@ -1,8 +1,8 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { motion } from "framer-motion";
-import { useReducedMotion } from "framer-motion";
-import { useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function TextReveal({
   text,
@@ -15,29 +15,45 @@ export default function TextReveal({
   tag?: "h1" | "h2" | "h3" | "h4" | "p" | "span";
   delay?: number;
 }) {
-  const words = text.split(" ");
-  const containerRef = useRef(null);
+  const [mounted, setMounted] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const bypass = !mounted || shouldReduceMotion;
+
+  if (bypass) {
+    return (
+      <Tag className={className}>
+        {text}
+      </Tag>
+    );
+  }
+
+  const words = text.split(" ");
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: (custom: number) => ({
       opacity: 1,
       transition: {
-        staggerChildren: shouldReduceMotion ? 0.02 : 0.08,
+        staggerChildren: 0.08,
         delayChildren: custom,
       },
     }),
   };
 
   const wordVariants = {
-    hidden: { y: shouldReduceMotion ? 0 : "110%", opacity: 0 },
+    hidden: { y: "110%", opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: shouldReduceMotion ? 0.2 : 0.8,
-        ease: [0.16, 1, 0.3, 1] as [number, number, number, number], // easeOutExpo
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
       },
     },
   };

@@ -7,46 +7,46 @@ const serviceCategories = [
   {
     title: "UI/UX & Web Design",
     icon: Monitor,
-    description: "Creating visually stunning web interfaces focusing on pixel-perfect layouts, intuitive navigation, and clean brand styles.",
+    description: "Creating visually clean web interfaces focusing on pixel-perfect layouts, intuitive navigation, and consistent brand typography.",
     services: ["UI Design", "UX Design", "Website Design", "Frontend Development", "Website Development"],
-    color: "from-accent-blue/10 to-transparent",
+    color: "from-accent-cyan/5 to-transparent",
   },
   {
     title: "Software & Mobile Apps",
     icon: Terminal,
-    description: "Developing robust mobile applications and custom desktop software tailored for optimal performance and native integration.",
-    services: ["Android App Development", "Software Development", "Game Development", "Java/Kotlin systems"],
-    color: "from-accent-purple/10 to-transparent",
+    description: "Developing lightweight mobile applications and custom desktop software tailored for optimal performance and native integration.",
+    services: ["Android App Development", "Software Development", "Game Design", "Java/Kotlin systems"],
+    color: "from-accent-teal/5 to-transparent",
   },
   {
     title: "Graphic Design & Branding",
     icon: Palette,
-    description: "Designing brand identity packages that captivate audiences and leave lasting prints across print and digital media.",
+    description: "Designing brand identity packages and monogram assets that communicate clearly across digital platforms.",
     services: ["Logo Design", "Brand Identity", "Poster Design", "Business Cards", "Social Media Design", "Digital Branding"],
-    color: "from-accent-pink/10 to-transparent",
+    color: "from-accent-teal/5 to-transparent",
   },
   {
     title: "Motion Graphics & Video",
     icon: Film,
-    description: "Authoring high-fidelity promotional clips, visual assets, transition kits, and engaging motion-tracking sequences.",
-    services: ["Video Editing", "Motion Graphics", "VFX & Compositing", "Promotional Ads"],
-    color: "from-white/[0.02] to-transparent",
+    description: "Editing high-fidelity promotional clips, visual assets, transition kits, and engaging motion sequences.",
+    services: ["Video Editing", "Motion Graphics", "VFX Compositing", "Promotional Videos"],
+    color: "from-white/[0.01] to-transparent",
   },
 ];
 
 export default function ServicesGrid() {
   return (
-    <section className="relative px-6 md:px-12 py-24 border-t border-white/[0.03] bg-bg-secondary/30">
+    <section className="relative px-6 md:px-12 py-24 border-t border-border-subtle bg-bg-primary">
       <div className="mx-auto max-w-7xl">
         <div className="text-center max-w-2xl mx-auto space-y-4">
-          <span className="text-xs font-semibold uppercase tracking-wider text-accent-purple">
-            Our Expertise
+          <span className="text-xs font-mono uppercase tracking-wider text-accent-cyan">
+            Capabilities
           </span>
           <h2 className="font-display text-3xl font-bold text-white tracking-tight sm:text-4xl">
-            High-End Digital Services
+            Digital Services
           </h2>
           <p className="text-sm text-text-secondary leading-relaxed">
-            We provide a comprehensive range of design and development capabilities to help your brand stands out in the modern tech ecosystem.
+            I provide a focused range of design and development capabilities to help ideas become clean digital products.
           </p>
         </div>
 
@@ -60,13 +60,13 @@ export default function ServicesGrid() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-5%" }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`group relative rounded-2xl border border-white/[0.05] bg-bg-secondary p-8 hover:border-accent-purple/20 transition-all duration-300 flex flex-col justify-between`}
+                className="group relative rounded-2xl border border-border-standard bg-bg-secondary p-8 hover:border-accent-teal/20 transition-all duration-300 flex flex-col justify-between"
               >
                 {/* Accent Background Gradient */}
                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${cat.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
 
                 <div>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.03] border border-white/[0.05] text-white group-hover:text-accent-purple group-hover:border-accent-purple/20 transition-all duration-300">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.03] border border-border-standard text-white group-hover:text-accent-cyan group-hover:border-accent-teal/20 transition-all duration-300">
                     <Icon className="h-5 w-5" />
                   </div>
 
@@ -79,10 +79,10 @@ export default function ServicesGrid() {
                   </p>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-white/[0.03] space-y-2">
+                <div className="mt-8 pt-6 border-t border-border-subtle space-y-2">
                   {cat.services.map((s) => (
                     <div key={s} className="flex items-center gap-2">
-                      <div className="h-1 w-1 rounded-full bg-accent-purple" />
+                      <div className="h-1 w-1 rounded-full bg-accent-teal" />
                       <span className="text-[11px] font-medium text-text-secondary group-hover:text-white transition-colors">
                         {s}
                       </span>
