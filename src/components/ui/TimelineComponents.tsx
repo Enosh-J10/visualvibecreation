@@ -13,16 +13,24 @@ export function TimelineStep({
   title,
   subtitle,
   children,
+  icon,
 }: {
   year: string;
   title: string;
   subtitle: string;
   children?: React.ReactNode;
+  icon?: React.ReactNode;
 }) {
   return (
     <div className="relative pl-8 group">
-      {/* Visual Marker (Electric Teal Node) */}
-      <div className="absolute left-[-5px] top-1.5 h-2.5 w-2.5 rounded-full bg-accent-teal border border-bg-primary z-10 transition-transform duration-300 group-hover:scale-125 shadow shadow-accent-teal/50" />
+      {/* Visual Marker (Icon or default Electric Teal Node) */}
+      {icon ? (
+        <div className="absolute left-[-14px] top-0 h-7 w-7 rounded-full bg-bg-secondary border border-border-standard flex items-center justify-center text-accent-cyan z-10 transition-transform duration-300 group-hover:scale-110 shadow-md">
+          {icon}
+        </div>
+      ) : (
+        <div className="absolute left-[-5px] top-1.5 h-2.5 w-2.5 rounded-full bg-accent-teal border border-bg-primary z-10 transition-transform duration-300 group-hover:scale-125 shadow shadow-accent-teal/50" />
+      )}
       
       <div className="space-y-2">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">

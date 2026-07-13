@@ -15,14 +15,10 @@ const navLinks = [
 const credentialLinks = [
   { name: "Experience", href: "/experience" },
   { name: "Education", href: "/education" },
-  { name: "Leadership", href: "/leadership" },
-  { name: "Awards", href: "/awards" },
-  { name: "Certifications", href: "/certifications" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
     <footer className="relative border-t border-border-subtle bg-bg-secondary py-16 px-6 md:px-12 mt-auto z-raised">
       <div className="mx-auto max-w-7xl">
@@ -35,19 +31,24 @@ export default function Footer() {
                   <path d="M20 20 h60 v15 H35 v15 h40 v15 H35 v15 h45" />
                 </svg>
               </div>
-              <span className="font-display text-base font-bold text-white transition-colors group-hover:text-accent-cyan">
-                Enosh Jaques
-              </span>
+              <div className="flex flex-col">
+                <span className="font-display text-sm font-bold text-white transition-colors group-hover:text-accent-cyan leading-none">
+                  Enosh Jaques
+                </span>
+                <span className="text-[10px] text-text-secondary mt-1">
+                  Creative Developer &amp; Founder of Visual Vibe Creation
+                </span>
+              </div>
             </Link>
             <p className="max-w-sm text-xs text-text-secondary leading-relaxed">
-              Creative Developer, Designer and Founder of Visual Vibe Creation. Originally from Goa, currently based in London, building premium digital systems, visuals, and applications.
+              Visual Vibe Creation — the independent creative studio of Enosh Jaques. Building digital systems, visuals, and applications.
             </p>
             <div className="flex items-center gap-2">
               <a
                 href="https://github.com/Enosh-J10"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="touch-target flex h-9 w-9 items-center justify-center rounded-lg border border-border-standard bg-white/[0.01] text-text-secondary hover:text-white hover:border-border-strong hover:bg-white/[0.03] transition-all"
+                className="touch-target flex h-11 w-11 items-center justify-center rounded-lg border border-border-standard bg-white/[0.01] text-text-secondary hover:text-white hover:border-border-strong hover:bg-white/[0.03] transition-all focus-visible:ring-2 focus-visible:ring-accent-teal outline-none"
                 aria-label="GitHub Profile"
               >
                 <GithubIcon className="h-4 w-4" />
@@ -56,7 +57,7 @@ export default function Footer() {
                 href="https://www.linkedin.com/in/enosh-jaques-b93817302"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="touch-target flex h-9 w-9 items-center justify-center rounded-lg border border-border-standard bg-white/[0.01] text-text-secondary hover:text-white hover:border-border-strong hover:bg-white/[0.03] transition-all"
+                className="touch-target flex h-11 w-11 items-center justify-center rounded-lg border border-border-standard bg-white/[0.01] text-text-secondary hover:text-white hover:border-border-strong hover:bg-white/[0.03] transition-all focus-visible:ring-2 focus-visible:ring-accent-teal outline-none"
                 aria-label="LinkedIn Profile"
               >
                 <LinkedinIcon className="h-4 w-4" />
@@ -65,7 +66,7 @@ export default function Footer() {
                 href="https://www.instagram.com/designer_visual_vibe_creations/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="touch-target flex h-9 w-9 items-center justify-center rounded-lg border border-border-standard bg-white/[0.01] text-text-secondary hover:text-white hover:border-border-strong hover:bg-white/[0.03] transition-all"
+                className="touch-target flex h-11 w-11 items-center justify-center rounded-lg border border-border-standard bg-white/[0.01] text-text-secondary hover:text-white hover:border-border-strong hover:bg-white/[0.03] transition-all focus-visible:ring-2 focus-visible:ring-accent-teal outline-none"
                 aria-label="Instagram Page"
               >
                 <InstagramIcon className="h-4 w-4" />
@@ -74,8 +75,8 @@ export default function Footer() {
                 href="https://play.google.com/store/apps/details?id=com.enosh.fincalc"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="touch-target flex h-9 w-9 items-center justify-center rounded-lg border border-border-standard bg-white/[0.01] text-text-secondary hover:text-white hover:border-border-strong hover:bg-white/[0.03] transition-all"
-                aria-label="Google Play Store Account"
+                className="touch-target flex h-11 w-11 items-center justify-center rounded-lg border border-border-standard bg-white/[0.01] text-text-secondary hover:text-white hover:border-border-strong hover:bg-white/[0.03] transition-all focus-visible:ring-2 focus-visible:ring-accent-teal outline-none"
+                aria-label="Google Play Store"
               >
                 <Play className="h-3.5 w-3.5 fill-current" />
               </a>
@@ -123,19 +124,20 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:hello@visualvibecreation.com"
-                  className="group inline-flex items-center gap-1.5 text-xs text-text-secondary hover:text-white transition-colors duration-200 py-1"
+                  className="group inline-flex items-center gap-1.5 text-xs text-text-secondary hover:text-white transition-colors duration-200 py-1 max-w-full min-w-0"
+                  style={{ overflowWrap: "anywhere" }}
                 >
-                  <Mail className="h-3.5 w-3.5 text-accent-teal" />
-                  <span>hello@visualvibecreation.com</span>
-                  <ArrowUpRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <Mail className="h-3.5 w-3.5 text-accent-teal shrink-0" />
+                  <span className="break-all">hello@visualvibecreation.com</span>
+                  <ArrowUpRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
                 </a>
               </li>
               <li>
                 <span className="text-[10px] text-text-muted block mt-2">
                   Independent Studio:
                 </span>
-                <span className="text-xs text-text-secondary block mt-0.5">
-                  Visual Vibe Creation (Est. 2022)
+                <span className="text-xs text-text-secondary block mt-0.5 font-mono">
+                  Est. 2022
                 </span>
               </li>
             </ul>
@@ -145,15 +147,14 @@ export default function Footer() {
         {/* Footer Bottom Details */}
         <div className="mt-16 border-t border-border-subtle pt-8 flex flex-col items-center justify-between gap-4 sm:flex-row text-[11px] text-text-muted">
           <div>
-            &copy; {currentYear} <span className="font-semibold text-text-secondary">Enosh Olencio Jaques</span>. All rights reserved.
+            Designed and developed by <span className="font-semibold text-text-secondary">Enosh Jaques</span>. &copy; {new Date().getUTCFullYear()}. All rights reserved.
           </div>
           <div className="flex items-center gap-1">
-            <span>Built with</span>
-            <span className="text-text-secondary font-medium">Next.js</span>
+            <span>Next.js</span>
             <span>·</span>
-            <span className="text-text-secondary font-medium">TypeScript</span>
+            <span>TypeScript</span>
             <span>·</span>
-            <span className="text-text-secondary font-medium">Tailwind CSS v4</span>
+            <span>Tailwind CSS</span>
           </div>
         </div>
       </div>

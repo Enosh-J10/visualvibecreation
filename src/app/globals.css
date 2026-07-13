@@ -453,6 +453,11 @@ textarea:focus-visible,
     linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
 }
 
+/* Section scroll margins to offset the sticky header */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
 /* 
   =========================================
   11. REDUCED-MOTION HANDLING

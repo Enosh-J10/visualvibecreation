@@ -3,7 +3,7 @@ import ContactSection from "@/components/sections/ContactSection";
 
 export const metadata = {
   title: "Contact | Visual Vibe Creation",
-  description: "Get in touch with Enosh Jaques at Visual Vibe Creation for premium coding, design, and motion graphics projects.",
+  description: "Get in touch with Enosh Jaques at Visual Vibe Creation for coding, design, and motion graphics projects.",
 };
 
 export default function ContactPage() {

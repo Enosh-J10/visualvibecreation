@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
 import { useScrollController } from "@/context/ScrollContext";
@@ -31,12 +31,14 @@ export default function Header() {
 
   const pathname = usePathname();
   const controller = useScrollController();
+  const shouldReduceMotion = useReducedMotion();
+
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const workRef = useRef<HTMLDivElement>(null);
   const journeyRef = useRef<HTMLDivElement>(null);
 
-  // Scroll detection for sticky header transition
+  // Scroll detection for sticky header transition (restrained threshold check)
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -81,6 +83,25 @@ export default function Header() {
     };
   }, [isOpen, controller]);
 
+  // Handle focus transition inside mobile menu drawer
+  const prevIsOpen = useRef(isOpen);
+  useEffect(() => {
+    // Focus first element inside the drawer when opened
+    if (isOpen && menuRef.current) {
+      const focusable = menuRef.current.querySelectorAll(
+        'a[href], button:not([disabled]), [tabindex="0"]'
+      );
+      if (focusable.length > 0) {
+        (focusable[0] as HTMLElement).focus();
+      }
+    }
+    // Restore focus to toggle button when closed
+    if (prevIsOpen.current && !isOpen) {
+      toggleButtonRef.current?.focus();
+    }
+    prevIsOpen.current = isOpen;
+  }, [isOpen]);
+
   // Escape key close & Mobile Focus Trap
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -89,7 +110,6 @@ export default function Header() {
         setIsJourneyOpen(false);
         if (isOpen) {
           setIsOpen(false);
-          toggleButtonRef.current?.focus();
         }
       }
 
@@ -136,17 +156,35 @@ export default function Header() {
   const isAboutActive = pathname === "/about";
   const isContactActive = pathname === "/contact";
 
+  // Dropdown animation variants
+  const dropdownVariants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 8 },
+    visible: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: shouldReduceMotion ? 0 : 8 },
+  };
+
+  // Mobile drawer animation variants
+  const drawerVariants = {
+    hidden: shouldReduceMotion ? { opacity: 0 } : { x: "100%" },
+    visible: shouldReduceMotion ? { opacity: 1 } : { x: 0 },
+    exit: shouldReduceMotion ? { opacity: 0 } : { x: "100%" },
+  };
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-header transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-header transition-colors duration-300 ${
         scrolled
-          ? "border-b border-border-subtle bg-bg-primary/75 backdrop-blur-md py-3.5 shadow-md shadow-black/5"
-          : "bg-transparent py-5"
+          ? "border-b border-border-subtle bg-bg-primary/95 backdrop-blur-md py-4 shadow-md shadow-black/5"
+          : "bg-transparent py-4"
       }`}
     >
       <div className="mx-auto max-w-7xl px-6 md:px-12 flex items-center justify-between">
-        {/* Monogram Logo */}
-        <Link href="/" className="group flex items-center gap-3 select-none" aria-label="Enosh Jaques Home Page">
+        {/* Logo / Monogram */}
+        <Link
+          href="/"
+          className="group flex items-center gap-3 select-none"
+          aria-label="Enosh Jaques Home Page"
+        >
           <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-accent-teal/20 bg-accent-teal/5 transition-all duration-300 group-hover:border-accent-teal/50 group-hover:bg-accent-teal/10">
             <svg
               viewBox="0 0 100 100"
@@ -167,7 +205,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden xl:flex items-center gap-8" role="navigation" aria-label="Main Navigation">
+        <nav className="hidden lg:flex items-center gap-8" role="navigation" aria-label="Main Navigation">
           {/* Home */}
           <Link
             href="/"
@@ -213,6 +251,8 @@ export default function Header() {
               }}
               aria-haspopup="true"
               aria-expanded={isWorkOpen}
+              aria-controls="desktop-work-menu"
+              aria-current={isWorkActive ? "page" : undefined}
               className={`relative flex items-center gap-1 py-1.5 text-[13px] font-medium transition-colors duration-200 cursor-pointer ${
                 isWorkActive ? "text-white" : "text-text-secondary hover:text-white"
               }`}
@@ -230,9 +270,11 @@ export default function Header() {
             <AnimatePresence>
               {isWorkOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
+                  id="desktop-work-menu"
+                  variants={dropdownVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
                   transition={{ duration: 0.15, ease: "easeOut" }}
                   className="absolute top-full left-0 mt-2 w-48 rounded-lg border border-border-subtle bg-bg-secondary p-2 shadow-lg shadow-black/40 z-modal"
                 >
@@ -260,6 +302,8 @@ export default function Header() {
               }}
               aria-haspopup="true"
               aria-expanded={isJourneyOpen}
+              aria-controls="desktop-journey-menu"
+              aria-current={isJourneyActive ? "page" : undefined}
               className={`relative flex items-center gap-1 py-1.5 text-[13px] font-medium transition-colors duration-200 cursor-pointer ${
                 isJourneyActive ? "text-white" : "text-text-secondary hover:text-white"
               }`}
@@ -277,9 +321,11 @@ export default function Header() {
             <AnimatePresence>
               {isJourneyOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
+                  id="desktop-journey-menu"
+                  variants={dropdownVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
                   transition={{ duration: 0.15, ease: "easeOut" }}
                   className="absolute top-full right-0 mt-2 w-48 rounded-lg border border-border-subtle bg-bg-secondary p-2 shadow-lg shadow-black/40 z-modal"
                 >
@@ -319,12 +365,12 @@ export default function Header() {
 
         {/* Social Icons & Mobile Trigger */}
         <div className="flex items-center gap-4">
-          <div className="hidden xl:flex items-center gap-3 border-l border-border-subtle pl-5">
+          <div className="hidden lg:flex items-center gap-3 border-l border-border-subtle pl-5">
             <a
               href="https://github.com/Enosh-J10"
               target="_blank"
               rel="noopener noreferrer"
-              className="touch-target flex h-9 w-9 items-center justify-center rounded-lg border border-transparent text-text-secondary hover:text-white hover:border-border-standard hover:bg-white/[0.02] transition-all"
+              className="touch-target relative z-20 flex h-11 w-11 items-center justify-center rounded-lg border border-transparent text-text-secondary hover:text-white hover:border-border-standard hover:bg-white/[0.02] cursor-pointer transition-all focus-visible:ring-2 focus-visible:ring-accent-teal outline-none"
               aria-label="GitHub Profile"
             >
               <GithubIcon className="h-4 w-4" />
@@ -334,7 +380,7 @@ export default function Header() {
               href="https://www.linkedin.com/in/enosh-jaques-b93817302"
               target="_blank"
               rel="noopener noreferrer"
-              className="touch-target flex h-9 w-9 items-center justify-center rounded-lg border border-transparent text-text-secondary hover:text-white hover:border-border-standard hover:bg-white/[0.02] transition-all"
+              className="touch-target relative z-20 flex h-11 w-11 items-center justify-center rounded-lg border border-transparent text-text-secondary hover:text-white hover:border-border-standard hover:bg-white/[0.02] cursor-pointer transition-all focus-visible:ring-2 focus-visible:ring-accent-teal outline-none"
               aria-label="LinkedIn Profile"
             >
               <LinkedinIcon className="h-4 w-4" />
@@ -348,7 +394,7 @@ export default function Header() {
               setIsWorkOpen(false);
               setIsJourneyOpen(false);
             }}
-            className="flex xl:hidden touch-target items-center justify-center p-2 rounded-lg border border-border-subtle bg-white/[0.01] text-text-secondary hover:text-white hover:bg-white/[0.03] transition-colors"
+            className="flex lg:hidden touch-target items-center justify-center p-2 rounded-lg border border-border-subtle bg-white/[0.01] text-text-secondary hover:text-white hover:bg-white/[0.03] transition-colors"
             aria-expanded={isOpen}
             aria-label="Toggle Navigation Menu"
             aria-controls={isOpen ? "mobile-navigation-dialog" : undefined}
@@ -367,7 +413,7 @@ export default function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="xl:hidden fixed inset-0 top-[65px] bg-black/60 backdrop-blur-sm z-backdrop"
+              className="lg:hidden fixed inset-0 top-[68px] bg-black/60 backdrop-blur-sm z-backdrop"
               aria-hidden="true"
             />
 
@@ -376,13 +422,16 @@ export default function Header() {
               ref={menuRef}
               role="dialog"
               aria-modal="true"
-              aria-label="Mobile navigation menu"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
+              aria-labelledby="mobile-nav-title"
+              variants={drawerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
               transition={{ type: "spring", stiffness: 380, damping: 35 }}
-              className="xl:hidden fixed top-[65px] right-0 bottom-0 w-full sm:w-[320px] bg-bg-secondary border-l border-border-subtle p-6 z-modal flex flex-col justify-between overflow-y-auto"
+              className="lg:hidden fixed top-[68px] right-0 bottom-0 w-full sm:w-[320px] bg-bg-secondary border-l border-border-subtle p-6 z-modal flex flex-col justify-between overflow-y-auto"
             >
+              <h2 id="mobile-nav-title" className="sr-only">Mobile Navigation Menu</h2>
+              
               <nav className="flex flex-col gap-6" aria-label="Mobile Navigation Panel">
                 <Link
                   href="/"

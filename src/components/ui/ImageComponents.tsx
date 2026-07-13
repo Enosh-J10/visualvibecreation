@@ -11,47 +11,41 @@ interface PlaceholderProps {
   className?: string;
 }
 
-// Sleek Development/Production Placeholder Container
+// Stable placeholder with one DOM structure for both server and client.
+// process.env.NODE_ENV is a build-time constant inlined by Turbopack —
+// identical on server and client, so no hydration mismatch occurs.
+const IS_DEV = process.env.NODE_ENV !== "production";
+
 export function DevAssetPlaceholder({ label, dimensions, className = "" }: PlaceholderProps) {
-  const isDev = process.env.NODE_ENV !== "production";
-
-  if (!isDev) {
-    return (
-      <div
-        className={`flex flex-col items-center justify-center gap-2 p-6 rounded-xl border border-border-subtle bg-bg-secondary/20 text-center select-none ${className}`}
-        role="status"
-        aria-label="Media content is being prepared"
-      >
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.01] text-text-muted/40">
-          <ImageIcon className="h-4 w-4" />
-        </div>
-        <span className="font-display text-[11px] font-medium text-text-muted block mt-1">
-          Creative media is being prepared
-        </span>
-      </div>
-    );
-  }
-
   return (
     <div
-      className={`flex flex-col items-center justify-center gap-3 p-6 rounded-xl border border-dashed border-border-standard bg-bg-secondary/30 text-center select-none ${className}`}
-      role="img"
-      aria-label={`Development placeholder for ${label}`}
+      className={`flex flex-col items-center justify-center gap-2 p-6 rounded-xl border border-border-subtle bg-bg-secondary/20 text-center select-none ${className}`}
+      role="status"
+      aria-label="Media content is being prepared"
     >
-      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border-subtle bg-white/[0.01] text-text-muted">
-        <ImageIcon className="h-5 w-5" />
+      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.01] text-text-muted/40">
+        <ImageIcon className="h-4 w-4" />
       </div>
+
       <div className="space-y-1">
-        <span className="font-display text-xs font-bold text-text-secondary block">
-          {label}
-        </span>
-        <span className="text-[10px] font-mono text-text-muted block">
-          {dimensions}
-        </span>
+        {IS_DEV ? (
+          <>
+            <span className="font-display text-xs font-bold text-text-secondary block">
+              {label}
+            </span>
+            <span className="text-[10px] font-mono text-text-muted block">
+              {dimensions}
+            </span>
+            <span className="inline-flex items-center px-2 py-0.5 mt-1.5 rounded border border-yellow-500/20 bg-yellow-500/5 text-yellow-500 text-[9px] font-mono uppercase tracking-wider">
+              Missing Asset
+            </span>
+          </>
+        ) : (
+          <span className="font-display text-[11px] font-medium text-text-muted block mt-1">
+            Creative media is being prepared
+          </span>
+        )}
       </div>
-      <span className="inline-flex items-center px-2 py-0.5 rounded border border-yellow-500/20 bg-yellow-500/5 text-yellow-500 text-[9px] font-mono uppercase tracking-wider">
-        Missing Asset
-      </span>
     </div>
   );
 }

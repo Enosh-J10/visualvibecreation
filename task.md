@@ -11,10 +11,10 @@
   - `[x]` Stabilize root configuration layer and directory trees
   - `[x]` Verify Tailwind setup and design token variables
   - `[x]` Run build & lint checks
-- `[ ]` **Phase 2: Navigation & Layout**
-  - `[ ]` Stabilize header navigation triggers, active pathing, and mobile drawers
-  - `[ ]` Align structural footer links
-  - `[ ]` Run build & lint checks
+- `[x]` **Phase 2: Navigation & Layout**
+  - `[x]` Stabilize header navigation triggers, active pathing, and mobile drawers
+  - `[x]` Align structural footer links
+  - `[x]` Run build & lint checks
 - `[ ]` **Phase 3: Content Rewrite**
   - `[ ]` Review copywriting inventory and refine editorial structure
   - `[ ]` Exclude marketing buzzwords and ensure consistent story-driven copy

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, Mail, Check, MapPin, Zap } from "lucide-react";
+import { ArrowRight, Mail, Check, MapPin, Zap, ArrowUpRight, GraduationCap, Briefcase, Trophy, Play, Star, Sparkles, BookOpen, Layers } from "lucide-react";
 import Button from "@/components/ui/Button";
 import {
   Display,
@@ -11,30 +11,30 @@ import {
   Body,
   Overline,
   GradientText,
-  StatusLabel,
 } from "@/components/ui/Typography";
 import {
   SectionWrapper,
   Container,
   SectionHeader,
   StatisticBlock,
-  GridWrapper,
-  HeroBackground,
 } from "@/components/ui/Sections";
-import { ProjectCard, ExperienceCard, AwardCard } from "@/components/ui/Cards";
+import { ExperienceCard } from "@/components/ui/Cards";
 import { TechnologyBadge } from "@/components/ui/PortfolioComponents";
 import { TimelineContainer, TimelineStep } from "@/components/ui/TimelineComponents";
-import { PortraitImage, PhoneMockup } from "@/components/ui/ImageComponents";
+import { PortraitImage, PhoneMockup, DevAssetPlaceholder } from "@/components/ui/ImageComponents";
 import {
   FadeUp,
   ScaleReveal,
   MouseTilt,
   MagneticWrapper,
 } from "@/components/animations/MotionWrappers";
-import EmptyStatePlaceholder from "@/components/ui/EmptyStates";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const locationRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("hello@visualvibecreation.com");
@@ -42,23 +42,56 @@ export default function Home() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Close location popover on click outside
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (locationRef.current && !locationRef.current.contains(e.target as Node)) {
+        setIsLocationOpen(false);
+      }
+    };
+    if (isLocationOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [isLocationOpen]);
+
+  // Close location popover on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsLocationOpen(false);
+      }
+    };
+    if (isLocationOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isLocationOpen]);
+
   return (
-    <main className="flex-1 w-full relative">
+    <main className="flex-grow w-full relative">
+      {/* Dynamic Background Spotlights & Grid Overlay */}
+      <div className="absolute inset-0 grid-overlay opacity-[0.015] pointer-events-none z-0" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-accent-teal/5 blur-[120px] pointer-events-none z-0" />
+      <div className="absolute top-3/4 left-1/3 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-accent-cyan/3 blur-[150px] pointer-events-none z-0" />
+
       {/* 1. Identity Showcase (Hero Section) */}
-      <section className="relative min-h-[90vh] flex items-center pt-24 pb-16 overflow-hidden">
-        <HeroBackground />
-        <Container className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section 
+        className="relative pt-8 pb-16 lg:pb-24 min-h-[80vh] flex flex-col justify-center overflow-hidden z-10"
+        aria-label="Welcome and Introduction"
+      >
+        <Container className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Identity Text */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-6 text-left">
             <FadeUp delay={0.05}>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent-teal/20 bg-accent-teal/5 text-accent-cyan text-[11px] font-mono tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent-teal/20 bg-accent-teal/5 text-accent-cyan text-[11px] font-mono tracking-wider">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent-cyan animate-pulse" />
-                <span>Available for collaborations</span>
+                <span>Available for selected collaborations</span>
               </div>
             </FadeUp>
 
             <FadeUp delay={0.1}>
-              <Display className="font-extrabold leading-[1.05]">
+              <Display className="font-extrabold leading-[1.05] tracking-tight">
                 Creative Developer. <br />
                 <GradientText variant="teal">Designer.</GradientText> <br />
                 Founder.
@@ -67,7 +100,7 @@ export default function Home() {
 
             <FadeUp delay={0.15}>
               <LeadParagraph className="max-w-xl">
-                Building digital products, visual identities and modern web experiences from London, with roots in Goa, India.
+                I build digital products, visual identities, and creative experiences. I am based in London, with roots in Cavelossim, South Goa.
               </LeadParagraph>
             </FadeUp>
 
@@ -79,123 +112,243 @@ export default function Home() {
                     View My Work
                   </Button>
                 </MagneticWrapper>
-                <Button variant="ghost" href="/contact">
+                <Button variant="secondary" href="/contact">
                   Get In Touch
                 </Button>
               </div>
             </FadeUp>
 
-            {/* Status Lines */}
+            {/* Interactive Location Control */}
             <FadeUp delay={0.25}>
-              <div className="pt-6 flex flex-col sm:flex-row sm:items-center gap-4 text-xs text-text-secondary border-t border-border-subtle max-w-lg">
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-accent-teal" />
-                  <span>Based in London • Originally from Goa</span>
+              <div className="pt-6 flex flex-wrap items-center gap-4 border-t border-border-subtle max-w-lg">
+                <div ref={locationRef} className="relative inline-block">
+                  <button
+                    onClick={() => setIsLocationOpen(!isLocationOpen)}
+                    aria-expanded={isLocationOpen}
+                    aria-haspopup="true"
+                    aria-controls="location-popover"
+                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-border-standard bg-bg-secondary/40 hover:bg-bg-secondary hover:border-accent-teal/30 text-text-secondary hover:text-white transition-all text-xs cursor-pointer focus-visible:ring-2 focus-visible:ring-accent-teal outline-none"
+                  >
+                    <MapPin className="h-3.5 w-3.5 text-accent-teal shrink-0" />
+                    <span>Based in London • From Cavelossim, South Goa</span>
+                    <ChevronDownIcon className={`h-3 w-3 text-text-muted transition-transform duration-200 ${isLocationOpen ? "rotate-180" : ""}`} />
+                  </button>
+
+                  <AnimatePresence>
+                    {isLocationOpen && (
+                      <motion.div
+                        id="location-popover"
+                        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 8 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute bottom-full left-0 mb-3 w-72 p-4 rounded-xl border border-border-subtle bg-bg-secondary shadow-xl shadow-black/80 z-modal space-y-4 text-left"
+                      >
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono text-text-muted uppercase block">Current Location</span>
+                          <span className="text-white text-xs font-semibold block">London, United Kingdom</span>
+                          <a
+                            href="https://www.google.com/maps/search/?api=1&query=London,+United+Kingdom"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-[11px] text-accent-cyan hover:underline"
+                            aria-label="Open London in Google Maps in a new tab"
+                          >
+                            <span>Open in Google Maps</span>
+                            <ArrowUpRight className="h-3 w-3 shrink-0" />
+                          </a>
+                        </div>
+                        
+                        <div className="space-y-1 pt-3 border-t border-border-subtle">
+                          <span className="text-[10px] font-mono text-text-muted uppercase block">Home</span>
+                          <span className="text-white text-xs font-semibold block">Cavelossim, South Goa, India</span>
+                          <a
+                            href="https://www.google.com/maps/search/?api=1&query=Cavelossim,+Goa,+India"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-[11px] text-accent-cyan hover:underline"
+                            aria-label="Open Cavelossim Goa in Google Maps in a new tab"
+                          >
+                            <span>Open in Google Maps</span>
+                            <ArrowUpRight className="h-3 w-3 shrink-0" />
+                          </a>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-                <span className="hidden sm:inline text-text-muted">|</span>
-                <div className="flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-accent-cyan" />
+
+                <div className="flex items-center gap-2 text-xs text-text-secondary bg-bg-secondary/40 border border-border-standard px-3.5 py-1.5 rounded-full select-none">
+                  <Zap className="h-3.5 w-3.5 text-accent-cyan shrink-0" />
                   <span>Founder of Visual Vibe Creation</span>
                 </div>
               </div>
             </FadeUp>
           </div>
 
-          {/* Portrait Image column */}
+          {/* Portrait Container */}
           <div className="lg:col-span-5 flex justify-center">
             <ScaleReveal delay={0.2}>
               <MouseTilt>
-                <PortraitImage
-                  src="/assets/images/enosh-portrait.jpg"
-                  alt="Enosh Jaques Portrait Photograph"
-                  className="w-[280px] max-w-full sm:w-[320px] rounded-2xl shadow-2xl shadow-black/40 ring-1 ring-white/10"
-                />
+                <div className="relative group p-2.5 rounded-2xl border border-border-standard bg-bg-secondary/40 shadow-2xl shadow-black/60 ring-1 ring-white/5 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-accent-teal/10 via-transparent to-accent-cyan/10 opacity-60 pointer-events-none" />
+                  <PortraitImage
+                    alt="Enosh Jaques Portrait Photograph"
+                    className="w-[280px] max-w-full sm:w-[320px] rounded-xl object-cover object-center ring-1 ring-white/10"
+                  />
+                  <div className="absolute bottom-4 left-4 right-4 p-3 rounded-lg border border-border-subtle bg-bg-primary/90 backdrop-blur-sm z-10 text-left">
+                    <span className="text-[9px] font-mono text-accent-cyan uppercase tracking-widest block">Studio Profile</span>
+                    <span className="text-xs font-bold text-white block mt-0.5">Enosh Jaques</span>
+                  </div>
+                </div>
               </MouseTilt>
             </ScaleReveal>
           </div>
         </Container>
       </section>
 
-      {/* 2. Current Snapshot */}
-      <SectionWrapper>
-        <Container variant="reading">
+      {/* 2. What I'm Building Now (Current Snapshot) */}
+      <SectionWrapper className="py-20 bg-bg-secondary/30 border-t border-b border-border-subtle relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,var(--color-bg-secondary),transparent_70%)] pointer-events-none" />
+        <Container variant="reading" className="relative z-10">
           <FadeUp>
-            <div className="text-center space-y-6">
-              <Overline>Current Snapshot</Overline>
-              <Headline className="font-bold text-white tracking-tight leading-tight">
-                Focus & Progression
-              </Headline>
-              <div className="glass-surface p-6 rounded-xl border border-border-subtle text-left space-y-4">
-                <div className="flex items-center gap-3">
-                  <StatusLabel type="info">Active Growth</StatusLabel>
-                  <span className="text-xs text-text-muted font-mono">Status Update</span>
-                </div>
-                <Body className="text-text-secondary">
-                  Currently preparing to begin the second and final year of my BTEC Level 3 Information Technology course at West Thames College in September, before progressing to university.
-                </Body>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-border-subtle text-xs text-text-secondary">
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-mono text-text-muted uppercase block">Academic Milestone</span>
-                    <span className="text-white font-medium">Completed T Level Foundation with verified D*D grade</span>
+            <div className="text-center space-y-8">
+              <div className="space-y-2">
+                <Overline className="text-accent-teal">Focus & Progression</Overline>
+                <Headline className="font-bold text-white tracking-tight leading-tight">
+                  What I&apos;m Building Now
+                </Headline>
+              </div>
+
+              {/* Focus List */}
+              <div className="grid grid-cols-1 gap-4 text-left">
+                {[
+                  {
+                    title: "FinCalc on Google Play",
+                    description: "My financial calculation app is live on Google Play, supporting calculations for margins, compound interest, and amortization plans.",
+                    tag: "Android Release",
+                    tagColor: "bg-accent-teal/15 text-accent-cyan border-accent-teal/20"
+                  },
+                  {
+                    title: "Visual Vibe Creation",
+                    description: "I run Visual Vibe Creation as my independent studio, designing branding, posters, cards, and custom graphics for client projects.",
+                    tag: "Self-Employment",
+                    tagColor: "bg-white/5 text-text-secondary border-border-standard"
+                  },
+                  {
+                    title: "BTEC IT Level 3",
+                    description: "I am preparing to start the final year of my BTEC Level 3 Information Technology course in September.",
+                    tag: "Technical Education",
+                    tagColor: "bg-white/5 text-text-secondary border-border-standard"
+                  },
+                  {
+                    title: "Frontend Engineering",
+                    description: "I am refining my web development skills, experimenting with Next.js structures, and designing future web utility apps.",
+                    tag: "Skills Expansion",
+                    tagColor: "bg-accent-cyan/10 text-accent-cyan border-accent-cyan/20"
+                  }
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    className="p-5 rounded-xl border border-border-standard bg-bg-primary/50 hover:bg-bg-primary/80 hover:border-accent-teal/20 transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-4"
+                  >
+                    <div className="space-y-1.5 max-w-xl">
+                      <h4 className="font-display text-sm font-bold text-white flex items-center gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-accent-teal shrink-0" />
+                        <span>{item.title}</span>
+                      </h4>
+                      <p className="text-xs text-text-secondary leading-relaxed">{item.description}</p>
+                    </div>
+                    <span className={`text-[9px] font-mono uppercase tracking-wider px-3 py-1 rounded-full border w-fit shrink-0 ${item.tagColor}`}>
+                      {item.tag}
+                    </span>
                   </div>
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-mono text-text-muted uppercase block">Direct Action</span>
-                    <span className="text-white font-medium">Released FinCalc, an Android app on Google Play Store</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </FadeUp>
         </Container>
       </SectionWrapper>
 
-      {/* 3. Featured Project (FinCalc Flagship) */}
-      <SectionWrapper>
+      {/* 3. Featured Project (FinCalc Flagship Case Study) */}
+      <SectionWrapper className="py-24 relative">
         <Container>
           <SectionHeader
-            overline="Flagship Engineering"
-            title="Technical Case Study: FinCalc"
-            subtitle="My first published Android application, built from scratch to verify software development, design, and calculation logic."
+            overline="Flagship Mobile Application"
+            title="Featured Work: FinCalc"
+            subtitle="I designed and built this native Android tool to simplify interest and compound growth calculations."
           />
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             {/* Phone Mockup side */}
             <div className="lg:col-span-5 flex justify-center">
               <FadeUp delay={0.1}>
                 <MouseTilt>
-                  <PhoneMockup
-                    src="/assets/images/fincalc-phone.jpg"
-                    alt="FinCalc App interface screenshot on Android screen"
-                  />
+                  <div className="relative group p-1 bg-gradient-to-tr from-accent-teal/10 to-transparent rounded-[44px]">
+                    <PhoneMockup
+                      alt="FinCalc App interface screenshot on Android screen"
+                      className="transition-transform duration-500 group-hover:scale-[1.01]"
+                    />
+                  </div>
                 </MouseTilt>
               </FadeUp>
             </div>
 
             {/* Study Narrative side */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-6 text-left">
               <FadeUp delay={0.15}>
                 <div className="space-y-4">
-                  <span className="badge-accent uppercase tracking-widest text-[9px]">Case Narrative</span>
-                  <Headline className="text-xl sm:text-2xl font-bold text-white">
-                    Solving Financial Margin Calculation Clumsiness
+                  <span className="inline-flex items-center px-2 py-0.5 rounded border border-accent-teal/20 bg-accent-teal/5 text-accent-cyan text-[10px] font-mono uppercase tracking-wider">
+                    Case Narrative
+                  </span>
+                  <Headline className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                    Why I built it
                   </Headline>
                   <Body className="text-text-secondary leading-relaxed">
-                    I built FinCalc to solve a personal frustration: calculating profit margins and compound interest quickly on my phone was clumsy. Instead of copying template scripts, I wrote the calculation structures from scratch in Java.
-                  </Body>
-                  <Body className="text-text-secondary leading-relaxed">
-                    This project taught me the importance of component lifecycle states, layout memory footprint, and material design systems. It transformed my development approach, showing me that clean UX is just as critical as clean code.
+                    I started building FinCalc because I wanted a simpler, faster way to work out loan plans and compound values on a phone. The process taught me how to take an idea from wireframes through formula structures, testing phases, and finally publishing on Google Play.
                   </Body>
                 </div>
               </FadeUp>
 
+              {/* Case Q&A Structure */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                {[
+                  {
+                    q: "What I created",
+                    a: "I built a mobile calculation utility in Java, handling margin, compound interest, and amortization plans."
+                  },
+                  {
+                    q: "What challenged me",
+                    a: "I had to figure out formula logic paths for complex compound frequencies and handle view state changes when changing screen layouts."
+                  },
+                  {
+                    q: "What I learned",
+                    a: "I gained practical knowledge of Android lifecycles, layouts via XML, device testing, and Google Play Console structures."
+                  },
+                  {
+                    q: "What I'll improve next",
+                    a: "I plan to rebuild the core calculation systems in Kotlin and transition the layout files to Jetpack Compose."
+                  }
+                ].map((item, idx) => (
+                  <FadeUp key={item.q} delay={0.18 + idx * 0.05}>
+                    <div className="space-y-1.5 p-4 rounded-xl border border-border-subtle bg-bg-secondary/40">
+                      <h4 className="font-display text-xs font-bold text-accent-cyan tracking-tight uppercase font-mono">
+                        {item.q}
+                      </h4>
+                      <p className="text-xs text-text-secondary leading-relaxed">{item.a}</p>
+                    </div>
+                  </FadeUp>
+                ))}
+              </div>
+
               {/* Technologies */}
-              <FadeUp delay={0.2}>
-                <div className="space-y-2">
+              <FadeUp delay={0.35}>
+                <div className="space-y-2 pt-2">
                   <span className="text-[10px] font-mono uppercase tracking-widest text-text-muted block">
-                    Technologies Explored & Used
+                    Technologies Utilized
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    <TechnologyBadge>Android SDK</TechnologyBadge>
                     <TechnologyBadge>Java</TechnologyBadge>
+                    <TechnologyBadge>Android SDK</TechnologyBadge>
                     <TechnologyBadge>XML Layouts</TechnologyBadge>
                     <TechnologyBadge>Git</TechnologyBadge>
                     <TechnologyBadge>Google Play Console</TechnologyBadge>
@@ -204,8 +357,8 @@ export default function Home() {
               </FadeUp>
 
               {/* Action Buttons */}
-              <FadeUp delay={0.25}>
-                <div className="flex flex-wrap items-center gap-4">
+              <FadeUp delay={0.4}>
+                <div className="flex flex-wrap items-center gap-4 pt-2">
                   <Button
                     variant="playstore"
                     href="https://play.google.com/store/apps/details?id=com.enosh.fincalc"
@@ -215,10 +368,10 @@ export default function Home() {
                   </Button>
                   <Link
                     href="/projects"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent-cyan hover:text-white transition-colors"
+                    className="group inline-flex items-center gap-1 text-xs font-semibold text-accent-cyan hover:text-white transition-colors"
                   >
-                    <span>Read Full Projects List</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
+                    <span>Read Full Projects Index</span>
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>
               </FadeUp>
@@ -227,272 +380,514 @@ export default function Home() {
         </Container>
       </SectionWrapper>
 
-      {/* 4. Journey Preview */}
-      <SectionWrapper>
+      {/* 4. My Journey (Timeline Section) */}
+      <SectionWrapper className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle relative">
         <Container variant="reading">
           <SectionHeader
             align="center"
-            overline="Narrative Progression"
-            title="Chronological Steps"
-            subtitle="A preview of my transition across regions, technologies, and creative disciplines."
+            overline="Narrative Steps"
+            title="My Journey"
+            subtitle="The path of my studies, relocation milestones, and creative endeavors."
           />
           <FadeUp>
             <TimelineContainer>
-              <TimelineStep year="2021" title="Orlim, Goa" subtitle="Where It Started">
+              <TimelineStep 
+                year="School Years" 
+                title="Growing Up and Learning in Goa" 
+                subtitle="St. Pius X Convent High School, Orlim"
+                icon={<GraduationCap className="h-4 w-4 text-accent-teal" />}
+              >
                 <Body className="text-text-secondary">
-                  Developing early visual curiosity, taking photos of quiet landscapes, and learning the basics of design.
+                  I studied at St. Pius X Convent High School from my early school years through Standard 10 and completed my secondary education with distinction.
                 </Body>
               </TimelineStep>
-              <TimelineStep year="2022" title="Creative Initiatives" subtitle="Discovering Tiatr Theater">
+
+              <TimelineStep 
+                year="Childhood and Teenage Years" 
+                title="Creativity Beyond the Classroom" 
+                subtitle="Goan Tiatr and Performing Experience"
+                icon={<Sparkles className="h-4 w-4 text-accent-cyan" />}
+              >
                 <Body className="text-text-secondary">
-                  Performed in traditional Goan tiatr theater before live audiences of more than 500 people, learning coordination under pressure.
+                  Throughout my childhood and teenage years in Goa, I participated in traditional Goan tiatr productions. This helped me build confidence, stage awareness, teamwork, public communication and coordination under pressure.
                 </Body>
               </TimelineStep>
-              <TimelineStep year="2022" title="Studio Foundation" subtitle="Building Visual Vibe Creation">
+
+              <TimelineStep 
+                year="Standards 11 and 12" 
+                title="Choosing a Technical Path" 
+                subtitle="Rosary Higher Secondary School, Navelim"
+                icon={<BookOpen className="h-4 w-4 text-accent-teal" />}
+              >
                 <Body className="text-text-secondary">
-                  Founded my independent creative studio to combine branding design, video editing, and code.
+                  I completed Standards 11 and 12 in the Computer Technology stream, studying programming logic, databases, software applications and computer networks, and graduated with distinction.
                 </Body>
               </TimelineStep>
-              <TimelineStep year="2024" title="Transition to London" subtitle="West Thames College">
+
+              <TimelineStep 
+                year="Established 2022" 
+                title="Building My Independent Studio" 
+                subtitle="Visual Vibe Creation"
+                icon={<Layers className="h-4 w-4 text-accent-cyan" />}
+              >
                 <Body className="text-text-secondary">
-                  Moving to London, adapting to a global tech capital, and completing the T Level Foundation with a D*D result.
+                  I founded Visual Vibe Creation in 2022 to bring together graphic design, branding, posters, invitation cards, business cards, social-media graphics, photography, video editing and technology.
                 </Body>
               </TimelineStep>
-              <TimelineStep year="2026+" title="Looking Ahead" subtitle="University Studies">
+
+              <TimelineStep 
+                year="2024" 
+                title="Moving to London" 
+                subtitle="West Thames College"
+                icon={<MapPin className="h-4 w-4 text-accent-teal" />}
+              >
                 <Body className="text-text-secondary">
-                  Planning to study Computer Science or Software Engineering at university.
+                  I moved to London and joined West Thames College. I completed the T Level Foundation with a D*D result and continued into BTEC Level 3 Information Technology.
+                </Body>
+              </TimelineStep>
+
+              <TimelineStep 
+                year="2025" 
+                title="Expanding My Industry Experience" 
+                subtitle="Asendia UK Internship"
+                icon={<Briefcase className="h-4 w-4 text-accent-cyan" />}
+              >
+                <Body className="text-text-secondary">
+                  I completed an IT support internship at Asendia UK in Hounslow, building my understanding of workplace technology, support processes and business operations.
+                </Body>
+              </TimelineStep>
+
+              <TimelineStep 
+                year="Google Play Release" 
+                title="Publishing My First Android App" 
+                subtitle="FinCalc"
+                icon={<Play className="h-4 w-4 text-accent-cyan" />}
+              >
+                <Body className="text-text-secondary">
+                  I designed, built and published FinCalc on Google Play, turning my Android development work into a publicly available product.
+                </Body>
+              </TimelineStep>
+
+              <TimelineStep 
+                year="Planned Next Step" 
+                title="University and Future Projects" 
+                subtitle="Higher Education Goals"
+                icon={<Star className="h-4 w-4 text-accent-teal" />}
+              >
+                <Body className="text-text-secondary">
+                  After completing my BTEC Level 3 course, I plan to progress to university and continue developing software, applications and creative digital projects.
                 </Body>
               </TimelineStep>
             </TimelineContainer>
             
             <div className="text-center pt-8">
               <Button variant="secondary" href="/experience">
-                Explore Full Journey details
+                View Full Timeline Details
               </Button>
             </div>
           </FadeUp>
         </Container>
       </SectionWrapper>
 
-      {/* 5. Visual Vibe Creation Studio */}
-      <SectionWrapper>
+      {/* 5. Visual Vibe Creation Section (Editorial Split) */}
+      <SectionWrapper className="py-24">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             {/* Studio Info side */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-6 text-left">
               <FadeUp>
                 <div className="space-y-4">
-                  <Overline>Independent Studio</Overline>
+                  <Overline className="text-accent-cyan">Independent Creative Studio</Overline>
                   <Headline className="font-bold text-white tracking-tight leading-tight">
                     Visual Vibe Creation
                   </Headline>
-                  <Body className="text-text-secondary leading-relaxed">
-                    Visual Vibe Creation is my independent creative studio where I combine design, branding and technology to help ideas become engaging digital experiences.
-                  </Body>
-                  <Body className="text-text-secondary leading-relaxed">
-                    It serves as the umbrella for all my client freelance work, design assets, video editing commissions, and visual projects, ensuring everything is presented with a consistent premium standard.
-                  </Body>
+                  <p className="text-sm text-text-secondary leading-relaxed">
+                    Visual Vibe Creation is my independent creative studio, where I combine graphic design, branding, visual media and technology.
+                  </p>
+                  <p className="text-xs text-text-secondary leading-relaxed">
+                    I create posters, invitations, business cards, logos, branding assets, social-media graphics, photography, video edits and selected digital projects for clients.
+                  </p>
                 </div>
               </FadeUp>
+
+              {/* Service Categories Grid */}
               <FadeUp delay={0.1}>
-                <div className="pt-4 border-t border-border-subtle grid grid-cols-2 gap-4">
+                <div className="pt-4 border-t border-border-subtle">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-text-muted block mb-3">
+                    Studio Capabilities
+                  </span>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {[
+                      "Posters & Layouts",
+                      "Invitations & Cards",
+                      "Business Cards",
+                      "Logos & Branding",
+                      "Social Media Assets",
+                      "Video Editing",
+                      "Visual Content",
+                      "Photography",
+                      "Web Utilities"
+                    ].map((service) => (
+                      <span key={service} className="px-3 py-2 rounded-lg border border-border-subtle bg-bg-secondary/40 text-[11px] text-text-secondary hover:text-white hover:border-accent-teal/30 hover:bg-bg-secondary transition-all">
+                        {service}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </FadeUp>
+
+              <FadeUp delay={0.15}>
+                <div className="pt-4 flex items-center gap-3">
                   <StatisticBlock value="2022" label="Established" />
-                  <StatisticBlock value="100%" label="Independent" />
+                  <div className="h-8 w-px bg-border-subtle mx-4" />
+                  <StatisticBlock value="Studio" label="100% Independent" />
                 </div>
               </FadeUp>
             </div>
 
-            {/* Brand Logo / Artwork Mock side */}
+            {/* Brand Logo Placeholder side */}
             <div className="lg:col-span-5 flex justify-center">
-              <FadeUp delay={0.15}>
-                <div className="glass-surface p-8 rounded-2xl border border-border-subtle w-full max-w-[340px] aspect-square flex flex-col justify-between group">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-accent-teal/20 bg-accent-teal/5 text-accent-cyan">
+              <FadeUp delay={0.2}>
+                <div className="glass-surface p-8 rounded-2xl border border-border-standard w-full max-w-[340px] aspect-square flex flex-col justify-between group relative overflow-hidden">
+                  <div className="absolute inset-0 grid-overlay opacity-10 pointer-events-none" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-accent-teal/20 bg-accent-teal/5 text-accent-cyan z-10">
                     <svg viewBox="0 0 100 100" className="h-6 w-6 text-accent-cyan fill-none stroke-current stroke-[8]">
                       <path d="M20 20 h60 v15 H35 v15 h40 v15 H35 v15 h45" />
                     </svg>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-3 z-10">
                     <span className="text-[9px] font-mono tracking-widest text-text-muted uppercase block">
-                      Brand Mark
+                      Creative Studio Logo
                     </span>
                     <h4 className="font-display text-base font-bold text-white group-hover:text-accent-cyan transition-colors">
                       Visual Vibe Creation
                     </h4>
                     <p className="text-xs text-text-secondary leading-relaxed">
-                      Handcrafted branding designs and video editing assets.
+                      Custom visual identities, invitations, business cards, and video assets.
+                    </p>
+                    <Link
+                      href="/portfolio"
+                      className="group/btn inline-flex items-center gap-1 text-xs text-accent-cyan font-semibold hover:text-white transition-colors pt-2"
+                    >
+                      <span>Explore Creative Works</span>
+                      <ArrowRight className="h-3 w-3 transition-transform group-hover/btn:translate-x-1" />
+                    </Link>
+                  </div>
+                </div>
+              </FadeUp>
+            </div>
+          </div>
+        </Container>
+      </SectionWrapper>
+
+      {/* 6. Selected Client & Creative Work */}
+      <SectionWrapper className="py-24 bg-bg-secondary/10 border-t border-b border-border-subtle">
+        <Container>
+          <SectionHeader
+            overline="Client & Creative Commissions"
+            title="Selected Visual Work"
+            subtitle="A preview of layouts, branding drafts, and sunset photography. I will update this section with real client project files."
+          />
+
+          {/* Varied Showcase Grid (1 large, 2 small) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            {/* Large Featured Card (Poster Category) */}
+            <div className="lg:col-span-7">
+              <FadeUp className="h-full">
+                <div className="group relative h-full flex flex-col justify-between p-6 rounded-2xl border border-border-standard bg-bg-secondary/40 hover:border-accent-teal/30 hover:shadow-xl transition-all duration-300 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-transparent opacity-90 z-10" />
+                  <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-bg-primary">
+                    <DevAssetPlaceholder
+                      label="Graphic Layout Poster"
+                      dimensions="1200 x 675 px · 16:9 Aspect"
+                      className="w-full h-full border-none bg-transparent"
+                    />
+                  </div>
+                  <div className="relative z-25 mt-6 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono text-accent-cyan uppercase tracking-wider">
+                        Poster Layout
+                      </span>
+                      <span className="text-[10px] font-mono text-text-muted">Graphic Design</span>
+                    </div>
+                    <h3 className="font-display text-lg font-bold text-white">Event Poster Typography Layout</h3>
+                    <p className="text-xs text-text-secondary leading-relaxed">
+                      I designed custom typography placements and contrast balancing for promotional layouts.
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {["Typography", "Layout"].map((tag) => (
+                        <span key={tag} className="text-[9px] font-mono text-text-muted px-2 py-0.5 rounded border border-border-subtle bg-white/[0.01]">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </FadeUp>
+            </div>
+
+            {/* Two Smaller Side Cards */}
+            <div className="lg:col-span-5 flex flex-col gap-6 justify-between">
+              {/* Card 1: Branding */}
+              <FadeUp delay={0.1} className="h-full">
+                <div className="group relative p-5 rounded-2xl border border-border-standard bg-bg-secondary/40 hover:border-accent-teal/35 hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-full">
+                  <div className="relative aspect-[3/2] w-full rounded-lg overflow-hidden bg-bg-primary">
+                    <DevAssetPlaceholder
+                      label="EJ Monogram Branding"
+                      dimensions="1200 x 800 px · 3:2 Aspect"
+                      className="w-full h-full border-none bg-transparent"
+                    />
+                  </div>
+                  <div className="mt-4 space-y-2">
+                    <div className="flex items-center justify-between text-[10px]">
+                      <span className="font-mono text-accent-cyan uppercase tracking-wider">Monogram Guideline</span>
+                      <span className="font-mono text-text-muted">Branding</span>
+                    </div>
+                    <h4 className="font-display text-sm font-bold text-white">EJ Brand Identity Grid</h4>
+                    <p className="text-xs text-text-secondary leading-relaxed">
+                      I established grid alignments and geometries for branding monograms and logos.
+                    </p>
+                  </div>
+                </div>
+              </FadeUp>
+
+              {/* Card 2: Photography */}
+              <FadeUp delay={0.15} className="h-full">
+                <div className="group relative p-5 rounded-2xl border border-border-standard bg-bg-secondary/40 hover:border-accent-teal/35 hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-full">
+                  <div className="relative aspect-[3/2] w-full rounded-lg overflow-hidden bg-bg-primary">
+                    <DevAssetPlaceholder
+                      label="Sunset at Orlim Landscape"
+                      dimensions="1200 x 800 px · 3:2 Aspect"
+                      className="w-full h-full border-none bg-transparent"
+                    />
+                  </div>
+                  <div className="mt-4 space-y-2">
+                    <div className="flex items-center justify-between text-[10px]">
+                      <span className="font-mono text-accent-cyan uppercase tracking-wider">Goan Photography</span>
+                      <span className="font-mono text-text-muted">Creative Media</span>
+                    </div>
+                    <h4 className="font-display text-sm font-bold text-white">Sunset silhouette in Orlim</h4>
+                    <p className="text-xs text-text-secondary leading-relaxed">
+                      I photographed the sunset in Goa, focusing on composition balance and natural contrast levels.
                     </p>
                   </div>
                 </div>
               </FadeUp>
             </div>
           </div>
-        </Container>
-      </SectionWrapper>
 
-      {/* 6. Selected Work (Portfolio Cards) */}
-      <SectionWrapper>
-        <Container>
-          <SectionHeader
-            overline="Creative Portfolio"
-            title="Selected Visual Work"
-            subtitle="A selection of graphic assets, branding, and photography themes."
-          />
-          <GridWrapper cols={3}>
-            {/* Poster design preview */}
-            <ProjectCard
-              title="Graphic Layout Poster"
-              description="High-contrast layout detailing visual event design and poster typography."
-              category="Graphic Design"
-              imageSrc="/assets/images/portfolio-poster.jpg"
-              href="/portfolio"
-              tags={["Typography", "Layout"]}
-            />
-
-            {/* Monogram branding preview */}
-            <ProjectCard
-              title="EJ Monogram Architecture"
-              description="Logo guidelines and geometric monogram grid for visual brand identities."
-              category="Branding"
-              imageSrc="/assets/images/portfolio-branding.jpg"
-              href="/portfolio"
-              tags={["Logo", "Branding"]}
-            />
-
-            {/* Photography theme preview */}
-            <ProjectCard
-              title="Sunset at Orlim"
-              description="High-contrast sunset silhouette photography theme capturing natural Goa landscapes."
-              category="Photography"
-              imageSrc="/assets/images/goa-landscape.jpg"
-              href="/portfolio"
-              tags={["Nature", "Sunset"]}
-            />
-          </GridWrapper>
-
-          {/* Placeholders for upcoming work */}
-          <div className="mt-12 pt-12 border-t border-border-subtle">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-text-muted block mb-6">
-              Future Exploration Pipelines
-            </span>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <EmptyStatePlaceholder
-                title="Upcoming Mobile Game"
-                description="Currently in the planning and concept stage. Researching gameplay logic and graphic elements."
-                type="game"
-              />
-              <EmptyStatePlaceholder
-                title="Micro Web Utilities"
-                description="Currently exploring data structure visualization layouts. Concept stage research project."
-                type="web"
-              />
-            </div>
+          <div className="text-center pt-12">
+            <Button variant="secondary" href="/portfolio">
+              Explore Full Portfolio Showcase
+            </Button>
           </div>
         </Container>
       </SectionWrapper>
 
-      {/* 7. Experience Snapshot */}
-      <SectionWrapper>
+      {/* 7. Future Explorations (Secondary) */}
+      <SectionWrapper className="py-16 bg-bg-primary">
+        <Container>
+          <div className="text-center max-w-xl mx-auto space-y-2 mb-10">
+            <Overline className="text-text-muted">Product Pipeline</Overline>
+            <Headline className="text-xl sm:text-2xl font-bold text-white">
+              Future Explorations
+            </Headline>
+            <p className="text-xs text-text-secondary leading-relaxed">
+              I am research-testing code paths and sketching drafts for these upcoming side projects.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Future Card 1: Game concept */}
+            <FadeUp>
+              <div className="p-6 rounded-xl border border-border-subtle bg-bg-secondary/30 flex flex-col justify-between h-full space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-text-muted shrink-0" />
+                    <span className="text-[10px] font-mono uppercase text-text-muted tracking-widest">Concept Stage</span>
+                  </div>
+                  <h4 className="font-display text-sm font-bold text-white">Upcoming Mobile Game</h4>
+                  <p className="text-xs text-text-secondary leading-relaxed">
+                    I am working on mechanics drafts, asset styles, and setup logic for a mobile game.
+                  </p>
+                </div>
+                <span className="text-[9px] font-mono text-text-muted uppercase border border-border-subtle px-2 py-0.5 rounded w-fit">
+                  Research Stage
+                </span>
+              </div>
+            </FadeUp>
+
+            {/* Future Card 2: Web tools */}
+            <FadeUp delay={0.1}>
+              <div className="p-6 rounded-xl border border-border-subtle bg-bg-secondary/30 flex flex-col justify-between h-full space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-text-muted shrink-0" />
+                    <span className="text-[10px] font-mono uppercase text-text-muted tracking-widest">Exploration Stage</span>
+                  </div>
+                  <h4 className="font-display text-sm font-bold text-white">Micro Web Utilities</h4>
+                  <p className="text-xs text-text-secondary leading-relaxed">
+                    I am prototyping small utilities that solve simple day-to-day workflow tasks while building my frontend skillset.
+                  </p>
+                </div>
+                <span className="text-[9px] font-mono text-text-muted uppercase border border-border-subtle px-2 py-0.5 rounded w-fit">
+                  Planning Stage
+                </span>
+              </div>
+            </FadeUp>
+          </div>
+        </Container>
+      </SectionWrapper>
+
+      {/* 8. Experience Snapshot */}
+      <SectionWrapper className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle">
         <Container variant="reading">
           <SectionHeader
             align="center"
             overline="Employment History"
             title="Experience Snapshot"
-            subtitle="Work experiences and internships focused on client communication and technical systems support."
+            subtitle="A list of my past work placements, internships, and self-employed studio commissions."
           />
           <FadeUp>
             <div className="space-y-6">
               <ExperienceCard
-                role="Founder & Creative"
-                company="Visual Vibe Creation (Self-Employed)"
+                role="Founder and Self-Employed Creative"
+                company="Visual Vibe Creation"
                 period="2022 - Present"
-                description="Independently designing visual identities, logos, event poster assets, and video edits for remote clients. Focus was placed on matching custom client requirements and managing project timelines."
+                description="I create posters, invitations, business cards, logos, branding assets, social-media graphics, and custom visual assets. I manage design parameters, revisions, and deliveries independently."
               />
               <ExperienceCard
-                role="IT Service Desk Placement"
-                company="Hadley Group"
+                role="IT Support Intern"
+                company="Asendia UK"
+                location="Hounslow, London, United Kingdom"
+                period="January 2025"
+                description="I completed an IT support internship at Asendia UK in Hounslow, where I learned how departments use technology in daily operations. I gained exposure to workplace systems, technical support processes, internal communication and how IT supports different business functions."
+              />
+              <ExperienceCard
+                role="Industry Work Experience"
+                company="Hadley Property Group"
                 period="2024"
-                description="Assisted in database operations, network setup configurations, and hardware troubleshooting. Learnt how to resolve software challenges in a corporate database environment under strict security standards."
+                description="I completed an industry placement learning about the property sector, preparing slideshow layouts, analyzing information, and pitching a property development design in a Dragon's Den-style group challenge."
               />
               <ExperienceCard
-                role="Hospitality Placement"
+                role="IT Support Experience"
                 company="Radisson Blu Resort, Goa"
                 period="2021"
-                description="Supported hospitality service desks and booking structures. Learnt customer psychology, communication etiquette, and workflow efficiency under high-pressure customer service situations."
+                description="I supported IT operations at the hotel, assisting with system checks, troubleshooting, device installations, hotel network setups, and technical request logs for staff."
               />
             </div>
             
-            <div className="text-center pt-8">
+            <div className="text-center pt-10">
               <Button variant="secondary" href="/experience">
-                View Full Timeline
+                View Full Experience Log
               </Button>
             </div>
           </FadeUp>
         </Container>
       </SectionWrapper>
 
-      {/* 8. Education Snapshot */}
-      <SectionWrapper>
+      {/* 9. Education Progression */}
+      <SectionWrapper className="py-24">
         <Container variant="reading">
           <SectionHeader
             align="center"
-            overline="Academic Path"
-            title="Education Timeline"
-            subtitle="Consistently achieving distinctions and preparing for higher computer science studies."
+            overline="Academic Milestones"
+            title="Education Progression"
+            subtitle="My academic history, including IT courses and tech study directions."
           />
           <FadeUp>
-            <TimelineContainer>
-              <TimelineStep year="Sept 2024 - Present" title="West Thames College, London" subtitle="BTEC Level 3 Information Technology">
-                <Body className="text-text-secondary">
-                  Completed BTEC T Level Foundation year with a verified distinction D*D result. Currently preparing to start Year 2 in September, before progressing to university.
-                </Body>
-              </TimelineStep>
-              <TimelineStep year="2022 - 2023" title="Rosary Higher Secondary School, Goa" subtitle="Computer Technology Stream">
-                <Body className="text-text-secondary">
-                  Achieved 75% Distinction in Computer Technology. Focus subjects included Database Management, Programming Logic, and Computer Networks.
-                </Body>
-              </TimelineStep>
-              <TimelineStep year="Completed 2021" title="St. Pius X High School, Goa" subtitle="Secondary School Certificate">
-                <Body className="text-text-secondary">
-                  Graduated with a 79% Distinction. Developed fundamental mathematics and analytical skills.
-                </Body>
-              </TimelineStep>
-            </TimelineContainer>
-            
-            <div className="text-center pt-8">
+            <div className="grid grid-cols-1 gap-6">
+              {[
+                {
+                  school: "West Thames College, London, United Kingdom",
+                  degree: "BTEC Level 3 Information Technology",
+                  period: "Sept 2024 - Present",
+                  desc: "I completed the T Level Foundation programme with a verified D*D result. I am preparing to begin the second and final year of my BTEC Level 3 Information Technology course."
+                },
+                {
+                  school: "Rosary Higher Secondary School, Navelim, South Goa, India",
+                  degree: "Computer Technology Stream",
+                  period: "2022 - 2023",
+                  desc: "I completed Standards 11 and 12 in Computer Technology with distinction. My studies included programming logic, database systems, software applications and computer networks."
+                },
+                {
+                  school: "St. Pius X Convent High School, Orlim, South Goa, India",
+                  degree: "Secondary Education through Standard 10",
+                  period: "Completed 2021",
+                  desc: "I completed my school education through Standard 10 and graduated with distinction."
+                },
+                {
+                  school: "University Computing Course",
+                  degree: "Planned Next Step",
+                  period: "Future Direction",
+                  desc: "After completing BTEC Level 3, I plan to progress to a computing-related university course."
+                }
+              ].map((item) => (
+                <div key={item.school} className="p-6 rounded-xl border border-border-standard bg-bg-secondary/40 flex flex-col md:flex-row md:items-start justify-between gap-4">
+                  <div className="space-y-1.5">
+                    <h4 className="font-display text-sm font-bold text-white">{item.school}</h4>
+                    <span className="text-xs text-accent-cyan font-semibold block">{item.degree}</span>
+                    <p className="text-xs text-text-secondary leading-relaxed pt-2">{item.desc}</p>
+                  </div>
+                  <span className="text-[10px] font-mono text-text-muted uppercase shrink-0 pt-1 font-bold">
+                    {item.period}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center pt-10">
               <Button variant="secondary" href="/education">
-                View Education Progression
+                View Full Education Records
               </Button>
             </div>
           </FadeUp>
         </Container>
       </SectionWrapper>
 
-      {/* 9. Awards & Leadership */}
-      <SectionWrapper>
+      {/* 10. Recognition & Leadership */}
+      <SectionWrapper className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle">
         <Container variant="reading">
           <SectionHeader
             align="center"
-            overline="Recognition"
+            overline="Recognition & Activity"
             title="Awards & Leadership"
-            subtitle="Milestones showcasing academic dedication and stage confidence."
+            subtitle="My creative and academic accomplishments, focusing on leadership skills."
           />
           <FadeUp>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <AwardCard
-                title="Student of the Year"
-                issuer="West Thames College"
-                date="2024"
-                description="Awarded for consistent academic performance during the T Level Foundation course, alongside helping peers with programming logic."
-              />
-              <AwardCard
-                title="Goan Tiatr Theatre"
-                issuer="Stage Coordination"
-                date="2022"
-                description="Performed before live audiences of 500+ people. Learnt public speech control, crowd engagement, and stage setup collaboration."
-              />
+              {/* Award 1 */}
+              <div className="p-6 rounded-xl border border-border-standard bg-bg-secondary/40 flex flex-col justify-between h-full space-y-4">
+                <div className="space-y-2">
+                  <Trophy className="h-5 w-5 text-accent-teal" />
+                  <h4 className="font-display text-sm font-bold text-white">Student Experience Student of the Year 2025–2026</h4>
+                  <span className="text-[10px] font-mono text-text-muted uppercase block">West Thames College</span>
+                  <p className="text-xs text-text-secondary leading-relaxed pt-1">
+                    I received this college award in recognition of my academic work, helping classmates understand coding layouts and database setups.
+                  </p>
+                </div>
+                <span className="text-[9px] font-mono text-accent-cyan border border-accent-teal/20 px-2 py-0.5 rounded w-fit">
+                  Academic Award
+                </span>
+              </div>
+
+              {/* Leadership 1 */}
+              <div className="p-6 rounded-xl border border-border-standard bg-bg-secondary/40 flex flex-col justify-between h-full space-y-4">
+                <div className="space-y-2">
+                  <Sparkles className="h-5 w-5 text-accent-cyan" />
+                  <h4 className="font-display text-sm font-bold text-white">Goan Tiatr Performing Experience</h4>
+                  <span className="text-[10px] font-mono text-text-muted uppercase block">Creative Participation</span>
+                  <p className="text-xs text-text-secondary leading-relaxed pt-1">
+                    I performed in traditional Goan stage plays. This helped me build my confidence, stage presence, public communication, and group coordination skills.
+                  </p>
+                </div>
+                <span className="text-[9px] font-mono text-text-muted border border-border-subtle px-2 py-0.5 rounded w-fit">
+                  Stage & Leadership
+                </span>
+              </div>
             </div>
-            
-            <div className="text-center pt-8">
+
+            <div className="text-center pt-10">
               <Button variant="secondary" href="/awards">
                 View Awards Details
               </Button>
@@ -501,29 +896,29 @@ export default function Home() {
         </Container>
       </SectionWrapper>
 
-      {/* 10. Let's Build Together (Contact Section) */}
-      <SectionWrapper id="contact">
+      {/* 11. Let's Build Together (Contact Section) */}
+      <SectionWrapper id="contact" className="py-28 relative overflow-hidden">
         <Container variant="reading">
           <FadeUp>
-            <div className="glass-surface p-8 md:p-12 rounded-2xl border border-border-subtle text-center space-y-6 relative overflow-hidden group">
+            <div className="glass-surface p-8 md:p-12 rounded-2xl border border-border-standard text-center space-y-8 relative overflow-hidden group">
               <div className="absolute inset-0 grid-overlay opacity-10 pointer-events-none" />
               <div className="absolute inset-0 bg-gradient-to-br from-accent-teal/5 to-transparent pointer-events-none" />
 
               <div className="space-y-3 relative z-10">
-                <Overline>Inquiries & Collaboration</Overline>
+                <Overline className="text-accent-teal">Inquiries & Collaboration</Overline>
                 <Headline className="text-2xl md:text-3xl font-extrabold text-white tracking-tight leading-tight">
                   Let&apos;s build something meaningful together.
                 </Headline>
                 <p className="text-xs text-text-secondary leading-relaxed max-w-sm mx-auto">
-                  Whether you want to discuss university progression, tech partnerships, design projects, or code, feel free to reach out.
+                  Have a design project, digital idea, or opportunity to discuss? I am open to collaborations, freelance work, and conversations about creative technology.
                 </p>
               </div>
 
               {/* Copy Email Area */}
-              <div className="relative z-10 max-w-md mx-auto p-4 rounded-xl border border-border-standard bg-bg-primary flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-accent-cyan" />
-                  <span className="text-xs text-text-primary font-mono select-all">
+              <div className="relative z-10 max-w-md mx-auto p-3 rounded-xl border border-border-standard bg-bg-primary flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg">
+                <div className="flex items-center gap-2 pl-2">
+                  <Mail className="h-4 w-4 text-accent-cyan shrink-0" />
+                  <span className="text-xs text-text-primary font-mono select-all break-all">
                     hello@visualvibecreation.com
                   </span>
                 </div>
@@ -542,9 +937,14 @@ export default function Home() {
                   )}
                 </Button>
               </div>
+              
+              {/* Screen reader live region */}
+              <span className="sr-only" aria-live="polite">
+                {copied ? "Email address copied to clipboard" : ""}
+              </span>
 
               {/* Direct links to socials */}
-              <div className="relative z-10 pt-4 flex justify-center gap-4 text-xs">
+              <div className="relative z-10 pt-4 flex flex-wrap justify-center gap-4 text-xs">
                 <a
                   href="https://github.com/Enosh-J10"
                   target="_blank"
@@ -571,11 +971,37 @@ export default function Home() {
                 >
                   Instagram
                 </a>
+                <span className="text-text-muted">·</span>
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.enosh.fincalc"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-text-secondary hover:text-white transition-colors"
+                >
+                  Google Play
+                </a>
               </div>
             </div>
           </FadeUp>
         </Container>
       </SectionWrapper>
     </main>
+  );
+}
+
+// Chevron helper
+function ChevronDownIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2.5" 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={`h-3 w-3 ${className}`}
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
   );
 }

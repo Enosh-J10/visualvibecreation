@@ -30,6 +30,8 @@ interface ButtonProps
   children?: React.ReactNode;
 }
 
+const MotionLink = motion.create(Link);
+
 export default function Button({
   variant = "primary",
   href,
@@ -112,15 +114,14 @@ export default function Button({
       );
     }
     return (
-      <Link href={href} passHref legacyBehavior>
-        <motion.a
-          className={finalClasses}
-          whileHover={{ scale: hoverScale }}
-          whileTap={{ scale: tapScale }}
-        >
-          {content}
-        </motion.a>
-      </Link>
+      <MotionLink
+        href={href}
+        className={finalClasses}
+        whileHover={{ scale: hoverScale }}
+        whileTap={{ scale: tapScale }}
+      >
+        {content}
+      </MotionLink>
     );
   }
 

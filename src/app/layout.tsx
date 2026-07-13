@@ -20,7 +20,7 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: "Visual Vibe Creation | Independent Creative Digital Studio",
-  description: "Visual Vibe Creation is a premium creative digital studio founded by Enosh Jaques, offering high-end software development, UI/UX design, mobile app development, motion graphics, and video editing services in the UK.",
+  description: "Visual Vibe Creation is the independent creative digital studio founded by Enosh Jaques, offering software development, UI/UX design, mobile app development, motion graphics, and video editing services in the UK.",
   keywords: [
     "Visual Vibe Creation",
     "Enosh Jaques",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   creator: "Enosh Jaques",
   openGraph: {
     title: "Visual Vibe Creation | Independent Creative Digital Studio",
-    description: "Premium software engineering and design portfolio by Enosh Jaques.",
+    description: "Software engineering and design portfolio by Enosh Jaques.",
     url: "https://visualvibecreation.com",
     siteName: "Visual Vibe Creation",
     locale: "en_GB",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Visual Vibe Creation | Independent Creative Digital Studio",
-    description: "Premium software engineering and design portfolio by Enosh Jaques.",
+    description: "Software engineering and design portfolio by Enosh Jaques.",
   },
   alternates: {
     canonical: "https://visualvibecreation.com",
@@ -102,7 +102,7 @@ export default function RootLayout({
         <SmoothScroll>
           <ScrollProgress />
           <Header />
-          <div className="flex flex-col min-h-screen pt-20">
+          <div className="flex flex-col min-h-screen pt-[var(--header-height,68px)]">
             {children}
           </div>
           <Footer />
