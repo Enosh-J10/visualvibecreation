@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/animations/SmoothScroll";
 import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/Footer";
 import ScrollProgress from "@/components/ui/ScrollProgress";
+import SplashWrapper from "@/components/SplashWrapper";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -49,6 +50,10 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://visualvibecreation.com",
+  },
+  icons: {
+    icon: "/assets/images/ej-logo.jpg",
+    apple: "/assets/images/ej-logo.jpg",
   },
 };
 
@@ -99,14 +104,16 @@ export default function RootLayout({
             })
           }}
         />
-        <SmoothScroll>
-          <ScrollProgress />
-          <Header />
-          <div className="flex flex-col min-h-screen pt-[var(--header-height,68px)]">
-            {children}
-          </div>
-          <Footer />
-        </SmoothScroll>
+        <SplashWrapper>
+          <SmoothScroll>
+            <ScrollProgress />
+            <Header />
+            <div className="flex flex-col min-h-screen pt-[var(--header-height,68px)]">
+              {children}
+            </div>
+            <Footer />
+          </SmoothScroll>
+        </SplashWrapper>
       </body>
     </html>
   );

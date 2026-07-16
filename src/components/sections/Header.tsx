@@ -185,14 +185,15 @@ export default function Header() {
           className="group flex items-center gap-3 select-none"
           aria-label="Enosh Jaques Home Page"
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-accent-teal/20 bg-accent-teal/5 transition-all duration-300 group-hover:border-accent-teal/50 group-hover:bg-accent-teal/10">
-            <svg
-              viewBox="0 0 100 100"
-              className="h-5 w-5 text-accent-cyan fill-none stroke-current stroke-[8]"
-              aria-hidden="true"
-            >
-              <path d="M20 20 h60 v15 H35 v15 h40 v15 H35 v15 h45" />
-            </svg>
+          <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full overflow-hidden ring-1 ring-white/10 transition-all duration-300 group-hover:ring-white/30">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/assets/images/ej-logo.jpg"
+              alt="EJ Monogram"
+              width={36}
+              height={36}
+              className="h-full w-full object-cover object-center"
+            />
           </div>
           <div className="flex flex-col">
             <span className="font-display text-sm font-bold tracking-tight text-white transition-colors duration-300 group-hover:text-accent-cyan">

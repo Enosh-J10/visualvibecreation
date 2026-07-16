@@ -12,8 +12,8 @@ export const ASSET_REGISTRY: Record<string, AssetEntry> = {
   portrait: {
     key: "portrait",
     intendedPath: "/assets/images/enosh-portrait.jpg",
-    status: "missing",
-    alt: "Enosh Jaques Portrait Photograph",
+    status: "available",
+    alt: "Enosh Jaques — Student Experience Award 2026, West Thames College",
     aspectRatio: "4:5",
     label: "Professional Portrait (Enosh Jaques)",
     dimensions: "800 x 1000 px · 4:5 Aspect"
@@ -21,11 +21,11 @@ export const ASSET_REGISTRY: Record<string, AssetEntry> = {
   fincalcMockup: {
     key: "fincalcMockup",
     intendedPath: "/assets/images/fincalc-phone.jpg",
-    status: "missing",
-    alt: "FinCalc App interface screenshot on Android screen",
-    aspectRatio: "9:19.5",
-    label: "FinCalc Android Screen",
-    dimensions: "1080 x 2400 px"
+    status: "available",
+    alt: "FinCalc — Smart Finance, Smart Travel, Smarter You. Launch poster showing app screens and key features.",
+    aspectRatio: "1:1",
+    label: "FinCalc Launch Poster",
+    dimensions: "1080 x 1080 px"
   },
   portfolioPoster: {
     key: "portfolioPoster",

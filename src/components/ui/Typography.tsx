@@ -86,7 +86,10 @@ export function HighlightText({ children, className = "" }: TypographyProps) {
 export function GradientText({ children, className = "", variant = "standard" }: TypographyProps & { variant?: "standard" | "teal" }) {
   const gradientClass = variant === "teal" ? "text-gradient-teal" : "text-gradient";
   return (
-    <span className={`${gradientClass} font-bold ${className}`}>
+    // suppressHydrationWarning: a cursor-enhancement browser extension injects
+    // "cursor-hover" into className before React hydrates. This is a third-party
+    // DOM modification — not a code bug — so suppression is correct here.
+    <span suppressHydrationWarning className={`${gradientClass} font-bold ${className}`}>
       {children}
     </span>
   );

@@ -67,13 +67,14 @@ export function PortraitImage({ className = "" }: { src?: string; alt: string; c
   }
 
   return (
-    <div className={`relative overflow-hidden rounded-2xl bg-bg-secondary ${className}`}>
+    <div className={`relative aspect-[4/5] overflow-hidden rounded-2xl bg-bg-secondary ${className}`}>
       <Image
         src={entry.intendedPath}
         alt={entry.alt}
         fill
         sizes="(max-width: 768px) 100vw, 33vw"
-        className="object-cover object-center"
+        className="object-cover object-top"
+        priority
       />
     </div>
   );
@@ -108,34 +109,38 @@ export function LandscapeImage({ className = "", src = "" }: { src?: string; alt
   );
 }
 
-// 3. Phone Mockup
+// 3. FinCalc Poster — displayed as a styled poster card (not a phone shell,
+// because the asset is a square launch poster, not a phone screenshot).
 export function PhoneMockup({ className = "" }: { src?: string; alt: string; className?: string }) {
   const assetKey = "fincalcMockup";
   checkAssetKey(assetKey);
   const entry = ASSET_REGISTRY[assetKey];
 
-  return (
-    <div className={`relative mx-auto max-w-[280px] w-full aspect-[9/19.5] rounded-[36px] border-[8px] border-bg-secondary bg-black shadow-xl shadow-black/60 ring-1 ring-white/10 overflow-hidden flex items-center justify-center p-4 ${className}`}>
-      {/* Notch */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 h-4 w-28 bg-bg-secondary rounded-b-xl z-20" />
-      
-      {!entry || entry.status === "missing" ? (
+  if (!entry || entry.status === "missing") {
+    return (
+      <div className={`relative mx-auto max-w-[280px] w-full aspect-[9/19.5] rounded-[36px] border-[8px] border-bg-secondary bg-black shadow-xl shadow-black/60 ring-1 ring-white/10 overflow-hidden flex items-center justify-center p-4 ${className}`}>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 h-4 w-28 bg-bg-secondary rounded-b-xl z-20" />
         <DevAssetPlaceholder
-          label={entry?.label || "FinCalc Android Screen"}
-          dimensions={entry?.dimensions || "1080 x 2400 px"}
+          label={entry?.label || "FinCalc Launch Poster"}
+          dimensions={entry?.dimensions || "1080 x 1080 px"}
           className="w-full h-full border-none bg-transparent"
         />
-      ) : (
-        <div className="relative w-full h-full rounded-2xl overflow-hidden">
-          <Image
-            src={entry.intendedPath}
-            alt={entry.alt}
-            fill
-            sizes="260px"
-            className="object-cover object-center"
-          />
-        </div>
-      )}
+      </div>
+    );
+  }
+
+  // Use explicit width/height — fill mode requires the parent to have a set height
+  // which is unreliable inside flex containers. A fixed 340×340 square is simpler.
+  return (
+    <div className={`relative mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-black/70 ring-1 ring-white/10 ${className}`}>
+      <Image
+        src={entry.intendedPath}
+        alt={entry.alt}
+        width={340}
+        height={340}
+        className="object-cover object-center w-full h-auto"
+        priority
+      />
     </div>
   );
 }
