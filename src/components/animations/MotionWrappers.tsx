@@ -28,6 +28,7 @@ export function FadeUp({ children, className = "", delay = 0 }: WrapperProps) {
 
   return (
     <motion.div
+      suppressHydrationWarning
       initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
@@ -49,6 +50,7 @@ export function FadeIn({ children, className = "", delay = 0 }: WrapperProps) {
 
   return (
     <motion.div
+      suppressHydrationWarning
       initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -74,6 +76,7 @@ export function BlurReveal({
 
   return (
     <motion.div
+      suppressHydrationWarning
       initial={
         shouldReduceMotion
           ? { opacity: 1, filter: "blur(0px)" }
@@ -103,6 +106,7 @@ export function ScaleReveal({
 
   return (
     <motion.div
+      suppressHydrationWarning
       initial={
         shouldReduceMotion
           ? { opacity: 1, scale: 1 }

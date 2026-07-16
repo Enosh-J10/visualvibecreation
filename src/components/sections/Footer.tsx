@@ -26,10 +26,15 @@ export default function Footer() {
           {/* Identity & Social Badges Column */}
           <div className="md:col-span-2 space-y-5">
             <Link href="/" className="group flex items-center gap-3 select-none" aria-label="Enosh Jaques Home Page">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-accent-teal/20 bg-accent-teal/5">
-                <svg viewBox="0 0 100 100" className="h-4 w-4 text-accent-cyan fill-none stroke-current stroke-[8]" aria-hidden="true">
-                  <path d="M20 20 h60 v15 H35 v15 h40 v15 H35 v15 h45" />
-                </svg>
+              <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full overflow-hidden ring-1 ring-white/10">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/assets/images/ej-logo.jpg"
+                  alt="EJ Monogram"
+                  width={32}
+                  height={32}
+                  className="h-full w-full object-cover object-center"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="font-display text-sm font-bold text-white transition-colors group-hover:text-accent-cyan leading-none">

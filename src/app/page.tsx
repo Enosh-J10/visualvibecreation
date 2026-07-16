@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Mail, Check, MapPin, Zap, ArrowUpRight, GraduationCap, Briefcase, Trophy, Play, Star, Sparkles, BookOpen, Layers } from "lucide-react";
 import Button from "@/components/ui/Button";
 import {
@@ -21,7 +22,7 @@ import {
 import { ExperienceCard } from "@/components/ui/Cards";
 import { TechnologyBadge } from "@/components/ui/PortfolioComponents";
 import { TimelineContainer, TimelineStep } from "@/components/ui/TimelineComponents";
-import { PortraitImage, PhoneMockup, DevAssetPlaceholder } from "@/components/ui/ImageComponents";
+import { PortraitImage, PhoneMockup } from "@/components/ui/ImageComponents";
 import {
   FadeUp,
   ScaleReveal,
@@ -76,7 +77,8 @@ export default function Home() {
       <div className="absolute top-3/4 left-1/3 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-accent-cyan/3 blur-[150px] pointer-events-none z-0" />
 
       {/* 1. Identity Showcase (Hero Section) */}
-      <section 
+      <section
+        suppressHydrationWarning
         className="relative pt-8 pb-16 lg:pb-24 min-h-[80vh] flex flex-col justify-center overflow-hidden z-10"
         aria-label="Welcome and Introduction"
       >
@@ -550,9 +552,14 @@ export default function Home() {
               <FadeUp delay={0.2}>
                 <div className="glass-surface p-8 rounded-2xl border border-border-standard w-full max-w-[340px] aspect-square flex flex-col justify-between group relative overflow-hidden">
                   <div className="absolute inset-0 grid-overlay opacity-10 pointer-events-none" />
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-accent-teal/20 bg-accent-teal/5 text-accent-cyan z-10">
-                    <svg viewBox="0 0 100 100" className="h-6 w-6 text-accent-cyan fill-none stroke-current stroke-[8]">
-                      <path d="M20 20 h60 v15 H35 v15 h40 v15 H35 v15 h45" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full border border-accent-teal/20 bg-accent-teal/5 text-accent-cyan z-10">
+                    <svg viewBox="0 0 100 100" className="h-6 w-6 text-accent-cyan fill-none stroke-current">
+                      <circle cx="50" cy="50" r="40" strokeWidth="2" className="stroke-accent-teal/25" />
+                      <circle cx="20" cy="30" r="3" fill="currentColor" stroke="none" />
+                      <circle cx="80" cy="30" r="3" fill="currentColor" stroke="none" />
+                      <circle cx="20" cy="70" r="3" fill="currentColor" stroke="none" />
+                      <path d="M32 53 L50 35 L68 53" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M32 67 L50 49 L68 67" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>
                   <div className="space-y-3 z-10">
@@ -595,12 +602,13 @@ export default function Home() {
             <div className="lg:col-span-7">
               <FadeUp className="h-full">
                 <div className="group relative h-full flex flex-col justify-between p-6 rounded-2xl border border-border-standard bg-bg-secondary/40 hover:border-accent-teal/30 hover:shadow-xl transition-all duration-300 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-transparent opacity-90 z-10" />
-                  <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-bg-primary">
-                    <DevAssetPlaceholder
-                      label="Graphic Layout Poster"
-                      dimensions="1200 x 675 px · 16:9 Aspect"
-                      className="w-full h-full border-none bg-transparent"
+                  <div className="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-bg-primary">
+                    <Image
+                      src="/assets/images/portfolio-poster-v3.png"
+                      alt="Graphic Layout Poster showing visual event design and typography 'Design that Connects'"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover object-center"
                     />
                   </div>
                   <div className="relative z-25 mt-6 space-y-3">
@@ -631,11 +639,13 @@ export default function Home() {
               {/* Card 1: Branding */}
               <FadeUp delay={0.1} className="h-full">
                 <div className="group relative p-5 rounded-2xl border border-border-standard bg-bg-secondary/40 hover:border-accent-teal/35 hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-full">
-                  <div className="relative aspect-[3/2] w-full rounded-lg overflow-hidden bg-bg-primary">
-                    <DevAssetPlaceholder
-                      label="EJ Monogram Branding"
-                      dimensions="1200 x 800 px · 3:2 Aspect"
-                      className="w-full h-full border-none bg-transparent"
+                  <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden bg-bg-primary">
+                    <Image
+                      src="/assets/images/portfolio-branding-v3.png"
+                      alt="Logo guidelines and monogram grid for EJ Brand Identity"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover object-center"
                     />
                   </div>
                   <div className="mt-4 space-y-2">
@@ -654,21 +664,23 @@ export default function Home() {
               {/* Card 2: Photography */}
               <FadeUp delay={0.15} className="h-full">
                 <div className="group relative p-5 rounded-2xl border border-border-standard bg-bg-secondary/40 hover:border-accent-teal/35 hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-full">
-                  <div className="relative aspect-[3/2] w-full rounded-lg overflow-hidden bg-bg-primary">
-                    <DevAssetPlaceholder
-                      label="Sunset at Orlim Landscape"
-                      dimensions="1200 x 800 px · 3:2 Aspect"
-                      className="w-full h-full border-none bg-transparent"
+                  <div className="relative aspect-square w-full rounded-lg overflow-hidden bg-bg-primary">
+                    <Image
+                      src="/assets/images/goa-landscape-v3.png"
+                      alt="Sunset silhouette photograph with palm trees and boats"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover object-center"
                     />
                   </div>
                   <div className="mt-4 space-y-2">
                     <div className="flex items-center justify-between text-[10px]">
-                      <span className="font-mono text-accent-cyan uppercase tracking-wider">Goan Photography</span>
+                      <span className="font-mono text-accent-cyan uppercase tracking-wider font-semibold">Photography</span>
                       <span className="font-mono text-text-muted">Creative Media</span>
                     </div>
-                    <h4 className="font-display text-sm font-bold text-white">Sunset silhouette in Orlim</h4>
+                    <h4 className="font-display text-sm font-bold text-white">Sunset silhouette</h4>
                     <p className="text-xs text-text-secondary leading-relaxed">
-                      I photographed the sunset in Goa, focusing on composition balance and natural contrast levels.
+                      A study in golden hour photography, capturing composition balance and natural contrast levels.
                     </p>
                   </div>
                 </div>

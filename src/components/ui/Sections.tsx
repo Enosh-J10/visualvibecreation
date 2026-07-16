@@ -9,6 +9,7 @@ interface SectionProps {
 export function SectionWrapper({ children, className = "", id }: SectionProps) {
   return (
     <section
+      suppressHydrationWarning
       id={id}
       className={`relative py-[--spacing-section] border-t border-border-subtle overflow-hidden bg-bg-primary ${className}`}
     >
@@ -25,7 +26,7 @@ export function Container({ children, className = "", variant = "standard" }: Se
   };
 
   return (
-    <div className={`${containerClasses[variant]} ${className}`}>
+    <div suppressHydrationWarning className={`${containerClasses[variant]} ${className}`}>
       {children}
     </div>
   );

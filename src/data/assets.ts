@@ -29,30 +29,30 @@ export const ASSET_REGISTRY: Record<string, AssetEntry> = {
   },
   portfolioPoster: {
     key: "portfolioPoster",
-    intendedPath: "/assets/images/portfolio-poster.jpg",
-    status: "missing",
-    alt: "Graphic Layout Poster showing visual event design and typography",
-    aspectRatio: "16:9",
-    label: "Graphic Layout Poster (Preview)",
-    dimensions: "1200 x 675 px"
+    intendedPath: "/assets/images/portfolio-poster-v3.png",
+    status: "available",
+    alt: "Graphic Layout Poster showing visual event design and typography 'Design that Connects'",
+    aspectRatio: "3:4",
+    label: "Graphic Layout Poster",
+    dimensions: "639 x 744 px"
   },
   portfolioBranding: {
     key: "portfolioBranding",
-    intendedPath: "/assets/images/portfolio-branding.jpg",
-    status: "missing",
-    alt: "Logo guidelines and monogram grid for visual brand identities",
+    intendedPath: "/assets/images/portfolio-branding-v3.png",
+    status: "available",
+    alt: "Logo guidelines and monogram grid for EJ Brand Identity",
     aspectRatio: "16:9",
-    label: "EJ Monogram Branding (Preview)",
-    dimensions: "1200 x 675 px"
+    label: "EJ Monogram Branding",
+    dimensions: "568 x 318 px"
   },
   goaLandscape: {
     key: "goaLandscape",
-    intendedPath: "/assets/images/goa-landscape.jpg",
-    status: "missing",
-    alt: "Sunset silhouette photograph of quiet Orlim landscape in Goa",
-    aspectRatio: "16:9",
-    label: "Sunset at Orlim Landscape (Preview)",
-    dimensions: "1200 x 675 px"
+    intendedPath: "/assets/images/goa-landscape-v3.png",
+    status: "available",
+    alt: "Sunset silhouette photograph with palm trees and boats",
+    aspectRatio: "2:1",
+    label: "Sunset Silhouette",
+    dimensions: "583 x 301 px"
   }
 };
 
