@@ -13,8 +13,8 @@ const navLinks = [
 ];
 
 const credentialLinks = [
-  { name: "Experience", href: "/experience" },
-  { name: "Education", href: "/education" },
+  { name: "Experience", href: "/#experience" },
+  { name: "Education", href: "/#education" },
   { name: "Contact", href: "/contact" },
 ];
 
