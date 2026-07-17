@@ -66,3 +66,44 @@ To redirect all non-www traffic to www (or vice versa):
    - URL Match: `http://visualvibecreation.com/*`
    - Setting: **Forwarding URL** -> **301 Permanent Redirect**
    - Target URL: `https://www.visualvibecreation.com/$1`
+
+---
+
+## 3. Contact Form Environment Setup
+
+The contact form is secured with Cloudflare Turnstile bot protection and dispatched via Resend.
+
+### Required Environment Variables
+
+Configure the following environment variables on Vercel and locally in `.env.local`:
+
+| Variable Name | Description / Values | Scope |
+| :--- | :--- | :--- |
+| `RESEND_API_KEY` | API key from your Resend account. | Server-only |
+| `CONTACT_FROM_EMAIL` | Sending address on your verified domain (e.g. `website@visualvibecreation.com`). | Server-only |
+| `CONTACT_TO_EMAIL` | Inbox destination address (defaults to `hello@visualvibecreation.com`). | Server-only |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Turnstile public widget Site Key. | Client & Server |
+| `TURNSTILE_SECRET_KEY` | Turnstile Secret Key. | Server-only |
+| `CONTACT_ALLOWED_HOSTNAMES` | Optional comma-separated allowlist of hostname values returned from verification (e.g., `visualvibecreation.com,www.visualvibecreation.com,localhost`). | Server-only |
+
+> [!WARNING]
+> Keep server-only variables (`RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`, and `CONTACT_ALLOWED_HOSTNAMES`) private. Do not prefix them with `NEXT_PUBLIC_`.
+
+### Setup Instructions
+
+#### Cloudflare Turnstile
+1. Go to the Cloudflare Turnstile dashboard.
+2. Add a site named `Portfolio Contact Form`.
+3. Choose **Managed** mode.
+4. Input your domain hostnames (`visualvibecreation.com`, Vercel deployment preview hostnames, and `localhost` for local dev).
+5. Copy the generated **Site Key** and **Secret Key**.
+6. For local testing, you can use Cloudflare's official testing keys:
+   - Site Key: `1x00000000000000000000AA`
+   - Secret Key: `1x000000000000000000000000000000AA`
+
+#### Resend Email
+1. Sign up for a free account at [Resend](https://resend.com).
+2. Go to **Domains** and add `visualvibecreation.com`.
+3. Add the provided MX and TXT DNS records to your Cloudflare DNS console.
+4. Once verified, generate an API key and set `CONTACT_FROM_EMAIL` to a verified address (e.g., `website@visualvibecreation.com`).
+
