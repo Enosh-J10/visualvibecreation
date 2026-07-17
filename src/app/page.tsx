@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -29,13 +30,38 @@ import {
   MouseTilt,
   MagneticWrapper,
 } from "@/components/animations/MotionWrappers";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const locationRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
+
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [isHeroParallaxEnabled, setIsHeroParallaxEnabled] = useState(false);
+
+  // Mouse offsets from center (-0.5 to 0.5)
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Springs
+  const smoothMouseX = useSpring(mouseX, { stiffness: 90, damping: 24 });
+  const smoothMouseY = useSpring(mouseY, { stiffness: 90, damping: 24 });
+
+  // Transforms
+  const headlineX = useTransform(smoothMouseX, [-0.5, 0.5], [-3, 3]);
+  const headlineY = useTransform(smoothMouseY, [-0.5, 0.5], [-3, 3]);
+
+  const portraitX = useTransform(smoothMouseX, [-0.5, 0.5], [5, -5]);
+  const portraitY = useTransform(smoothMouseY, [-0.5, 0.5], [5, -5]);
+  const portraitRotate = useTransform(smoothMouseX, [-0.5, 0.5], [0.75, -0.75]);
+
+  useEffect(() => {
+    const isFine = window.matchMedia("(pointer: fine)").matches;
+    const isWide = window.innerWidth >= 1024;
+    setIsHeroParallaxEnabled(isFine && isWide && !shouldReduceMotion);
+  }, [shouldReduceMotion]);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("hello@visualvibecreation.com");
@@ -69,15 +95,29 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isLocationOpen]);
 
+  const handleHeroPointerMove = (e: React.PointerEvent) => {
+    if (!isHeroParallaxEnabled) return;
+    const rect = heroRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleHeroPointerLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
   return (
     <main className="flex-grow w-full relative">
-      {/* Dynamic Background Spotlights & Grid Overlay */}
-      <div className="absolute inset-0 grid-overlay opacity-[0.015] pointer-events-none z-0" />
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-accent-teal/5 blur-[120px] pointer-events-none z-0" />
-      <div className="absolute top-3/4 left-1/3 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-accent-cyan/3 blur-[150px] pointer-events-none z-0" />
-
       {/* 1. Identity Showcase (Hero Section) */}
       <section
+        id="hero"
+        ref={heroRef}
+        onPointerMove={handleHeroPointerMove}
+        onPointerLeave={handleHeroPointerLeave}
         suppressHydrationWarning
         className="relative pt-8 pb-16 lg:pb-24 min-h-[80vh] flex flex-col justify-center overflow-hidden z-10"
         aria-label="Welcome and Introduction"
@@ -93,11 +133,13 @@ export default function Home() {
             </FadeUp>
 
             <FadeUp delay={0.1}>
-              <Display className="font-extrabold leading-[1.05] tracking-tight">
-                Creative Developer. <br />
-                <GradientText variant="teal">Designer.</GradientText> <br />
-                Founder.
-              </Display>
+              <motion.div style={isHeroParallaxEnabled ? { x: headlineX, y: headlineY } : {}}>
+                <Display className="font-extrabold leading-[1.05] tracking-tight">
+                  Creative Developer. <br />
+                  <GradientText variant="teal">Designer.</GradientText> <br />
+                  Founder.
+                </Display>
+              </motion.div>
             </FadeUp>
 
             <FadeUp delay={0.15}>
@@ -110,7 +152,7 @@ export default function Home() {
             <FadeUp delay={0.2}>
               <div className="flex flex-wrap items-center gap-4">
                 <MagneticWrapper>
-                  <Button variant="cta" href="/projects">
+                  <Button variant="cta" href="/about">
                     View My Work
                   </Button>
                 </MagneticWrapper>
@@ -191,26 +233,28 @@ export default function Home() {
           {/* Portrait Container */}
           <div className="lg:col-span-5 flex justify-center">
             <ScaleReveal delay={0.2}>
-              <MouseTilt>
-                <div className="relative group p-2.5 rounded-2xl border border-border-standard bg-bg-secondary/40 shadow-2xl shadow-black/60 ring-1 ring-white/5 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-accent-teal/10 via-transparent to-accent-cyan/10 opacity-60 pointer-events-none" />
-                  <PortraitImage
-                    alt="Enosh Jaques Portrait Photograph"
-                    className="w-[280px] max-w-full sm:w-[320px] rounded-xl object-cover object-center ring-1 ring-white/10"
-                  />
-                  <div className="absolute bottom-4 left-4 right-4 p-3 rounded-lg border border-border-subtle bg-bg-primary/90 backdrop-blur-sm z-10 text-left">
-                    <span className="text-[9px] font-mono text-accent-cyan uppercase tracking-widest block">Studio Profile</span>
-                    <span className="text-xs font-bold text-white block mt-0.5">Enosh Jaques</span>
+              <motion.div style={isHeroParallaxEnabled ? { x: portraitX, y: portraitY, rotate: portraitRotate } : {}} className="w-full flex justify-center">
+                <MouseTilt>
+                  <div className="relative group p-2.5 rounded-2xl border border-border-standard bg-bg-secondary/40 shadow-2xl shadow-black/60 ring-1 ring-white/5 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-accent-teal/10 via-transparent to-accent-cyan/10 opacity-60 pointer-events-none" />
+                    <PortraitImage
+                      alt="Enosh Jaques Portrait Photograph"
+                      className="w-[280px] max-w-full sm:w-[320px] rounded-xl object-cover object-center ring-1 ring-white/10"
+                    />
+                    <div className="absolute bottom-4 left-4 right-4 p-3 rounded-lg border border-border-subtle bg-bg-primary/90 backdrop-blur-sm z-10 text-left">
+                      <span className="text-[9px] font-mono text-accent-cyan uppercase tracking-widest block">Studio Profile</span>
+                      <span className="text-xs font-bold text-white block mt-0.5">Enosh Jaques</span>
+                    </div>
                   </div>
-                </div>
-              </MouseTilt>
+                </MouseTilt>
+              </motion.div>
             </ScaleReveal>
           </div>
         </Container>
       </section>
 
       {/* 2. What I'm Building Now (Current Snapshot) */}
-      <SectionWrapper className="py-20 bg-bg-secondary/30 border-t border-b border-border-subtle relative">
+      <SectionWrapper id="focus" className="py-20 bg-bg-secondary/30 border-t border-b border-border-subtle relative">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,var(--color-bg-secondary),transparent_70%)] pointer-events-none" />
         <Container variant="reading" className="relative z-10">
           <FadeUp>
@@ -273,7 +317,7 @@ export default function Home() {
       </SectionWrapper>
 
       {/* 3. Featured Project (FinCalc Flagship Case Study) */}
-      <SectionWrapper className="py-24 relative">
+      <SectionWrapper id="fincalc" className="py-24 relative">
         <Container>
           <SectionHeader
             overline="Flagship Mobile Application"
@@ -383,7 +427,7 @@ export default function Home() {
       </SectionWrapper>
 
       {/* 4. My Journey (Timeline Section) */}
-      <SectionWrapper className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle relative">
+      <SectionWrapper id="journey" className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle relative">
         <Container variant="reading">
           <SectionHeader
             align="center"
@@ -482,17 +526,12 @@ export default function Home() {
               </TimelineStep>
             </TimelineContainer>
             
-            <div className="text-center pt-8">
-              <Button variant="secondary" href="/experience">
-                View Full Timeline Details
-              </Button>
-            </div>
           </FadeUp>
         </Container>
       </SectionWrapper>
 
       {/* 5. Visual Vibe Creation Section (Editorial Split) */}
-      <SectionWrapper className="py-24">
+      <SectionWrapper id="visual-vibe" className="py-24">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             {/* Studio Info side */}
@@ -752,7 +791,7 @@ export default function Home() {
       </SectionWrapper>
 
       {/* 8. Experience Snapshot */}
-      <SectionWrapper className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle">
+      <SectionWrapper id="experience" className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle">
         <Container variant="reading">
           <SectionHeader
             align="center"
@@ -788,18 +827,12 @@ export default function Home() {
                 description="I supported IT operations at the hotel, assisting with system checks, troubleshooting, device installations, hotel network setups, and technical request logs for staff."
               />
             </div>
-            
-            <div className="text-center pt-10">
-              <Button variant="secondary" href="/experience">
-                View Full Experience Log
-              </Button>
-            </div>
           </FadeUp>
         </Container>
       </SectionWrapper>
 
       {/* 9. Education Progression */}
-      <SectionWrapper className="py-24">
+      <SectionWrapper id="education" className="py-24">
         <Container variant="reading">
           <SectionHeader
             align="center"
@@ -847,18 +880,12 @@ export default function Home() {
                 </div>
               ))}
             </div>
-
-            <div className="text-center pt-10">
-              <Button variant="secondary" href="/education">
-                View Full Education Records
-              </Button>
-            </div>
           </FadeUp>
         </Container>
       </SectionWrapper>
 
       {/* 10. Recognition & Leadership */}
-      <SectionWrapper className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle">
+      <SectionWrapper id="awards" className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle">
         <Container variant="reading">
           <SectionHeader
             align="center"
@@ -897,12 +924,6 @@ export default function Home() {
                   Stage & Leadership
                 </span>
               </div>
-            </div>
-
-            <div className="text-center pt-10">
-              <Button variant="secondary" href="/awards">
-                View Awards Details
-              </Button>
             </div>
           </FadeUp>
         </Container>

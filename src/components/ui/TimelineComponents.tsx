@@ -3,6 +3,11 @@ import React from "react";
 export function TimelineContainer({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative border-l border-border-standard ml-2 pl-0.5 space-y-8 py-2">
+      {/* Low-opacity cyan gradient line layered above the solid timeline axis */}
+      <div 
+        className="absolute left-[-1px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-accent-cyan/10 via-accent-cyan/40 to-accent-cyan/10 pointer-events-none" 
+        aria-hidden="true"
+      />
       {children}
     </div>
   );

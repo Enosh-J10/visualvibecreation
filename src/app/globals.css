@@ -36,6 +36,15 @@
   --z-modal: 200;
   --z-toast: 300;
   --z-debug: 9000;
+
+  --z-index-base: 0;
+  --z-index-raised: 10;
+  --z-index-sticky: 20;
+  --z-index-header: 50;
+  --z-index-backdrop: 100;
+  --z-index-modal: 200;
+  --z-index-toast: 300;
+  --z-index-debug: 9000;
 }
 
 /* 

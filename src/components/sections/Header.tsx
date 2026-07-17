@@ -15,19 +15,18 @@ const workSubLinks = [
   { name: "Services", href: "/services" },
 ];
 
-const journeySubLinks = [
-  { name: "Experience", href: "/experience" },
-  { name: "Education", href: "/education" },
-  { name: "Leadership", href: "/leadership" },
-  { name: "Awards", href: "/awards" },
-  { name: "Certifications", href: "/certifications" },
+const homeSubLinks = [
+  { name: "Home Top", href: "/" },
+  { name: "Experience", href: "/#experience", hash: "#experience" },
+  { name: "Education", href: "/#education", hash: "#education" },
+  { name: "Awards & Leadership", href: "/#awards", hash: "#awards" },
 ];
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isWorkOpen, setIsWorkOpen] = useState(false);
-  const [isJourneyOpen, setIsJourneyOpen] = useState(false);
+  const [isHomeOpen, setIsHomeOpen] = useState(false);
 
   const pathname = usePathname();
   const controller = useScrollController();
@@ -36,7 +35,7 @@ export default function Header() {
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const workRef = useRef<HTMLDivElement>(null);
-  const journeyRef = useRef<HTMLDivElement>(null);
+  const homeRef = useRef<HTMLDivElement>(null);
 
   // Scroll detection for sticky header transition (restrained threshold check)
   useEffect(() => {
@@ -53,8 +52,8 @@ export default function Header() {
       if (workRef.current && !workRef.current.contains(e.target as Node)) {
         setIsWorkOpen(false);
       }
-      if (journeyRef.current && !journeyRef.current.contains(e.target as Node)) {
-        setIsJourneyOpen(false);
+      if (homeRef.current && !homeRef.current.contains(e.target as Node)) {
+        setIsHomeOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -65,7 +64,7 @@ export default function Header() {
   useEffect(() => {
     setIsOpen(false);
     setIsWorkOpen(false);
-    setIsJourneyOpen(false);
+    setIsHomeOpen(false);
   }, [pathname]);
 
   // Mobile menu scroll lock contract coordinating with ScrollController
@@ -107,7 +106,7 @@ export default function Header() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setIsWorkOpen(false);
-        setIsJourneyOpen(false);
+        setIsHomeOpen(false);
         if (isOpen) {
           setIsOpen(false);
         }
@@ -146,13 +145,6 @@ export default function Header() {
     pathname === "/portfolio" ||
     pathname === "/services";
 
-  const isJourneyActive =
-    pathname === "/experience" ||
-    pathname === "/education" ||
-    pathname === "/leadership" ||
-    pathname === "/awards" ||
-    pathname === "/certifications";
-
   const isAboutActive = pathname === "/about";
   const isContactActive = pathname === "/contact";
 
@@ -172,7 +164,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-header transition-colors duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[var(--z-header,50)] transition-colors duration-300 ${
         scrolled
           ? "border-b border-border-subtle bg-bg-primary/95 backdrop-blur-md py-4 shadow-md shadow-black/5"
           : "bg-transparent py-4"
@@ -207,23 +199,66 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-8" role="navigation" aria-label="Main Navigation">
-          {/* Home */}
-          <Link
-            href="/"
-            aria-current={pathname === "/" ? "page" : undefined}
-            className={`relative py-1.5 text-[13px] font-medium transition-colors duration-200 ${
-              pathname === "/" ? "text-white" : "text-text-secondary hover:text-white"
-            }`}
-          >
-            <span>Home</span>
-            {pathname === "/" && (
-              <motion.span
-                layoutId="activeNavIndicator"
-                className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-accent-teal"
-                transition={{ type: "spring", stiffness: 350, damping: 28 }}
-              />
-            )}
-          </Link>
+          {/* Home Dropdown */}
+          <div ref={homeRef} className="relative">
+            <button
+              onClick={() => {
+                setIsHomeOpen(!isHomeOpen);
+                setIsWorkOpen(false);
+              }}
+              aria-haspopup="true"
+              aria-expanded={isHomeOpen}
+              aria-controls="desktop-home-menu"
+              aria-current={pathname === "/" ? "page" : undefined}
+              className={`relative flex items-center gap-1 py-1.5 text-[13px] font-medium transition-colors duration-200 cursor-pointer ${
+                pathname === "/" ? "text-white" : "text-text-secondary hover:text-white"
+              }`}
+            >
+              <span>Home</span>
+              <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${isHomeOpen ? "rotate-180" : ""}`} />
+              {pathname === "/" && (
+                <motion.span
+                  layoutId="activeNavIndicator"
+                  className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-accent-teal"
+                  transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                />
+              )}
+            </button>
+            <AnimatePresence>
+              {isHomeOpen && (
+                <motion.div
+                  id="desktop-home-menu"
+                  variants={dropdownVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  transition={{ duration: 0.15, ease: "easeOut" }}
+                  className="absolute top-full left-0 mt-2 w-48 rounded-lg border border-border-subtle bg-bg-secondary p-2 shadow-lg shadow-black/40 z-[var(--z-modal,200)]"
+                >
+                  {homeSubLinks.map((sub) => (
+                    <Link
+                      key={sub.name}
+                      href={sub.href}
+                      onClick={(e) => {
+                         setIsHomeOpen(false);
+                         if (pathname === "/") {
+                           e.preventDefault();
+                           if (sub.hash) {
+                             controller.scrollToHash(sub.hash);
+                           } else {
+                             controller.scrollToTop();
+                           }
+                         }
+                      }}
+                      className="block rounded-md px-3 py-2 text-xs text-text-secondary hover:text-white hover:bg-white/[0.03] transition-colors"
+                    >
+                      {sub.name}
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
           {/* About */}
           <Link
@@ -248,7 +283,7 @@ export default function Header() {
             <button
               onClick={() => {
                 setIsWorkOpen(!isWorkOpen);
-                setIsJourneyOpen(false);
+                setIsHomeOpen(false);
               }}
               aria-haspopup="true"
               aria-expanded={isWorkOpen}
@@ -277,7 +312,7 @@ export default function Header() {
                   animate="visible"
                   exit="exit"
                   transition={{ duration: 0.15, ease: "easeOut" }}
-                  className="absolute top-full left-0 mt-2 w-48 rounded-lg border border-border-subtle bg-bg-secondary p-2 shadow-lg shadow-black/40 z-modal"
+                  className="absolute top-full left-0 mt-2 w-48 rounded-lg border border-border-subtle bg-bg-secondary p-2 shadow-lg shadow-black/40 z-[var(--z-modal,200)]"
                 >
                   {workSubLinks.map((sub) => (
                     <Link
@@ -294,56 +329,7 @@ export default function Header() {
             </AnimatePresence>
           </div>
 
-          {/* Journey Dropdown */}
-          <div ref={journeyRef} className="relative">
-            <button
-              onClick={() => {
-                setIsJourneyOpen(!isJourneyOpen);
-                setIsWorkOpen(false);
-              }}
-              aria-haspopup="true"
-              aria-expanded={isJourneyOpen}
-              aria-controls="desktop-journey-menu"
-              aria-current={isJourneyActive ? "page" : undefined}
-              className={`relative flex items-center gap-1 py-1.5 text-[13px] font-medium transition-colors duration-200 cursor-pointer ${
-                isJourneyActive ? "text-white" : "text-text-secondary hover:text-white"
-              }`}
-            >
-              <span>Journey</span>
-              <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${isJourneyOpen ? "rotate-180" : ""}`} />
-              {isJourneyActive && (
-                <motion.span
-                  layoutId="activeNavIndicator"
-                  className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-accent-teal"
-                  transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                />
-              )}
-            </button>
-            <AnimatePresence>
-              {isJourneyOpen && (
-                <motion.div
-                  id="desktop-journey-menu"
-                  variants={dropdownVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  transition={{ duration: 0.15, ease: "easeOut" }}
-                  className="absolute top-full right-0 mt-2 w-48 rounded-lg border border-border-subtle bg-bg-secondary p-2 shadow-lg shadow-black/40 z-modal"
-                >
-                  {journeySubLinks.map((sub) => (
-                    <Link
-                      key={sub.name}
-                      href={sub.href}
-                      onClick={() => setIsJourneyOpen(false)}
-                      className="block rounded-md px-3 py-2 text-xs text-text-secondary hover:text-white hover:bg-white/[0.03] transition-colors"
-                    >
-                      {sub.name}
-                    </Link>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+
 
           {/* Contact */}
           <Link
@@ -393,7 +379,7 @@ export default function Header() {
             onClick={() => {
               setIsOpen(!isOpen);
               setIsWorkOpen(false);
-              setIsJourneyOpen(false);
+              setIsHomeOpen(false);
             }}
             className="flex lg:hidden touch-target items-center justify-center p-2 rounded-lg border border-border-subtle bg-white/[0.01] text-text-secondary hover:text-white hover:bg-white/[0.03] transition-colors"
             aria-expanded={isOpen}
@@ -414,7 +400,7 @@ export default function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="lg:hidden fixed inset-0 top-[68px] bg-black/60 backdrop-blur-sm z-backdrop"
+              className="lg:hidden fixed inset-0 top-[68px] bg-black/60 backdrop-blur-sm z-[var(--z-backdrop,100)]"
               aria-hidden="true"
             />
 
@@ -429,20 +415,41 @@ export default function Header() {
               animate="visible"
               exit="exit"
               transition={{ type: "spring", stiffness: 380, damping: 35 }}
-              className="lg:hidden fixed top-[68px] right-0 bottom-0 w-full sm:w-[320px] bg-bg-secondary border-l border-border-subtle p-6 z-modal flex flex-col justify-between overflow-y-auto"
+              className="lg:hidden fixed top-[68px] right-0 bottom-0 w-full sm:w-[320px] bg-bg-secondary border-l border-border-subtle p-6 z-[var(--z-modal,200)] flex flex-col justify-between overflow-y-auto"
             >
               <h2 id="mobile-nav-title" className="sr-only">Mobile Navigation Menu</h2>
               
               <nav className="flex flex-col gap-6" aria-label="Mobile Navigation Panel">
-                <Link
-                  href="/"
-                  onClick={() => setIsOpen(false)}
-                  className={`text-sm font-medium transition-colors min-h-[44px] flex items-center px-4 rounded-lg ${
-                    pathname === "/" ? "bg-accent-teal/10 text-accent-cyan" : "text-text-secondary hover:text-white"
-                  }`}
-                >
-                  Home
-                </Link>
+                {/* Home Group */}
+                <div className="space-y-2">
+                  <span className="text-[10px] font-mono tracking-widest text-text-muted uppercase block px-4">
+                    Home Navigation
+                  </span>
+                  <div className="pl-4 flex flex-col gap-1 border-l border-border-subtle ml-4">
+                    {homeSubLinks.map((sub) => (
+                      <Link
+                        key={sub.name}
+                        href={sub.href}
+                        onClick={(e) => {
+                          setIsOpen(false);
+                          if (pathname === "/") {
+                            e.preventDefault();
+                            if (sub.hash) {
+                              controller.scrollToHash(sub.hash);
+                            } else {
+                              controller.scrollToTop();
+                            }
+                          }
+                        }}
+                        className={`text-xs font-medium transition-colors min-h-[38px] flex items-center px-3 rounded ${
+                          pathname === sub.href ? "text-accent-cyan bg-white/[0.02]" : "text-text-secondary hover:text-white"
+                        }`}
+                      >
+                        {sub.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
                 <Link
                   href="/about"
                   onClick={() => setIsOpen(false)}
@@ -474,26 +481,7 @@ export default function Header() {
                   </div>
                 </div>
 
-                {/* Journey Group */}
-                <div className="space-y-2">
-                  <span className="text-[10px] font-mono tracking-widest text-text-muted uppercase block px-4">
-                    Journey Details
-                  </span>
-                  <div className="pl-4 flex flex-col gap-1 border-l border-border-subtle ml-4">
-                    {journeySubLinks.map((sub) => (
-                      <Link
-                        key={sub.name}
-                        href={sub.href}
-                        onClick={() => setIsOpen(false)}
-                        className={`text-xs font-medium transition-colors min-h-[38px] flex items-center px-3 rounded ${
-                          pathname === sub.href ? "text-accent-cyan bg-white/[0.02]" : "text-text-secondary hover:text-white"
-                        }`}
-                      >
-                        {sub.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
+
 
                 <Link
                   href="/contact"

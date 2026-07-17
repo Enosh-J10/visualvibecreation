@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef, useState, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
@@ -81,27 +81,43 @@ export function ScrollProvider({ children }: { children: React.ReactNode }) {
 
   // Reset scroll coordinates upon client-side route transitions
   useEffect(() => {
-    // Avoid overriding scroll position on Back/Forward history navigation
-    if (isPopStateRef.current) {
-      isPopStateRef.current = false;
-      return;
-    }
-
-    // Avoid scrolling to top if landing on a valid hash target
-    if (window.location.hash) {
-      const target = document.querySelector(window.location.hash);
-      if (target) return;
-    }
-
-    // Scroll viewport to top
+    // Force Lenis to start/resume and recalculate size boundaries on route transition
     if (lenisRef.current) {
+      lenisRef.current.start();
+      
+      // Avoid overriding scroll position on Back/Forward history navigation
+      if (isPopStateRef.current) {
+        isPopStateRef.current = false;
+        requestAnimationFrame(() => {
+          lenisRef.current?.resize();
+        });
+        return;
+      }
+
+      // Avoid scrolling to top if landing on a valid hash target
+      if (window.location.hash) {
+        const target = document.querySelector(window.location.hash);
+        if (target) {
+          requestAnimationFrame(() => {
+            lenisRef.current?.resize();
+          });
+          return;
+        }
+      }
+
       lenisRef.current.scrollTo(0, { immediate: true });
+      requestAnimationFrame(() => {
+        lenisRef.current?.resize();
+      });
     } else {
       window.scrollTo(0, 0);
+      if (isPopStateRef.current) {
+        isPopStateRef.current = false;
+      }
     }
   }, [pathname]);
 
-  const controller: ScrollController = {
+  const controller = useMemo<ScrollController>(() => ({
     stop: () => {
       if (lenisRef.current) {
         lenisRef.current.stop();
@@ -131,8 +147,7 @@ export function ScrollProvider({ children }: { children: React.ReactNode }) {
     },
     isReady,
     isReducedMotion,
-  };
-
+  }), [isReady, isReducedMotion]);
   return (
     <ScrollContext.Provider value={controller}>
       {children}

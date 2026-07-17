@@ -6,6 +6,7 @@ import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/Footer";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import SplashWrapper from "@/components/SplashWrapper";
+import InteractiveBackground from "@/components/animations/InteractiveBackground";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -106,9 +107,10 @@ export default function RootLayout({
         />
         <SplashWrapper>
           <SmoothScroll>
+            <InteractiveBackground />
             <ScrollProgress />
             <Header />
-            <div className="flex flex-col min-h-screen pt-[var(--header-height,68px)]">
+            <div className="relative z-10 flex flex-col min-h-screen pt-[var(--header-height,68px)]">
               {children}
             </div>
             <Footer />
