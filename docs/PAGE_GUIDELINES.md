@@ -5,6 +5,7 @@ This document details the purpose, target visitor, expected reading time, visual
 ---
 
 ## 1. Home Page (`/`)
+
 - **Purpose**: A narrative-driven storytelling flow. Introduces Enosh Jaques, his skills, and visual vibe.
 - **Target Visitor**: General recruiters, creative collaborators, prospective clients.
 - **Expected Reading Time**: 3 minutes.
@@ -15,6 +16,7 @@ This document details the purpose, target visitor, expected reading time, visual
 ---
 
 ## 2. About Page (`/about`)
+
 - **Purpose**: Deep-dive personal biography detailing interests in design, coding, photography, and video.
 - **Target Visitor**: University admissions, team leaders, recruiters.
 - **Expected Reading Time**: 5 minutes.
@@ -25,6 +27,7 @@ This document details the purpose, target visitor, expected reading time, visual
 ---
 
 ## 3. Projects Page (`/projects`)
+
 - **Purpose**: Central hub of all development, app, and web work.
 - **Target Visitor**: Developers, tech recruiters, software managers.
 - **Expected Reading Time**: 2 minutes.
@@ -35,6 +38,7 @@ This document details the purpose, target visitor, expected reading time, visual
 ---
 
 ## 4. FinCalc Case Study Page (`/projects/fincalc`)
+
 - **Purpose**: Showcase the development case study of the FinCalc Android app.
 - **Target Visitor**: Technical leads, software developers.
 - **Expected Reading Time**: 4 minutes.
@@ -45,6 +49,7 @@ This document details the purpose, target visitor, expected reading time, visual
 ---
 
 ## 5. Portfolio Page (`/portfolio`)
+
 - **Purpose**: Gallery of graphic designs, brand packages, poster design, and professional photography.
 - **Target Visitor**: Brand directors, media clients, videography leads.
 - **Expected Reading Time**: 1.5 minutes.
@@ -55,6 +60,7 @@ This document details the purpose, target visitor, expected reading time, visual
 ---
 
 ## 6. Services Page (`/services`)
+
 - **Purpose**: List capabilities of Visual Vibe Creation studio (Branding, Graphic design, UI design, Video editing).
 - **Target Visitor**: Small businesses, freelance clients, marketing managers.
 - **Expected Reading Time**: 2 minutes.
@@ -65,6 +71,7 @@ This document details the purpose, target visitor, expected reading time, visual
 ---
 
 ## 7. Experience Page (`/experience`)
+
 - **Purpose**: Display professional timeline, internships, self-employment, and Radisson/Asendia/Hadley placements.
 - **Target Visitor**: Recruiters, employers.
 - **Expected Reading Time**: 2.5 minutes.
@@ -75,6 +82,7 @@ This document details the purpose, target visitor, expected reading time, visual
 ---
 
 ## 8. Education Page (`/education`)
+
 - **Purpose**: Academic background (distinctions at St. Pius and Rosary, BTEC Level 3 progression, and university plans).
 - **Target Visitor**: University admissions, education boards, employers.
 - **Expected Reading Time**: 2 minutes.
@@ -85,6 +93,7 @@ This document details the purpose, target visitor, expected reading time, visual
 ---
 
 ## 9. Leadership Page (`/leadership`)
+
 - **Purpose**: Showcase event organization, esports planning, Student Union handler, and Goan Tiatr theatrical experience.
 - **Target Visitor**: Student committees, event organizers, recruiters.
 - **Expected Reading Time**: 2 minutes.
@@ -95,6 +104,7 @@ This document details the purpose, target visitor, expected reading time, visual
 ---
 
 ## 10. Awards Page (`/awards`)
+
 - **Purpose**: Highlight college achievements and cycling medals.
 - **Target Visitor**: General visitors.
 - **Expected Reading Time**: 1 minute.
@@ -105,6 +115,7 @@ This document details the purpose, target visitor, expected reading time, visual
 ---
 
 ## 11. Certifications Page (`/certifications`)
+
 - **Purpose**: Grid displaying verified Cisco Academy certificates and Springpod IT virtual placements.
 - **Target Visitor**: Hiring managers, technical recruiters.
 - **Expected Reading Time**: 1.5 minutes.
@@ -115,6 +126,7 @@ This document details the purpose, target visitor, expected reading time, visual
 ---
 
 ## 12. Contact Page (`/contact`)
+
 - **Purpose**: Allow visitors to copy emails, check current availability status, and access verified socials.
 - **Target Visitor**: All visitors.
 - **Expected Reading Time**: 1 minute.

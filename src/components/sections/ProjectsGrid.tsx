@@ -1,47 +1,51 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import ProjectCard from "@/components/ui/ProjectCard";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import ProjectCard from '@/components/ui/ProjectCard';
 
-const categories = ["All", "Web Dev", "Android Apps", "Future Games", "Concept Stages"];
+const categories = ['All', 'Web Dev', 'Android Apps', 'Future Games', 'Concept Stages'];
 
 const projectsList = [
   {
-    title: "FinCalc - Financial Calculator",
-    description: "My first published Android calculator application. Features compound interest plans, loan amortizations, profit margins, and custom calculation logic written in Java.",
-    category: "Android Apps",
-    tags: ["Java", "Android SDK", "Google Play"],
-    link: "https://play.google.com/store/apps/details?id=com.enosh.fincalc",
+    title: 'FinCalc - Financial Calculator',
+    description:
+      'My first published Android calculator application. Features compound interest plans, loan amortizations, profit margins, and custom calculation logic written in Java.',
+    category: 'Android Apps',
+    tags: ['Java', 'Android SDK', 'Google Play'],
+    link: 'https://play.google.com/store/apps/details?id=com.enosh.fincalc',
   },
   {
-    title: "Visual Vibe Creation Portfolio",
-    description: "Official digital identity framework. Built from scratch with Next.js App Router, Tailwind CSS, TypeScript, and Framer Motion visual components.",
-    category: "Web Dev",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    link: "/",
+    title: 'Visual Vibe Creation Portfolio',
+    description:
+      'Official digital identity framework. Built from scratch with Next.js App Router, Tailwind CSS, TypeScript, and Framer Motion visual components.',
+    category: 'Web Dev',
+    tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    link: '/',
   },
   {
-    title: "Upcoming Mobile Game",
-    description: "Currently in the planning and concept stage. Researching graphic layout elements and gameplay logic blueprints.",
-    category: "Future Games",
-    tags: ["Concept Stage", "Planning"],
-    link: "/projects",
+    title: 'Upcoming Mobile Game',
+    description:
+      'Currently in the planning and concept stage. Researching graphic layout elements and gameplay logic blueprints.',
+    category: 'Future Games',
+    tags: ['Concept Stage', 'Planning'],
+    link: '/projects',
   },
   {
-    title: "Micro Web Utilities",
-    description: "Research project focusing on visual representation systems for data structures. Concept stage layout exploration.",
-    category: "Concept Stages",
-    tags: ["Research", "Concept"],
-    link: "/projects",
+    title: 'Micro Web Utilities',
+    description:
+      'Research project focusing on visual representation systems for data structures. Concept stage layout exploration.',
+    category: 'Concept Stages',
+    tags: ['Research', 'Concept'],
+    link: '/projects',
   },
 ];
 
 export default function ProjectsGrid() {
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] = useState('All');
 
   const filteredProjects = projectsList.filter(
-    (project) => activeCategory === "All" || project.category === activeCategory
+    (project) => activeCategory === 'All' || project.category === activeCategory,
   );
 
   return (
@@ -66,14 +70,16 @@ export default function ProjectsGrid() {
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
                   className={`relative rounded-full px-5 py-2 text-xs font-medium transition-colors duration-300 cursor-pointer ${
-                    isSelected ? "text-bg-primary font-bold" : "text-text-secondary hover:text-white"
+                    isSelected
+                      ? 'text-bg-primary font-bold'
+                      : 'text-text-secondary hover:text-white'
                   }`}
                 >
                   {isSelected && (
                     <motion.span
                       layoutId="activeFilterBg"
                       className="absolute inset-0 rounded-full bg-accent-teal"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
                   <span className="relative z-10">{cat}</span>

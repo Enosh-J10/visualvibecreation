@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useRef, useState, useEffect } from "react";
-import { motion, useReducedMotion, useSpring } from "framer-motion";
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useReducedMotion, useSpring } from 'framer-motion';
 
 interface WrapperProps {
   children: React.ReactNode;
@@ -23,7 +23,7 @@ interface WrapperProps {
 // ---------------------------------------------------------------------------
 
 // 1. Fade Up
-export function FadeUp({ children, className = "", delay = 0 }: WrapperProps) {
+export function FadeUp({ children, className = '', delay = 0 }: WrapperProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -31,11 +31,9 @@ export function FadeUp({ children, className = "", delay = 0 }: WrapperProps) {
       suppressHydrationWarning
       initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10%" }}
+      viewport={{ once: true, margin: '-10%' }}
       transition={
-        shouldReduceMotion
-          ? { duration: 0 }
-          : { ease: [0.16, 1, 0.3, 1], duration: 0.6, delay }
+        shouldReduceMotion ? { duration: 0 } : { ease: [0.16, 1, 0.3, 1], duration: 0.6, delay }
       }
       className={className}
     >
@@ -45,7 +43,7 @@ export function FadeUp({ children, className = "", delay = 0 }: WrapperProps) {
 }
 
 // 2. Fade In
-export function FadeIn({ children, className = "", delay = 0 }: WrapperProps) {
+export function FadeIn({ children, className = '', delay = 0 }: WrapperProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -54,11 +52,7 @@ export function FadeIn({ children, className = "", delay = 0 }: WrapperProps) {
       initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={
-        shouldReduceMotion
-          ? { duration: 0 }
-          : { ease: "linear", duration: 0.4, delay }
-      }
+      transition={shouldReduceMotion ? { duration: 0 } : { ease: 'linear', duration: 0.4, delay }}
       className={className}
     >
       {children}
@@ -67,11 +61,7 @@ export function FadeIn({ children, className = "", delay = 0 }: WrapperProps) {
 }
 
 // 3. Blur Reveal
-export function BlurReveal({
-  children,
-  className = "",
-  delay = 0,
-}: WrapperProps) {
+export function BlurReveal({ children, className = '', delay = 0 }: WrapperProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -79,15 +69,13 @@ export function BlurReveal({
       suppressHydrationWarning
       initial={
         shouldReduceMotion
-          ? { opacity: 1, filter: "blur(0px)" }
-          : { opacity: 0, filter: "blur(8px)" }
+          ? { opacity: 1, filter: 'blur(0px)' }
+          : { opacity: 0, filter: 'blur(8px)' }
       }
-      whileInView={{ opacity: 1, filter: "blur(0px)" }}
+      whileInView={{ opacity: 1, filter: 'blur(0px)' }}
       viewport={{ once: true }}
       transition={
-        shouldReduceMotion
-          ? { duration: 0 }
-          : { ease: [0.16, 1, 0.3, 1], duration: 0.8, delay }
+        shouldReduceMotion ? { duration: 0 } : { ease: [0.16, 1, 0.3, 1], duration: 0.8, delay }
       }
       className={className}
     >
@@ -97,27 +85,17 @@ export function BlurReveal({
 }
 
 // 4. Scale Reveal
-export function ScaleReveal({
-  children,
-  className = "",
-  delay = 0,
-}: WrapperProps) {
+export function ScaleReveal({ children, className = '', delay = 0 }: WrapperProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div
       suppressHydrationWarning
-      initial={
-        shouldReduceMotion
-          ? { opacity: 1, scale: 1 }
-          : { opacity: 0, scale: 0.96 }
-      }
+      initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
       transition={
-        shouldReduceMotion
-          ? { duration: 0 }
-          : { ease: [0.16, 1, 0.3, 1], duration: 0.6, delay }
+        shouldReduceMotion ? { duration: 0 } : { ease: [0.16, 1, 0.3, 1], duration: 0.6, delay }
       }
       className={className}
     >
@@ -127,11 +105,7 @@ export function ScaleReveal({
 }
 
 // 5. Stagger Container
-export function StaggerContainer({
-  children,
-  className = "",
-  delay = 0,
-}: WrapperProps) {
+export function StaggerContainer({ children, className = '', delay = 0 }: WrapperProps) {
   const shouldReduceMotion = useReducedMotion();
 
   if (shouldReduceMotion) {
@@ -142,7 +116,7 @@ export function StaggerContainer({
     <motion.div
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-5%" }}
+      viewport={{ once: true, margin: '-5%' }}
       variants={{
         hidden: {},
         show: {
@@ -160,7 +134,7 @@ export function StaggerContainer({
 }
 
 // 6. Floating Element (subtle loop; skipped entirely on reduced motion)
-export function FloatingElement({ children, className = "" }: WrapperProps) {
+export function FloatingElement({ children, className = '' }: WrapperProps) {
   const shouldReduceMotion = useReducedMotion();
 
   if (shouldReduceMotion) {
@@ -170,7 +144,7 @@ export function FloatingElement({ children, className = "" }: WrapperProps) {
   return (
     <motion.div
       animate={{ y: [0, -6, 0] }}
-      transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
+      transition={{ duration: 5, ease: 'easeInOut', repeat: Infinity }}
       className={className}
     >
       {children}
@@ -179,7 +153,7 @@ export function FloatingElement({ children, className = "" }: WrapperProps) {
 }
 
 // 7. Mouse Tilt (3D tilt on hover; no DOM tree switch on mount)
-export function MouseTilt({ children, className = "" }: WrapperProps) {
+export function MouseTilt({ children, className = '' }: WrapperProps) {
   const shouldReduceMotion = useReducedMotion();
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [hovering, setHovering] = useState(false);
@@ -188,7 +162,7 @@ export function MouseTilt({ children, className = "" }: WrapperProps) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    isTouchRef.current = window.matchMedia("(hover: none)").matches;
+    isTouchRef.current = window.matchMedia('(hover: none)').matches;
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -210,15 +184,17 @@ export function MouseTilt({ children, className = "" }: WrapperProps) {
     <motion.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => { if (!isTouchRef.current) setHovering(true); }}
+      onMouseEnter={() => {
+        if (!isTouchRef.current) setHovering(true);
+      }}
       onMouseLeave={() => {
         setHovering(false);
         setCoords({ x: 0, y: 0 });
       }}
       animate={{ rotateX, rotateY }}
-      transition={{ type: "spring", stiffness: 200, damping: 25 }}
-      style={{ transformStyle: "preserve-3d" }}
-      className={`perspective-[800px] ${shouldReduceMotion ? "" : "cursor-pointer"} ${className}`.trim()}
+      transition={{ type: 'spring', stiffness: 200, damping: 25 }}
+      style={{ transformStyle: 'preserve-3d' }}
+      className={`perspective-[800px] ${shouldReduceMotion ? '' : 'cursor-pointer'} ${className}`.trim()}
     >
       {children}
     </motion.div>
@@ -226,7 +202,7 @@ export function MouseTilt({ children, className = "" }: WrapperProps) {
 }
 
 // 8. Magnetic Wrapper (bypassed on touch & reduced motion)
-export function MagneticWrapper({ children, className = "" }: WrapperProps) {
+export function MagneticWrapper({ children, className = '' }: WrapperProps) {
   const shouldReduceMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   // useRef avoids re-render and the set-state-in-effect lint rule.
@@ -237,7 +213,7 @@ export function MagneticWrapper({ children, className = "" }: WrapperProps) {
   const y = useSpring(0, springConfig);
 
   useEffect(() => {
-    isTouchRef.current = window.matchMedia("(hover: none)").matches;
+    isTouchRef.current = window.matchMedia('(hover: none)').matches;
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 interface ContactEmailProps {
   name: string;
@@ -7,19 +7,24 @@ interface ContactEmailProps {
   timestamp: string;
 }
 
-export function renderContactEmailHtml({ name, email, message, timestamp }: ContactEmailProps): string {
+export function renderContactEmailHtml({
+  name,
+  email,
+  message,
+  timestamp,
+}: ContactEmailProps): string {
   const escapeHtml = (unsafe: string) => {
     return unsafe
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   };
 
   const escapedName = escapeHtml(name);
   const escapedEmail = escapeHtml(email);
-  const escapedMessage = escapeHtml(message).replace(/\n/g, "<br />");
+  const escapedMessage = escapeHtml(message).replace(/\n/g, '<br />');
   const escapedTimestamp = escapeHtml(timestamp);
 
   return `
@@ -63,58 +68,58 @@ export function ContactEmail({ name, email, message, timestamp }: ContactEmailPr
   return (
     <div
       style={{
-        fontFamily: "system-ui, -apple-system, sans-serif",
-        padding: "24px",
-        backgroundColor: "#0d0e12",
-        color: "#f3f4f6",
-        borderRadius: "12px",
-        border: "1px solid #1f2937",
-        maxWidth: "600px",
-        margin: "0 auto",
+        fontFamily: 'system-ui, -apple-system, sans-serif',
+        padding: '24px',
+        backgroundColor: '#0d0e12',
+        color: '#f3f4f6',
+        borderRadius: '12px',
+        border: '1px solid #1f2937',
+        maxWidth: '600px',
+        margin: '0 auto',
       }}
     >
       <h2
         style={{
-          fontSize: "18px",
-          fontWeight: "bold",
-          color: "#2dd4bf",
-          borderBottom: "1px solid #1f2937",
-          paddingBottom: "12px",
+          fontSize: '18px',
+          fontWeight: 'bold',
+          color: '#2dd4bf',
+          borderBottom: '1px solid #1f2937',
+          paddingBottom: '12px',
           marginTop: 0,
         }}
       >
         Enosh Jaques Portfolio Contact Form
       </h2>
-      <div style={{ marginTop: "16px", fontSize: "14px", lineHeight: "1.5" }}>
-        <p style={{ margin: "6px 0" }}>
-          <strong style={{ color: "#9ca3af" }}>Sender Name:</strong> {name}
+      <div style={{ marginTop: '16px', fontSize: '14px', lineHeight: '1.5' }}>
+        <p style={{ margin: '6px 0' }}>
+          <strong style={{ color: '#9ca3af' }}>Sender Name:</strong> {name}
         </p>
-        <p style={{ margin: "6px 0" }}>
-          <strong style={{ color: "#9ca3af" }}>Sender Email:</strong> {email}
+        <p style={{ margin: '6px 0' }}>
+          <strong style={{ color: '#9ca3af' }}>Sender Email:</strong> {email}
         </p>
-        <p style={{ margin: "6px 0" }}>
-          <strong style={{ color: "#9ca3af" }}>Submission Time (UTC):</strong> {timestamp}
+        <p style={{ margin: '6px 0' }}>
+          <strong style={{ color: '#9ca3af' }}>Submission Time (UTC):</strong> {timestamp}
         </p>
       </div>
       <div
         style={{
-          marginTop: "24px",
-          padding: "16px",
-          backgroundColor: "#161821",
-          borderRadius: "8px",
-          border: "1px solid #1f2937",
+          marginTop: '24px',
+          padding: '16px',
+          backgroundColor: '#161821',
+          borderRadius: '8px',
+          border: '1px solid #1f2937',
         }}
       >
-        <p style={{ margin: "0 0 8px 0", fontSize: "14px", fontWeight: "600", color: "#2dd4bf" }}>
+        <p style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '600', color: '#2dd4bf' }}>
           Message:
         </p>
         <p
           style={{
             margin: 0,
-            fontSize: "13px",
-            lineHeight: "1.6",
-            whiteSpace: "pre-wrap",
-            color: "#e5e7eb",
+            fontSize: '13px',
+            lineHeight: '1.6',
+            whiteSpace: 'pre-wrap',
+            color: '#e5e7eb',
           }}
         >
           {message}

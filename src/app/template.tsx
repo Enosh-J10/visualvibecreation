@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import React, { useState, useEffect } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);

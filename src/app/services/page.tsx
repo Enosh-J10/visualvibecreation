@@ -1,9 +1,10 @@
-import { Container } from "@/components/ui/Sections";
-import ServicesGrid from "@/components/sections/ServicesGrid";
+import { Container } from '@/components/ui/Sections';
+import ServicesGrid from '@/components/sections/ServicesGrid';
 
 export const metadata = {
-  title: "Services | Visual Vibe Creation",
-  description: "High-end design, software, video editing, motion graphics, and mobile development services by Visual Vibe Creation.",
+  title: 'Services | Visual Vibe Creation',
+  description:
+    'High-end design, software, video editing, motion graphics, and mobile development services by Visual Vibe Creation.',
 };
 
 export default function ServicesPage() {
@@ -14,7 +15,8 @@ export default function ServicesPage() {
           Services & Capabilities
         </h1>
         <p className="mt-4 text-xs text-text-secondary leading-relaxed max-w-xl mx-auto">
-          From visual branding assets to high-end application stacks. Here is how I design and deploy.
+          From visual branding assets to high-end application stacks. Here is how I design and
+          deploy.
         </p>
       </Container>
 
@@ -28,7 +30,9 @@ export default function ServicesPage() {
           </h2>
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="space-y-2">
-              <span className="text-[10px] font-mono font-bold text-accent-cyan">01 / DISCOVER</span>
+              <span className="text-[10px] font-mono font-bold text-accent-cyan">
+                01 / DISCOVER
+              </span>
               <h4 className="text-sm font-semibold text-white">Understand & Draft</h4>
               <p className="text-xs text-text-secondary leading-relaxed">
                 Detailing requirements, sketching wireframes, and defining colors and architecture.
@@ -45,7 +49,8 @@ export default function ServicesPage() {
               <span className="text-[10px] font-mono font-bold text-accent-cyan">03 / LAUNCH</span>
               <h4 className="text-sm font-semibold text-white">Test & Deploy</h4>
               <p className="text-xs text-text-secondary leading-relaxed">
-                Conducting lighthouse reviews, securing domain routing, and publishing live onto Vercel.
+                Conducting lighthouse reviews, securing domain routing, and publishing live onto
+                Vercel.
               </p>
             </div>
           </div>

@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-"use client";
+'use client';
 
-import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 
 interface ProjectCardProps {
   title: string;
@@ -52,7 +52,7 @@ export default function ProjectCard({
               </span>
               <Link
                 href={link}
-                target={link.startsWith("http") ? "_blank" : "_self"}
+                target={link.startsWith('http') ? '_blank' : '_self'}
                 className="flex h-9 w-9 items-center justify-center rounded-full bg-white/5 text-white transition-all hover:bg-accent-teal hover:text-bg-primary"
               >
                 <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -61,9 +61,7 @@ export default function ProjectCard({
             <h3 className="font-display mt-6 text-2xl font-bold text-white tracking-tight">
               {title}
             </h3>
-            <p className="mt-4 text-xs text-text-secondary leading-relaxed">
-              {description}
-            </p>
+            <p className="mt-4 text-xs text-text-secondary leading-relaxed">{description}</p>
           </div>
           <div className="mt-8 flex flex-wrap gap-2">
             {tags.map((tag) => (
@@ -86,7 +84,7 @@ export default function ProjectCard({
       onMouseMove={handleMouseMove}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10%" }}
+      viewport={{ once: true, margin: '-10%' }}
       transition={{ duration: 0.6 }}
       className="group relative overflow-hidden rounded-2xl border border-border-standard bg-bg-secondary p-6 sm:p-8 transition-colors duration-500 hover:border-accent-teal/30"
     >
@@ -109,7 +107,7 @@ export default function ProjectCard({
             </span>
             <Link
               href={link}
-              target={link.startsWith("http") ? "_blank" : "_self"}
+              target={link.startsWith('http') ? '_blank' : '_self'}
               className="flex h-9 w-9 items-center justify-center rounded-full bg-white/5 text-white transition-all hover:bg-accent-teal hover:text-bg-primary"
             >
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -120,9 +118,7 @@ export default function ProjectCard({
             {title}
           </h3>
 
-          <p className="mt-4 text-xs text-text-secondary leading-relaxed">
-            {description}
-          </p>
+          <p className="mt-4 text-xs text-text-secondary leading-relaxed">{description}</p>
         </div>
 
         <div className="mt-8 flex flex-wrap gap-2">

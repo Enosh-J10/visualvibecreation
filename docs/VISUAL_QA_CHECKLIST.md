@@ -7,6 +7,7 @@ This checklist is prepared for the manual visual and functional review of the we
 ## 1. Global Navigation & Header (Desktop & Mobile)
 
 ### Desktop Viewports (>= 1024px)
+
 - [ ] **Branding Display**: "Enosh Jaques" (Primary) and "Visual Vibe Creation" (Secondary) are aligned without overlapping elements.
 - [ ] **EJ Monogram Logo**: Logo links to the home page with an accessible screen reader label.
 - [ ] **Work & Journey Dropdowns**:
@@ -20,6 +21,7 @@ This checklist is prepared for the manual visual and functional review of the we
 - [ ] **Scroll Progress**: High contrast horizontal indicator bar at the top of the header.
 
 ### Mobile Viewports (< 1024px)
+
 - [ ] **Compact Branding**: Brand subtitle "Visual Vibe Creation" hides on narrow widths to prevent overlapping the hamburger menu trigger.
 - [ ] **Menu Hamburger Trigger**: Complies with the minimum 44×44px touch target guidelines.
 - [ ] **Mobile Drawer Navigation**:

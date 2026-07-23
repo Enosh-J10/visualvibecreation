@@ -9,23 +9,25 @@ This document defines the unified token layers and visual constants for the offi
 We restrict our interface to a high-contrast tech color system to direct focus on content and typography.
 
 ### Rationale
+
 Our near-black background and charcoal cards establish a neutral, premium dark workspace. By limiting color variables, we avoid visual distraction and preserve maximum accessibility contrast. Soft Cyan and Electric Teal are used as selective accent signals (focus indicators, link highlights, and state changes) and never as decorative background noise.
 
 ### Palette Tokens
+
 - **Near-Black Background**: `#070708` (`--color-bg-primary` / `--background`)
-  *The core canvas of the website. Soft enough to prevent eye strain while preserving absolute dark mode aesthetics.*
+  _The core canvas of the website. Soft enough to prevent eye strain while preserving absolute dark mode aesthetics._
 - **Charcoal Surfaces**: `#121214` (`--color-bg-secondary` / `--background-subtle` / `--surface`)
-  *Used for structural panels, grids, and cards. Separates layouts from the primary canvas.*
+  _Used for structural panels, grids, and cards. Separates layouts from the primary canvas._
 - **Elevated Charcoal**: `#1a1a1d` (`--surface-elevated`)
-  *For dialog boxes, drop-downs, hover-over layers, and modals.*
+  _For dialog boxes, drop-downs, hover-over layers, and modals._
 - **White Primary Typography**: `#ffffff` (`--color-text-primary` / `--text-primary`)
-  *Used for high-priority readouts, headings, and active buttons.*
+  _Used for high-priority readouts, headings, and active buttons._
 - **Muted Grey Secondary Typography**: `#8e8e93` (`--color-text-secondary` / `--text-secondary`)
-  *Used for descriptive lines, timelines, dates, and non-active menus.*
+  _Used for descriptive lines, timelines, dates, and non-active menus._
 - **Soft Cyan Accent**: `#a5f3fc` (`--color-accent-cyan` / `--accent-cyan`)
-  *A high-luminance light indicator. Primary text color on buttons and link icons.*
+  _A high-luminance light indicator. Primary text color on buttons and link icons._
 - **Electric Teal Accent**: `#0d9488` (`--color-accent-teal` / `--accent`)
-  *A rich tech green. Used for hover borders, progress indicators, active timeline steps, and focus frames.*
+  _A rich tech green. Used for hover borders, progress indicators, active timeline steps, and focus frames._
 
 ---
 
@@ -34,9 +36,11 @@ Our near-black background and charcoal cards establish a neutral, premium dark w
 The type scale balances layout geometry (Outfit) with legibility (Inter).
 
 ### Rationale
+
 Display fonts can become overwhelming when applied to body content. Therefore, **Outfit** is strictly bounded to headings and large visual readouts. All paragraph reading layouts utilize **Inter** with line-heights exceeding $1.6\times$ to avoid character crowding.
 
 ### Typographic Tokens
+
 - **Display XL**: Outfit, `clamp(2.5rem, 7vw, 4.5rem)`, Extra-Bold (800).
 - **Display**: Outfit, `clamp(2.0rem, 5vw, 3.5rem)`, Extra-Bold (800).
 - **H1**: Outfit, `clamp(1.75rem, 4vw, 2.75rem)`, Bold (700).
@@ -58,6 +62,7 @@ Display fonts can become overwhelming when applied to body content. Therefore, *
 We use an 8px grid baseline supplemented by clamp-based fluid gaps for structural layouts.
 
 ### Spacing Tokens
+
 - **`--spacing-2xs`**: `0.25rem` (4px) - For badge details.
 - **`--spacing-xs`**: `0.5rem` (8px) - Card labels, button paddings.
 - **`--spacing-sm`**: `0.75rem` (12px) - Tight gaps inside lists.
@@ -91,6 +96,7 @@ Defines the horizontal boundaries to keep paragraphs readable and grid layouts m
 - **Radius XL (`--radius-xl`)**: `24px` - Outer visual boxes.
 
 ### Borders
+
 - **Subtle**: `1px solid rgba(255, 255, 255, 0.04)` - Structural separations.
 - **Standard**: `1px solid rgba(255, 255, 255, 0.08)` - Default card outlines.
 - **Strong**: `1px solid rgba(255, 255, 255, 0.16)` - Hover card states.

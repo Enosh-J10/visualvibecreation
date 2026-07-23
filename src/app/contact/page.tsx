@@ -1,9 +1,10 @@
-import { Container } from "@/components/ui/Sections";
-import ContactSection from "@/components/sections/ContactSection";
+import { Container } from '@/components/ui/Sections';
+import ContactSection from '@/components/sections/ContactSection';
 
 export const metadata = {
-  title: "Contact | Visual Vibe Creation",
-  description: "Get in touch with Enosh Jaques at Visual Vibe Creation for coding, design, and motion graphics projects.",
+  title: 'Contact | Visual Vibe Creation',
+  description:
+    'Get in touch with Enosh Jaques at Visual Vibe Creation for coding, design, and motion graphics projects.',
 };
 
 export default function ContactPage() {

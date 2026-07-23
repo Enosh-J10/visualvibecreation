@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-"use client";
+'use client';
 
-import React, { createContext, useContext, useEffect, useRef, useState, useMemo } from "react";
-import { usePathname } from "next/navigation";
-import Lenis from "lenis";
+import React, { createContext, useContext, useEffect, useRef, useState, useMemo } from 'react';
+import { usePathname } from 'next/navigation';
+import Lenis from 'lenis';
 
 export interface ScrollController {
   stop: () => void;
@@ -37,13 +37,13 @@ export function ScrollProvider({ children }: { children: React.ReactNode }) {
     const handlePopState = () => {
       isPopStateRef.current = true;
     };
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   // Initialize Lenis or fall back to native scrolling
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     setIsReducedMotion(prefersReducedMotion);
 
     if (prefersReducedMotion) {
@@ -54,8 +54,8 @@ export function ScrollProvider({ children }: { children: React.ReactNode }) {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 1.5,
@@ -84,7 +84,7 @@ export function ScrollProvider({ children }: { children: React.ReactNode }) {
     // Force Lenis to start/resume and recalculate size boundaries on route transition
     if (lenisRef.current) {
       lenisRef.current.start();
-      
+
       // Avoid overriding scroll position on Back/Forward history navigation
       if (isPopStateRef.current) {
         isPopStateRef.current = false;
@@ -117,40 +117,39 @@ export function ScrollProvider({ children }: { children: React.ReactNode }) {
     }
   }, [pathname]);
 
-  const controller = useMemo<ScrollController>(() => ({
-    stop: () => {
-      if (lenisRef.current) {
-        lenisRef.current.stop();
-      }
-    },
-    start: () => {
-      if (lenisRef.current) {
-        lenisRef.current.start();
-      }
-    },
-    scrollToTop: (immediate = true) => {
-      if (lenisRef.current) {
-        lenisRef.current.scrollTo(0, { immediate });
-      } else {
-        window.scrollTo(0, 0);
-      }
-    },
-    scrollToHash: (hash: string) => {
-      const target = document.querySelector(hash);
-      if (target) {
+  const controller = useMemo<ScrollController>(
+    () => ({
+      stop: () => {
         if (lenisRef.current) {
-          lenisRef.current.scrollTo(target as HTMLElement, { offset: -80 });
-        } else {
-          target.scrollIntoView({ behavior: "smooth" });
+          lenisRef.current.stop();
         }
-      }
-    },
-    isReady,
-    isReducedMotion,
-  }), [isReady, isReducedMotion]);
-  return (
-    <ScrollContext.Provider value={controller}>
-      {children}
-    </ScrollContext.Provider>
+      },
+      start: () => {
+        if (lenisRef.current) {
+          lenisRef.current.start();
+        }
+      },
+      scrollToTop: (immediate = true) => {
+        if (lenisRef.current) {
+          lenisRef.current.scrollTo(0, { immediate });
+        } else {
+          window.scrollTo(0, 0);
+        }
+      },
+      scrollToHash: (hash: string) => {
+        const target = document.querySelector(hash);
+        if (target) {
+          if (lenisRef.current) {
+            lenisRef.current.scrollTo(target as HTMLElement, { offset: -80 });
+          } else {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      },
+      isReady,
+      isReducedMotion,
+    }),
+    [isReady, isReducedMotion],
   );
+  return <ScrollContext.Provider value={controller}>{children}</ScrollContext.Provider>;
 }

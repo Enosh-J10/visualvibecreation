@@ -1,10 +1,11 @@
-import { Container } from "@/components/ui/Sections";
-import Button from "@/components/ui/Button";
-import { ArrowLeft } from "lucide-react";
+import { Container } from '@/components/ui/Sections';
+import Button from '@/components/ui/Button';
+import { ArrowLeft } from 'lucide-react';
 
 export const metadata = {
-  title: "Projects | Visual Vibe Creation",
-  description: "Detailed projects content is being prepared. The verified overview of Enosh Jaques' projects is available on the homepage.",
+  title: 'Projects | Visual Vibe Creation',
+  description:
+    "Detailed projects content is being prepared. The verified overview of Enosh Jaques' projects is available on the homepage.",
   robots: {
     index: false,
     follow: true,
@@ -19,7 +20,8 @@ export default function ProjectsPage() {
           Projects
         </h1>
         <p className="text-xs text-text-secondary leading-relaxed">
-          Detailed projects content is being prepared. The verified overview is currently available on the homepage.
+          Detailed projects content is being prepared. The verified overview is currently available
+          on the homepage.
         </p>
         <div className="pt-4 flex justify-center">
           <Button variant="primary" href="/">

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-export function GithubIcon({ className = "h-5 w-5" }: { className?: string }) {
+export function GithubIcon({ className = 'h-5 w-5' }: { className?: string }) {
   return (
     <svg
       role="img"
@@ -17,7 +17,7 @@ export function GithubIcon({ className = "h-5 w-5" }: { className?: string }) {
   );
 }
 
-export function LinkedinIcon({ className = "h-5 w-5" }: { className?: string }) {
+export function LinkedinIcon({ className = 'h-5 w-5' }: { className?: string }) {
   return (
     <svg
       role="img"
@@ -34,7 +34,7 @@ export function LinkedinIcon({ className = "h-5 w-5" }: { className?: string }) 
   );
 }
 
-export function InstagramIcon({ className = "h-5 w-5" }: { className?: string }) {
+export function InstagramIcon({ className = 'h-5 w-5' }: { className?: string }) {
   return (
     <svg
       role="img"

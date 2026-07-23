@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 export function TimelineContainer({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative border-l border-border-standard ml-2 pl-0.5 space-y-8 py-2">
       {/* Low-opacity cyan gradient line layered above the solid timeline axis */}
-      <div 
-        className="absolute left-[-1px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-accent-cyan/10 via-accent-cyan/40 to-accent-cyan/10 pointer-events-none" 
+      <div
+        className="absolute left-[-1px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-accent-cyan/10 via-accent-cyan/40 to-accent-cyan/10 pointer-events-none"
         aria-hidden="true"
       />
       {children}
@@ -36,7 +36,7 @@ export function TimelineStep({
       ) : (
         <div className="absolute left-[-5px] top-1.5 h-2.5 w-2.5 rounded-full bg-accent-teal border border-bg-primary z-10 transition-transform duration-300 group-hover:scale-125 shadow shadow-accent-teal/50" />
       )}
-      
+
       <div className="space-y-2">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
           <div>
@@ -49,7 +49,9 @@ export function TimelineStep({
             {year}
           </span>
         </div>
-        {children && <div className="text-xs text-text-secondary leading-relaxed pt-1">{children}</div>}
+        {children && (
+          <div className="text-xs text-text-secondary leading-relaxed pt-1">{children}</div>
+        )}
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
-import { Container } from "@/components/ui/Sections";
-import ProjectsGrid from "@/components/sections/ProjectsGrid";
+import { Container } from '@/components/ui/Sections';
+import ProjectsGrid from '@/components/sections/ProjectsGrid';
 
 export const metadata = {
-  title: "Portfolio | Visual Vibe Creation",
-  description: "Browse the design portfolios, android apps, game designs, and web development project files created by Enosh Jaques.",
+  title: 'Portfolio | Visual Vibe Creation',
+  description:
+    'Browse the design portfolios, android apps, game designs, and web development project files created by Enosh Jaques.',
 };
 
 export default function PortfolioPage() {
@@ -14,7 +15,8 @@ export default function PortfolioPage() {
           Visual Works
         </h1>
         <p className="mt-4 text-xs text-text-secondary leading-relaxed max-w-xl mx-auto">
-          Explore complete digital builds, mobile platforms, software code bases, and branding layouts.
+          Explore complete digital builds, mobile platforms, software code bases, and branding
+          layouts.
         </p>
       </Container>
 

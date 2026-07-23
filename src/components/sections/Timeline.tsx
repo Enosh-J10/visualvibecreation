@@ -1,37 +1,42 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
 const timelineEvents = [
   {
-    year: "2026+",
-    title: "Looking Ahead",
-    location: "London, UK",
-    description: "Preparing for higher studies in Computer Science at university to build functional software products and learn advanced systems engineering.",
+    year: '2026+',
+    title: 'Looking Ahead',
+    location: 'London, UK',
+    description:
+      'Preparing for higher studies in Computer Science at university to build functional software products and learn advanced systems engineering.',
   },
   {
-    year: "2025",
-    title: "FinCalc App Launch",
-    location: "Google Play Store",
-    description: "Developed and published FinCalc on the Google Play Store from scratch. Learnt how to resolve lifecycle state management and calculations in Java.",
+    year: '2025',
+    title: 'FinCalc App Launch',
+    location: 'Google Play Store',
+    description:
+      'Developed and published FinCalc on the Google Play Store from scratch. Learnt how to resolve lifecycle state management and calculations in Java.',
   },
   {
-    year: "2024",
-    title: "Moving to London & College",
-    location: "West Thames College, London",
-    description: "Relocated to the UK. Completed the T Level Foundation year with a verified distinction D*D result. Preparing for BTEC Level 3 Year 2 in September.",
+    year: '2024',
+    title: 'Moving to London & College',
+    location: 'West Thames College, London',
+    description:
+      'Relocated to the UK. Completed the T Level Foundation year with a verified distinction D*D result. Preparing for BTEC Level 3 Year 2 in September.',
   },
   {
-    year: "2022",
-    title: "Founding Visual Vibe Creation",
-    location: "Goa, India",
-    description: "Established the independent creative studio to channel video editing and visual branding design commissions for clients.",
+    year: '2022',
+    title: 'Founding Visual Vibe Creation',
+    location: 'Goa, India',
+    description:
+      'Established the independent creative studio to channel video editing and visual branding design commissions for clients.',
   },
   {
-    year: "2021",
-    title: "First Steps in Creative Design",
-    location: "Goa, India",
-    description: "Started experimenting with digital layouts, graphic vectors, and taking atmospheric landscape photos of quiet Goan settings.",
+    year: '2021',
+    title: 'First Steps in Creative Design',
+    location: 'Goa, India',
+    description:
+      'Started experimenting with digital layouts, graphic vectors, and taking atmospheric landscape photos of quiet Goan settings.',
   },
 ];
 
@@ -47,7 +52,8 @@ export default function Timeline() {
             Journey Timeline
           </h2>
           <p className="text-sm text-text-secondary leading-relaxed">
-            A chronological mapping of my academic progression, creative projects, and transition from Goa to London.
+            A chronological mapping of my academic progression, creative projects, and transition
+            from Goa to London.
           </p>
         </div>
 
@@ -63,10 +69,10 @@ export default function Timeline() {
                   key={event.title}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-10%" }}
+                  viewport={{ once: true, margin: '-10%' }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className={`relative flex flex-col md:flex-row items-stretch ${
-                    isEven ? "md:flex-row-reverse" : ""
+                    isEven ? 'md:flex-row-reverse' : ''
                   }`}
                 >
                   {/* Circle Node */}
@@ -76,7 +82,7 @@ export default function Timeline() {
                   <div className="w-full md:w-1/2 pl-12 md:pl-0 md:px-8">
                     <div
                       className={`rounded-2xl border border-border-standard bg-bg-secondary/40 backdrop-blur-sm p-6 text-left hover:border-accent-teal/20 transition-all duration-300 ${
-                        isEven ? "md:text-left" : "md:text-right"
+                        isEven ? 'md:text-left' : 'md:text-right'
                       }`}
                     >
                       <span className="inline-block text-[10px] font-mono font-bold text-accent-cyan tracking-widest bg-accent-teal/10 px-2.5 py-0.5 rounded-full mb-3">
