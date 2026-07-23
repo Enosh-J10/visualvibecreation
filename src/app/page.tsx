@@ -1,11 +1,26 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-"use client";
+'use client';
 
-import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, Mail, Check, MapPin, Zap, ArrowUpRight, GraduationCap, Briefcase, Trophy, Play, Star, Sparkles, BookOpen, Layers } from "lucide-react";
-import Button from "@/components/ui/Button";
+import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import {
+  ArrowRight,
+  Mail,
+  Check,
+  MapPin,
+  Zap,
+  ArrowUpRight,
+  GraduationCap,
+  Briefcase,
+  Trophy,
+  Play,
+  Star,
+  Sparkles,
+  BookOpen,
+  Layers,
+} from 'lucide-react';
+import Button from '@/components/ui/Button';
 import {
   Display,
   Headline,
@@ -13,24 +28,26 @@ import {
   Body,
   Overline,
   GradientText,
-} from "@/components/ui/Typography";
-import {
-  SectionWrapper,
-  Container,
-  SectionHeader,
-  StatisticBlock,
-} from "@/components/ui/Sections";
-import { ExperienceCard } from "@/components/ui/Cards";
-import { TechnologyBadge } from "@/components/ui/PortfolioComponents";
-import { TimelineContainer, TimelineStep } from "@/components/ui/TimelineComponents";
-import { PortraitImage, PhoneMockup } from "@/components/ui/ImageComponents";
+} from '@/components/ui/Typography';
+import { SectionWrapper, Container, SectionHeader, StatisticBlock } from '@/components/ui/Sections';
+import { ExperienceCard } from '@/components/ui/Cards';
+import { TechnologyBadge } from '@/components/ui/PortfolioComponents';
+import { TimelineContainer, TimelineStep } from '@/components/ui/TimelineComponents';
+import { PortraitImage, PhoneMockup } from '@/components/ui/ImageComponents';
 import {
   FadeUp,
   ScaleReveal,
   MouseTilt,
   MagneticWrapper,
-} from "@/components/animations/MotionWrappers";
-import { AnimatePresence, motion, useReducedMotion, useMotionValue, useSpring, useTransform } from "framer-motion";
+} from '@/components/animations/MotionWrappers';
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from 'framer-motion';
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
@@ -58,13 +75,13 @@ export default function Home() {
   const portraitRotate = useTransform(smoothMouseX, [-0.5, 0.5], [0.75, -0.75]);
 
   useEffect(() => {
-    const isFine = window.matchMedia("(pointer: fine)").matches;
+    const isFine = window.matchMedia('(pointer: fine)').matches;
     const isWide = window.innerWidth >= 1024;
     setIsHeroParallaxEnabled(isFine && isWide && !shouldReduceMotion);
   }, [shouldReduceMotion]);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText("hello@visualvibecreation.com");
+    navigator.clipboard.writeText('hello@visualvibecreation.com');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -77,22 +94,22 @@ export default function Home() {
       }
     };
     if (isLocationOpen) {
-      document.addEventListener("mousedown", handleOutsideClick);
+      document.addEventListener('mousedown', handleOutsideClick);
     }
-    return () => document.removeEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, [isLocationOpen]);
 
   // Close location popover on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         setIsLocationOpen(false);
       }
     };
     if (isLocationOpen) {
-      window.addEventListener("keydown", handleKeyDown);
+      window.addEventListener('keydown', handleKeyDown);
     }
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isLocationOpen]);
 
   const handleHeroPointerMove = (e: React.PointerEvent) => {
@@ -144,7 +161,8 @@ export default function Home() {
 
             <FadeUp delay={0.15}>
               <LeadParagraph className="max-w-xl">
-                I build digital products, visual identities, and creative experiences. I am based in London, with roots in Cavelossim, South Goa.
+                I build digital products, visual identities, and creative experiences. I am based in
+                London, with roots in Cavelossim, South Goa.
               </LeadParagraph>
             </FadeUp>
 
@@ -175,7 +193,9 @@ export default function Home() {
                   >
                     <MapPin className="h-3.5 w-3.5 text-accent-teal shrink-0" />
                     <span>Based in London • From Cavelossim, South Goa</span>
-                    <ChevronDownIcon className={`h-3 w-3 text-text-muted transition-transform duration-200 ${isLocationOpen ? "rotate-180" : ""}`} />
+                    <ChevronDownIcon
+                      className={`h-3 w-3 text-text-muted transition-transform duration-200 ${isLocationOpen ? 'rotate-180' : ''}`}
+                    />
                   </button>
 
                   <AnimatePresence>
@@ -189,8 +209,12 @@ export default function Home() {
                         className="absolute bottom-full left-0 mb-3 w-72 p-4 rounded-xl border border-border-subtle bg-bg-secondary shadow-xl shadow-black/80 z-modal space-y-4 text-left"
                       >
                         <div className="space-y-1">
-                          <span className="text-[10px] font-mono text-text-muted uppercase block">Current Location</span>
-                          <span className="text-white text-xs font-semibold block">London, United Kingdom</span>
+                          <span className="text-[10px] font-mono text-text-muted uppercase block">
+                            Current Location
+                          </span>
+                          <span className="text-white text-xs font-semibold block">
+                            London, United Kingdom
+                          </span>
                           <a
                             href="https://www.google.com/maps/search/?api=1&query=London,+United+Kingdom"
                             target="_blank"
@@ -202,10 +226,14 @@ export default function Home() {
                             <ArrowUpRight className="h-3 w-3 shrink-0" />
                           </a>
                         </div>
-                        
+
                         <div className="space-y-1 pt-3 border-t border-border-subtle">
-                          <span className="text-[10px] font-mono text-text-muted uppercase block">Home</span>
-                          <span className="text-white text-xs font-semibold block">Cavelossim, South Goa, India</span>
+                          <span className="text-[10px] font-mono text-text-muted uppercase block">
+                            Home
+                          </span>
+                          <span className="text-white text-xs font-semibold block">
+                            Cavelossim, South Goa, India
+                          </span>
                           <a
                             href="https://www.google.com/maps/search/?api=1&query=Cavelossim,+Goa,+India"
                             target="_blank"
@@ -233,7 +261,14 @@ export default function Home() {
           {/* Portrait Container */}
           <div className="lg:col-span-5 flex justify-center">
             <ScaleReveal delay={0.2}>
-              <motion.div style={isHeroParallaxEnabled ? { x: portraitX, y: portraitY, rotate: portraitRotate } : {}} className="w-full flex justify-center">
+              <motion.div
+                style={
+                  isHeroParallaxEnabled
+                    ? { x: portraitX, y: portraitY, rotate: portraitRotate }
+                    : {}
+                }
+                className="w-full flex justify-center"
+              >
                 <MouseTilt>
                   <div className="relative group p-2.5 rounded-2xl border border-border-standard bg-bg-secondary/40 shadow-2xl shadow-black/60 ring-1 ring-white/5 overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-tr from-accent-teal/10 via-transparent to-accent-cyan/10 opacity-60 pointer-events-none" />
@@ -242,8 +277,12 @@ export default function Home() {
                       className="w-[280px] max-w-full sm:w-[320px] rounded-xl object-cover object-center ring-1 ring-white/10"
                     />
                     <div className="absolute bottom-4 left-4 right-4 p-3 rounded-lg border border-border-subtle bg-bg-primary/90 backdrop-blur-sm z-10 text-left">
-                      <span className="text-[9px] font-mono text-accent-cyan uppercase tracking-widest block">Studio Profile</span>
-                      <span className="text-xs font-bold text-white block mt-0.5">Enosh Jaques</span>
+                      <span className="text-[9px] font-mono text-accent-cyan uppercase tracking-widest block">
+                        Studio Profile
+                      </span>
+                      <span className="text-xs font-bold text-white block mt-0.5">
+                        Enosh Jaques
+                      </span>
                     </div>
                   </div>
                 </MouseTilt>
@@ -254,7 +293,10 @@ export default function Home() {
       </section>
 
       {/* 2. What I'm Building Now (Current Snapshot) */}
-      <SectionWrapper id="focus" className="py-20 bg-bg-secondary/30 border-t border-b border-border-subtle relative">
+      <SectionWrapper
+        id="focus"
+        className="py-20 bg-bg-secondary/30 border-t border-b border-border-subtle relative"
+      >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,var(--color-bg-secondary),transparent_70%)] pointer-events-none" />
         <Container variant="reading" className="relative z-10">
           <FadeUp>
@@ -270,29 +312,33 @@ export default function Home() {
               <div className="grid grid-cols-1 gap-4 text-left">
                 {[
                   {
-                    title: "FinCalc on Google Play",
-                    description: "My financial calculation app is live on Google Play, supporting calculations for margins, compound interest, and amortization plans.",
-                    tag: "Android Release",
-                    tagColor: "bg-accent-teal/15 text-accent-cyan border-accent-teal/20"
+                    title: 'FinCalc on Google Play',
+                    description:
+                      'My financial calculation app is live on Google Play, supporting calculations for margins, compound interest, and amortization plans.',
+                    tag: 'Android Release',
+                    tagColor: 'bg-accent-teal/15 text-accent-cyan border-accent-teal/20',
                   },
                   {
-                    title: "Visual Vibe Creation",
-                    description: "I run Visual Vibe Creation as my independent studio, designing branding, posters, cards, and custom graphics for client projects.",
-                    tag: "Self-Employment",
-                    tagColor: "bg-white/5 text-text-secondary border-border-standard"
+                    title: 'Visual Vibe Creation',
+                    description:
+                      'I run Visual Vibe Creation as my independent studio, designing branding, posters, cards, and custom graphics for client projects.',
+                    tag: 'Self-Employment',
+                    tagColor: 'bg-white/5 text-text-secondary border-border-standard',
                   },
                   {
-                    title: "BTEC IT Level 3",
-                    description: "I am preparing to start the final year of my BTEC Level 3 Information Technology course in September.",
-                    tag: "Technical Education",
-                    tagColor: "bg-white/5 text-text-secondary border-border-standard"
+                    title: 'BTEC IT Level 3',
+                    description:
+                      'I am preparing to start the final year of my BTEC Level 3 Information Technology course in September.',
+                    tag: 'Technical Education',
+                    tagColor: 'bg-white/5 text-text-secondary border-border-standard',
                   },
                   {
-                    title: "Frontend Engineering",
-                    description: "I am refining my web development skills, experimenting with Next.js structures, and designing future web utility apps.",
-                    tag: "Skills Expansion",
-                    tagColor: "bg-accent-cyan/10 text-accent-cyan border-accent-cyan/20"
-                  }
+                    title: 'Frontend Engineering',
+                    description:
+                      'I am refining my web development skills, experimenting with Next.js structures, and designing future web utility apps.',
+                    tag: 'Skills Expansion',
+                    tagColor: 'bg-accent-cyan/10 text-accent-cyan border-accent-cyan/20',
+                  },
                 ].map((item) => (
                   <div
                     key={item.title}
@@ -303,9 +349,13 @@ export default function Home() {
                         <span className="h-1.5 w-1.5 rounded-full bg-accent-teal shrink-0" />
                         <span>{item.title}</span>
                       </h4>
-                      <p className="text-xs text-text-secondary leading-relaxed">{item.description}</p>
+                      <p className="text-xs text-text-secondary leading-relaxed">
+                        {item.description}
+                      </p>
                     </div>
-                    <span className={`text-[9px] font-mono uppercase tracking-wider px-3 py-1 rounded-full border w-fit shrink-0 ${item.tagColor}`}>
+                    <span
+                      className={`text-[9px] font-mono uppercase tracking-wider px-3 py-1 rounded-full border w-fit shrink-0 ${item.tagColor}`}
+                    >
                       {item.tag}
                     </span>
                   </div>
@@ -350,7 +400,10 @@ export default function Home() {
                     Why I built it
                   </Headline>
                   <Body className="text-text-secondary leading-relaxed">
-                    I started building FinCalc because I wanted a simpler, faster way to work out loan plans and compound values on a phone. The process taught me how to take an idea from wireframes through formula structures, testing phases, and finally publishing on Google Play.
+                    I started building FinCalc because I wanted a simpler, faster way to work out
+                    loan plans and compound values on a phone. The process taught me how to take an
+                    idea from wireframes through formula structures, testing phases, and finally
+                    publishing on Google Play.
                   </Body>
                 </div>
               </FadeUp>
@@ -359,21 +412,21 @@ export default function Home() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
                 {[
                   {
-                    q: "What I created",
-                    a: "I built a mobile calculation utility in Java, handling margin, compound interest, and amortization plans."
+                    q: 'What I created',
+                    a: 'I built a mobile calculation utility in Java, handling margin, compound interest, and amortization plans.',
                   },
                   {
-                    q: "What challenged me",
-                    a: "I had to figure out formula logic paths for complex compound frequencies and handle view state changes when changing screen layouts."
+                    q: 'What challenged me',
+                    a: 'I had to figure out formula logic paths for complex compound frequencies and handle view state changes when changing screen layouts.',
                   },
                   {
-                    q: "What I learned",
-                    a: "I gained practical knowledge of Android lifecycles, layouts via XML, device testing, and Google Play Console structures."
+                    q: 'What I learned',
+                    a: 'I gained practical knowledge of Android lifecycles, layouts via XML, device testing, and Google Play Console structures.',
                   },
                   {
                     q: "What I'll improve next",
-                    a: "I plan to rebuild the core calculation systems in Kotlin and transition the layout files to Jetpack Compose."
-                  }
+                    a: 'I plan to rebuild the core calculation systems in Kotlin and transition the layout files to Jetpack Compose.',
+                  },
                 ].map((item, idx) => (
                   <FadeUp key={item.q} delay={0.18 + idx * 0.05}>
                     <div className="space-y-1.5 p-4 rounded-xl border border-border-subtle bg-bg-secondary/40">
@@ -427,7 +480,10 @@ export default function Home() {
       </SectionWrapper>
 
       {/* 4. My Journey (Timeline Section) */}
-      <SectionWrapper id="journey" className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle relative">
+      <SectionWrapper
+        id="journey"
+        className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle relative"
+      >
         <Container variant="reading">
           <SectionHeader
             align="center"
@@ -437,95 +493,106 @@ export default function Home() {
           />
           <FadeUp>
             <TimelineContainer>
-              <TimelineStep 
-                year="School Years" 
-                title="Growing Up and Learning in Goa" 
+              <TimelineStep
+                year="School Years"
+                title="Growing Up and Learning in Goa"
                 subtitle="St. Pius X Convent High School, Orlim"
                 icon={<GraduationCap className="h-4 w-4 text-accent-teal" />}
               >
                 <Body className="text-text-secondary">
-                  I studied at St. Pius X Convent High School from my early school years through Standard 10 and completed my secondary education with distinction.
+                  I studied at St. Pius X Convent High School from my early school years through
+                  Standard 10 and completed my secondary education with distinction.
                 </Body>
               </TimelineStep>
 
-              <TimelineStep 
-                year="Childhood and Teenage Years" 
-                title="Creativity Beyond the Classroom" 
+              <TimelineStep
+                year="Childhood and Teenage Years"
+                title="Creativity Beyond the Classroom"
                 subtitle="Goan Tiatr and Performing Experience"
                 icon={<Sparkles className="h-4 w-4 text-accent-cyan" />}
               >
                 <Body className="text-text-secondary">
-                  Throughout my childhood and teenage years in Goa, I participated in traditional Goan tiatr productions. This helped me build confidence, stage awareness, teamwork, public communication and coordination under pressure.
+                  Throughout my childhood and teenage years in Goa, I participated in traditional
+                  Goan tiatr productions. This helped me build confidence, stage awareness,
+                  teamwork, public communication and coordination under pressure.
                 </Body>
               </TimelineStep>
 
-              <TimelineStep 
-                year="Standards 11 and 12" 
-                title="Choosing a Technical Path" 
+              <TimelineStep
+                year="Standards 11 and 12"
+                title="Choosing a Technical Path"
                 subtitle="Rosary Higher Secondary School, Navelim"
                 icon={<BookOpen className="h-4 w-4 text-accent-teal" />}
               >
                 <Body className="text-text-secondary">
-                  I completed Standards 11 and 12 in the Computer Technology stream, studying programming logic, databases, software applications and computer networks, and graduated with distinction.
+                  I completed Standards 11 and 12 in the Computer Technology stream, studying
+                  programming logic, databases, software applications and computer networks, and
+                  graduated with distinction.
                 </Body>
               </TimelineStep>
 
-              <TimelineStep 
-                year="Established 2022" 
-                title="Building My Independent Studio" 
+              <TimelineStep
+                year="Established 2022"
+                title="Building My Independent Studio"
                 subtitle="Visual Vibe Creation"
                 icon={<Layers className="h-4 w-4 text-accent-cyan" />}
               >
                 <Body className="text-text-secondary">
-                  I founded Visual Vibe Creation in 2022 to bring together graphic design, branding, posters, invitation cards, business cards, social-media graphics, photography, video editing and technology.
+                  I founded Visual Vibe Creation in 2022 to bring together graphic design, branding,
+                  posters, invitation cards, business cards, social-media graphics, photography,
+                  video editing and technology.
                 </Body>
               </TimelineStep>
 
-              <TimelineStep 
-                year="2024" 
-                title="Moving to London" 
+              <TimelineStep
+                year="2024"
+                title="Moving to London"
                 subtitle="West Thames College"
                 icon={<MapPin className="h-4 w-4 text-accent-teal" />}
               >
                 <Body className="text-text-secondary">
-                  I moved to London and joined West Thames College. I completed the T Level Foundation with a D*D result and continued into BTEC Level 3 Information Technology.
+                  I moved to London and joined West Thames College. I completed the T Level
+                  Foundation with a D*D result and continued into BTEC Level 3 Information
+                  Technology.
                 </Body>
               </TimelineStep>
 
-              <TimelineStep 
-                year="2025" 
-                title="Expanding My Industry Experience" 
+              <TimelineStep
+                year="2025"
+                title="Expanding My Industry Experience"
                 subtitle="Asendia UK Internship"
                 icon={<Briefcase className="h-4 w-4 text-accent-cyan" />}
               >
                 <Body className="text-text-secondary">
-                  I completed an IT support internship at Asendia UK in Hounslow, building my understanding of workplace technology, support processes and business operations.
+                  I completed an IT support internship at Asendia UK in Hounslow, building my
+                  understanding of workplace technology, support processes and business operations.
                 </Body>
               </TimelineStep>
 
-              <TimelineStep 
-                year="Google Play Release" 
-                title="Publishing My First Android App" 
+              <TimelineStep
+                year="Google Play Release"
+                title="Publishing My First Android App"
                 subtitle="FinCalc"
                 icon={<Play className="h-4 w-4 text-accent-cyan" />}
               >
                 <Body className="text-text-secondary">
-                  I designed, built and published FinCalc on Google Play, turning my Android development work into a publicly available product.
+                  I designed, built and published FinCalc on Google Play, turning my Android
+                  development work into a publicly available product.
                 </Body>
               </TimelineStep>
 
-              <TimelineStep 
-                year="Planned Next Step" 
-                title="University and Future Projects" 
+              <TimelineStep
+                year="Planned Next Step"
+                title="University and Future Projects"
                 subtitle="Higher Education Goals"
                 icon={<Star className="h-4 w-4 text-accent-teal" />}
               >
                 <Body className="text-text-secondary">
-                  After completing my BTEC Level 3 course, I plan to progress to university and continue developing software, applications and creative digital projects.
+                  After completing my BTEC Level 3 course, I plan to progress to university and
+                  continue developing software, applications and creative digital projects.
                 </Body>
               </TimelineStep>
             </TimelineContainer>
-            
           </FadeUp>
         </Container>
       </SectionWrapper>
@@ -543,10 +610,13 @@ export default function Home() {
                     Visual Vibe Creation
                   </Headline>
                   <p className="text-sm text-text-secondary leading-relaxed">
-                    Visual Vibe Creation is my independent creative studio, where I combine graphic design, branding, visual media and technology.
+                    Visual Vibe Creation is my independent creative studio, where I combine graphic
+                    design, branding, visual media and technology.
                   </p>
                   <p className="text-xs text-text-secondary leading-relaxed">
-                    I create posters, invitations, business cards, logos, branding assets, social-media graphics, photography, video edits and selected digital projects for clients.
+                    I create posters, invitations, business cards, logos, branding assets,
+                    social-media graphics, photography, video edits and selected digital projects
+                    for clients.
                   </p>
                 </div>
               </FadeUp>
@@ -559,17 +629,20 @@ export default function Home() {
                   </span>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {[
-                      "Posters & Layouts",
-                      "Invitations & Cards",
-                      "Business Cards",
-                      "Logos & Branding",
-                      "Social Media Assets",
-                      "Video Editing",
-                      "Visual Content",
-                      "Photography",
-                      "Web Utilities"
+                      'Posters & Layouts',
+                      'Invitations & Cards',
+                      'Business Cards',
+                      'Logos & Branding',
+                      'Social Media Assets',
+                      'Video Editing',
+                      'Visual Content',
+                      'Photography',
+                      'Web Utilities',
                     ].map((service) => (
-                      <span key={service} className="px-3 py-2 rounded-lg border border-border-subtle bg-bg-secondary/40 text-[11px] text-text-secondary hover:text-white hover:border-accent-teal/30 hover:bg-bg-secondary transition-all">
+                      <span
+                        key={service}
+                        className="px-3 py-2 rounded-lg border border-border-subtle bg-bg-secondary/40 text-[11px] text-text-secondary hover:text-white hover:border-accent-teal/30 hover:bg-bg-secondary transition-all"
+                      >
                         {service}
                       </span>
                     ))}
@@ -592,13 +665,32 @@ export default function Home() {
                 <div className="glass-surface p-8 rounded-2xl border border-border-standard w-full max-w-[340px] aspect-square flex flex-col justify-between group relative overflow-hidden">
                   <div className="absolute inset-0 grid-overlay opacity-10 pointer-events-none" />
                   <div className="flex h-12 w-12 items-center justify-center rounded-full border border-accent-teal/20 bg-accent-teal/5 text-accent-cyan z-10">
-                    <svg viewBox="0 0 100 100" className="h-6 w-6 text-accent-cyan fill-none stroke-current">
-                      <circle cx="50" cy="50" r="40" strokeWidth="2" className="stroke-accent-teal/25" />
+                    <svg
+                      viewBox="0 0 100 100"
+                      className="h-6 w-6 text-accent-cyan fill-none stroke-current"
+                    >
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="40"
+                        strokeWidth="2"
+                        className="stroke-accent-teal/25"
+                      />
                       <circle cx="20" cy="30" r="3" fill="currentColor" stroke="none" />
                       <circle cx="80" cy="30" r="3" fill="currentColor" stroke="none" />
                       <circle cx="20" cy="70" r="3" fill="currentColor" stroke="none" />
-                      <path d="M32 53 L50 35 L68 53" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M32 67 L50 49 L68 67" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+                      <path
+                        d="M32 53 L50 35 L68 53"
+                        strokeWidth="6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M32 67 L50 49 L68 67"
+                        strokeWidth="6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </div>
                   <div className="space-y-3 z-10">
@@ -657,13 +749,19 @@ export default function Home() {
                       </span>
                       <span className="text-[10px] font-mono text-text-muted">Graphic Design</span>
                     </div>
-                    <h3 className="font-display text-lg font-bold text-white">Event Poster Typography Layout</h3>
+                    <h3 className="font-display text-lg font-bold text-white">
+                      Event Poster Typography Layout
+                    </h3>
                     <p className="text-xs text-text-secondary leading-relaxed">
-                      I designed custom typography placements and contrast balancing for promotional layouts.
+                      I designed custom typography placements and contrast balancing for promotional
+                      layouts.
                     </p>
                     <div className="flex flex-wrap gap-1.5 pt-1">
-                      {["Typography", "Layout"].map((tag) => (
-                        <span key={tag} className="text-[9px] font-mono text-text-muted px-2 py-0.5 rounded border border-border-subtle bg-white/[0.01]">
+                      {['Typography', 'Layout'].map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-[9px] font-mono text-text-muted px-2 py-0.5 rounded border border-border-subtle bg-white/[0.01]"
+                        >
                           {tag}
                         </span>
                       ))}
@@ -689,10 +787,14 @@ export default function Home() {
                   </div>
                   <div className="mt-4 space-y-2">
                     <div className="flex items-center justify-between text-[10px]">
-                      <span className="font-mono text-accent-cyan uppercase tracking-wider">Monogram Guideline</span>
+                      <span className="font-mono text-accent-cyan uppercase tracking-wider">
+                        Monogram Guideline
+                      </span>
                       <span className="font-mono text-text-muted">Branding</span>
                     </div>
-                    <h4 className="font-display text-sm font-bold text-white">EJ Brand Identity Grid</h4>
+                    <h4 className="font-display text-sm font-bold text-white">
+                      EJ Brand Identity Grid
+                    </h4>
                     <p className="text-xs text-text-secondary leading-relaxed">
                       I established grid alignments and geometries for branding monograms and logos.
                     </p>
@@ -714,12 +816,15 @@ export default function Home() {
                   </div>
                   <div className="mt-4 space-y-2">
                     <div className="flex items-center justify-between text-[10px]">
-                      <span className="font-mono text-accent-cyan uppercase tracking-wider font-semibold">Photography</span>
+                      <span className="font-mono text-accent-cyan uppercase tracking-wider font-semibold">
+                        Photography
+                      </span>
                       <span className="font-mono text-text-muted">Creative Media</span>
                     </div>
                     <h4 className="font-display text-sm font-bold text-white">Sunset silhouette</h4>
                     <p className="text-xs text-text-secondary leading-relaxed">
-                      A study in golden hour photography, capturing composition balance and natural contrast levels.
+                      A study in golden hour photography, capturing composition balance and natural
+                      contrast levels.
                     </p>
                   </div>
                 </div>
@@ -744,7 +849,8 @@ export default function Home() {
               Future Explorations
             </Headline>
             <p className="text-xs text-text-secondary leading-relaxed">
-              I am research-testing code paths and sketching drafts for these upcoming side projects.
+              I am research-testing code paths and sketching drafts for these upcoming side
+              projects.
             </p>
           </div>
 
@@ -755,11 +861,16 @@ export default function Home() {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <span className="h-1.5 w-1.5 rounded-full bg-text-muted shrink-0" />
-                    <span className="text-[10px] font-mono uppercase text-text-muted tracking-widest">Concept Stage</span>
+                    <span className="text-[10px] font-mono uppercase text-text-muted tracking-widest">
+                      Concept Stage
+                    </span>
                   </div>
-                  <h4 className="font-display text-sm font-bold text-white">Upcoming Mobile Game</h4>
+                  <h4 className="font-display text-sm font-bold text-white">
+                    Upcoming Mobile Game
+                  </h4>
                   <p className="text-xs text-text-secondary leading-relaxed">
-                    I am working on mechanics drafts, asset styles, and setup logic for a mobile game.
+                    I am working on mechanics drafts, asset styles, and setup logic for a mobile
+                    game.
                   </p>
                 </div>
                 <span className="text-[9px] font-mono text-text-muted uppercase border border-border-subtle px-2 py-0.5 rounded w-fit">
@@ -774,11 +885,14 @@ export default function Home() {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <span className="h-1.5 w-1.5 rounded-full bg-text-muted shrink-0" />
-                    <span className="text-[10px] font-mono uppercase text-text-muted tracking-widest">Exploration Stage</span>
+                    <span className="text-[10px] font-mono uppercase text-text-muted tracking-widest">
+                      Exploration Stage
+                    </span>
                   </div>
                   <h4 className="font-display text-sm font-bold text-white">Micro Web Utilities</h4>
                   <p className="text-xs text-text-secondary leading-relaxed">
-                    I am prototyping small utilities that solve simple day-to-day workflow tasks while building my frontend skillset.
+                    I am prototyping small utilities that solve simple day-to-day workflow tasks
+                    while building my frontend skillset.
                   </p>
                 </div>
                 <span className="text-[9px] font-mono text-text-muted uppercase border border-border-subtle px-2 py-0.5 rounded w-fit">
@@ -791,7 +905,10 @@ export default function Home() {
       </SectionWrapper>
 
       {/* 8. Experience Snapshot */}
-      <SectionWrapper id="experience" className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle">
+      <SectionWrapper
+        id="experience"
+        className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle"
+      >
         <Container variant="reading">
           <SectionHeader
             align="center"
@@ -844,34 +961,39 @@ export default function Home() {
             <div className="grid grid-cols-1 gap-6">
               {[
                 {
-                  school: "West Thames College, London, United Kingdom",
-                  degree: "BTEC Level 3 Information Technology",
-                  period: "Sept 2024 - Present",
-                  desc: "I completed the T Level Foundation programme with a verified D*D result. I am preparing to begin the second and final year of my BTEC Level 3 Information Technology course."
+                  school: 'West Thames College, London, United Kingdom',
+                  degree: 'BTEC Level 3 Information Technology',
+                  period: 'Sept 2024 - Present',
+                  desc: 'I completed the T Level Foundation programme with a verified D*D result. I am preparing to begin the second and final year of my BTEC Level 3 Information Technology course.',
                 },
                 {
-                  school: "Rosary Higher Secondary School, Navelim, South Goa, India",
-                  degree: "Computer Technology Stream",
-                  period: "2022 - 2023",
-                  desc: "I completed Standards 11 and 12 in Computer Technology with distinction. My studies included programming logic, database systems, software applications and computer networks."
+                  school: 'Rosary Higher Secondary School, Navelim, South Goa, India',
+                  degree: 'Computer Technology Stream',
+                  period: '2022 - 2023',
+                  desc: 'I completed Standards 11 and 12 in Computer Technology with distinction. My studies included programming logic, database systems, software applications and computer networks.',
                 },
                 {
-                  school: "St. Pius X Convent High School, Orlim, South Goa, India",
-                  degree: "Secondary Education through Standard 10",
-                  period: "Completed 2021",
-                  desc: "I completed my school education through Standard 10 and graduated with distinction."
+                  school: 'St. Pius X Convent High School, Orlim, South Goa, India',
+                  degree: 'Secondary Education through Standard 10',
+                  period: 'Completed 2021',
+                  desc: 'I completed my school education through Standard 10 and graduated with distinction.',
                 },
                 {
-                  school: "University Computing Course",
-                  degree: "Planned Next Step",
-                  period: "Future Direction",
-                  desc: "After completing BTEC Level 3, I plan to progress to a computing-related university course."
-                }
+                  school: 'University Computing Course',
+                  degree: 'Planned Next Step',
+                  period: 'Future Direction',
+                  desc: 'After completing BTEC Level 3, I plan to progress to a computing-related university course.',
+                },
               ].map((item) => (
-                <div key={item.school} className="p-6 rounded-xl border border-border-standard bg-bg-secondary/40 flex flex-col md:flex-row md:items-start justify-between gap-4">
+                <div
+                  key={item.school}
+                  className="p-6 rounded-xl border border-border-standard bg-bg-secondary/40 flex flex-col md:flex-row md:items-start justify-between gap-4"
+                >
                   <div className="space-y-1.5">
                     <h4 className="font-display text-sm font-bold text-white">{item.school}</h4>
-                    <span className="text-xs text-accent-cyan font-semibold block">{item.degree}</span>
+                    <span className="text-xs text-accent-cyan font-semibold block">
+                      {item.degree}
+                    </span>
                     <p className="text-xs text-text-secondary leading-relaxed pt-2">{item.desc}</p>
                   </div>
                   <span className="text-[10px] font-mono text-text-muted uppercase shrink-0 pt-1 font-bold">
@@ -885,7 +1007,10 @@ export default function Home() {
       </SectionWrapper>
 
       {/* 10. Recognition & Leadership */}
-      <SectionWrapper id="awards" className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle">
+      <SectionWrapper
+        id="awards"
+        className="py-24 bg-bg-secondary/20 border-t border-b border-border-subtle"
+      >
         <Container variant="reading">
           <SectionHeader
             align="center"
@@ -899,10 +1024,15 @@ export default function Home() {
               <div className="p-6 rounded-xl border border-border-standard bg-bg-secondary/40 flex flex-col justify-between h-full space-y-4">
                 <div className="space-y-2">
                   <Trophy className="h-5 w-5 text-accent-teal" />
-                  <h4 className="font-display text-sm font-bold text-white">Student Experience Student of the Year 2025–2026</h4>
-                  <span className="text-[10px] font-mono text-text-muted uppercase block">West Thames College</span>
+                  <h4 className="font-display text-sm font-bold text-white">
+                    Student Experience Student of the Year 2025–2026
+                  </h4>
+                  <span className="text-[10px] font-mono text-text-muted uppercase block">
+                    West Thames College
+                  </span>
                   <p className="text-xs text-text-secondary leading-relaxed pt-1">
-                    I received this college award in recognition of my academic work, helping classmates understand coding layouts and database setups.
+                    I received this college award in recognition of my academic work, helping
+                    classmates understand coding layouts and database setups.
                   </p>
                 </div>
                 <span className="text-[9px] font-mono text-accent-cyan border border-accent-teal/20 px-2 py-0.5 rounded w-fit">
@@ -914,10 +1044,15 @@ export default function Home() {
               <div className="p-6 rounded-xl border border-border-standard bg-bg-secondary/40 flex flex-col justify-between h-full space-y-4">
                 <div className="space-y-2">
                   <Sparkles className="h-5 w-5 text-accent-cyan" />
-                  <h4 className="font-display text-sm font-bold text-white">Goan Tiatr Performing Experience</h4>
-                  <span className="text-[10px] font-mono text-text-muted uppercase block">Creative Participation</span>
+                  <h4 className="font-display text-sm font-bold text-white">
+                    Goan Tiatr Performing Experience
+                  </h4>
+                  <span className="text-[10px] font-mono text-text-muted uppercase block">
+                    Creative Participation
+                  </span>
                   <p className="text-xs text-text-secondary leading-relaxed pt-1">
-                    I performed in traditional Goan stage plays. This helped me build my confidence, stage presence, public communication, and group coordination skills.
+                    I performed in traditional Goan stage plays. This helped me build my confidence,
+                    stage presence, public communication, and group coordination skills.
                   </p>
                 </div>
                 <span className="text-[9px] font-mono text-text-muted border border-border-subtle px-2 py-0.5 rounded w-fit">
@@ -943,7 +1078,8 @@ export default function Home() {
                   Let&apos;s build something meaningful together.
                 </Headline>
                 <p className="text-xs text-text-secondary leading-relaxed max-w-sm mx-auto">
-                  Have a design project, digital idea, or opportunity to discuss? I am open to collaborations, freelance work, and conversations about creative technology.
+                  Have a design project, digital idea, or opportunity to discuss? I am open to
+                  collaborations, freelance work, and conversations about creative technology.
                 </p>
               </div>
 
@@ -970,10 +1106,10 @@ export default function Home() {
                   )}
                 </Button>
               </div>
-              
+
               {/* Screen reader live region */}
               <span className="sr-only" aria-live="polite">
-                {copied ? "Email address copied to clipboard" : ""}
+                {copied ? 'Email address copied to clipboard' : ''}
               </span>
 
               {/* Direct links to socials */}
@@ -1023,15 +1159,15 @@ export default function Home() {
 }
 
 // Chevron helper
-function ChevronDownIcon({ className = "" }: { className?: string }) {
+function ChevronDownIcon({ className = '' }: { className?: string }) {
   return (
-    <svg 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2.5" 
-      strokeLinecap="round" 
-      strokeLinejoin="round" 
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className={`h-3 w-3 ${className}`}
     >
       <path d="m6 9 6 6 6-6" />

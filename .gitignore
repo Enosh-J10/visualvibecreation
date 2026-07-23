@@ -12,6 +12,9 @@
 
 # testing
 /coverage
+/playwright-report
+/test-results
+/lighthouse-reports
 
 # next.js
 /.next/
@@ -44,4 +47,3 @@ next-env.d.ts
 # additional exclusions
 /dist
 *.log
-

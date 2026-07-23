@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-"use client";
+'use client';
 
-import { motion, useScroll, useSpring, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, useScroll, useSpring, useReducedMotion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 export default function ScrollProgress() {
   const { scrollYProgress } = useScroll();

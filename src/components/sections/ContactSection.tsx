@@ -1,41 +1,35 @@
-"use client";
+'use client';
 
-import { useState, useRef } from "react";
-import { MapPin, Copy, Check, Send, Sparkles } from "lucide-react";
-import { MagneticWrapper } from "@/components/animations/MotionWrappers";
-import Button from "@/components/ui/Button";
-import { type TurnstileInstance } from "@marsidev/react-turnstile";
-import { contactSchema } from "@/lib/contact-schema";
-import dynamic from "next/dynamic";
+import { useState, useRef } from 'react';
+import { MapPin, Copy, Check, Send, Sparkles } from 'lucide-react';
+import { MagneticWrapper } from '@/components/animations/MotionWrappers';
+import Button from '@/components/ui/Button';
+import { type TurnstileInstance } from '@marsidev/react-turnstile';
+import { contactSchema } from '@/lib/contact-schema';
+import dynamic from 'next/dynamic';
 
-const Turnstile = dynamic(
-  () => import("@marsidev/react-turnstile").then((mod) => mod.Turnstile),
-  { ssr: false }
-);
+const Turnstile = dynamic(() => import('@marsidev/react-turnstile').then((mod) => mod.Turnstile), {
+  ssr: false,
+});
 
 export default function ContactSection() {
   const [copied, setCopied] = useState(false);
 
   // Form State
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [companyWebsite, setCompanyWebsite] = useState(""); // Honeypot
-  const [turnstileToken, setTurnstileToken] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [companyWebsite, setCompanyWebsite] = useState(''); // Honeypot
+  const [turnstileToken, setTurnstileToken] = useState('');
 
-  type VerificationState =
-    | "loading"
-    | "ready"
-    | "verified"
-    | "expired"
-    | "error";
+  type VerificationState = 'loading' | 'ready' | 'verified' | 'expired' | 'error';
 
-  const [verificationState, setVerificationState] = useState<VerificationState>("loading");
+  const [verificationState, setVerificationState] = useState<VerificationState>('loading');
   const [verificationMessage, setVerificationMessage] = useState<string | null>(null);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
   const [fieldErrors, setFieldErrors] = useState<{
     name?: string;
     email?: string;
@@ -45,15 +39,15 @@ export default function ContactSection() {
   const turnstileRef = useRef<TurnstileInstance>(null);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("hello@visualvibecreation.com");
+    navigator.clipboard.writeText('hello@visualvibecreation.com');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const resetTurnstile = () => {
     turnstileRef.current?.reset();
-    setTurnstileToken("");
-    setVerificationState("ready");
+    setTurnstileToken('');
+    setVerificationState('ready');
     setVerificationMessage(null);
   };
 
@@ -62,8 +56,8 @@ export default function ContactSection() {
     if (isSubmitting) return;
 
     setIsSubmitting(true);
-    setSubmitStatus("idle");
-    setErrorMessage("");
+    setSubmitStatus('idle');
+    setErrorMessage('');
     setFieldErrors({});
 
     // Validate fields (name, email, message)
@@ -90,8 +84,8 @@ export default function ContactSection() {
     }
 
     // Check Turnstile token explicitly
-    if (verificationState !== "verified" || !turnstileToken) {
-      setVerificationMessage("Please complete the security verification.");
+    if (verificationState !== 'verified' || !turnstileToken) {
+      setVerificationMessage('Please complete the security verification.');
       setIsSubmitting(false);
       return;
     }
@@ -99,10 +93,10 @@ export default function ContactSection() {
     const token = turnstileToken;
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
+      const response = await fetch('/api/contact', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           name,
@@ -116,33 +110,33 @@ export default function ContactSection() {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        setSubmitStatus("error");
+        setSubmitStatus('error');
 
-        if (data.code === "TURNSTILE_EXPIRED") {
-          setVerificationState("expired");
-          setVerificationMessage("The security verification expired. Please verify again.");
-          setErrorMessage("The security verification expired. Please verify again.");
-        } else if (data.code === "TURNSTILE_INVALID") {
-          setVerificationState("error");
-          setVerificationMessage("Verification failed. Please retry.");
-          setErrorMessage("Verification failed. Please retry.");
+        if (data.code === 'TURNSTILE_EXPIRED') {
+          setVerificationState('expired');
+          setVerificationMessage('The security verification expired. Please verify again.');
+          setErrorMessage('The security verification expired. Please verify again.');
+        } else if (data.code === 'TURNSTILE_INVALID') {
+          setVerificationState('error');
+          setVerificationMessage('Verification failed. Please retry.');
+          setErrorMessage('Verification failed. Please retry.');
         } else {
-          setErrorMessage(data.message || "Your message could not be sent right now.");
+          setErrorMessage(data.message || 'Your message could not be sent right now.');
         }
       } else {
-        setSubmitStatus("success");
+        setSubmitStatus('success');
         // Clear form on success
-        setName("");
-        setEmail("");
-        setMessage("");
-        setCompanyWebsite("");
+        setName('');
+        setEmail('');
+        setMessage('');
+        setCompanyWebsite('');
         // Reset Turnstile
         resetTurnstile();
       }
     } catch (err) {
-      setSubmitStatus("error");
-      setErrorMessage("Your message could not be sent right now.");
-      console.error("Network error during submission:", err);
+      setSubmitStatus('error');
+      setErrorMessage('Your message could not be sent right now.');
+      console.error('Network error during submission:', err);
     } finally {
       setIsSubmitting(false);
     }
@@ -162,7 +156,8 @@ export default function ContactSection() {
                 Let&apos;s build something meaningful.
               </h2>
               <p className="mt-4 text-xs text-text-secondary leading-relaxed">
-                Have a project, opportunity or idea to discuss? Send me a message and I’ll get back to you as soon as I can.
+                Have a project, opportunity or idea to discuss? Send me a message and I’ll get back
+                to you as soon as I can.
               </p>
 
               {/* Availability Indicator */}
@@ -177,13 +172,18 @@ export default function ContactSection() {
 
             {/* Email card */}
             <div className="space-y-4">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-white">Direct Email</h3>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-white">
+                Direct Email
+              </h3>
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-3.5 rounded-xl border border-border-standard bg-bg-secondary/40 backdrop-blur-sm group hover:border-accent-teal/20 transition-all duration-300 min-w-0">
                 <div className="min-w-0">
                   <p className="text-[10px] text-text-secondary font-mono uppercase tracking-wider block">
                     General & Business Inbox
                   </p>
-                  <p className="text-xs font-semibold text-white mt-0.5 break-words" style={{ overflowWrap: "anywhere" }}>
+                  <p
+                    className="text-xs font-semibold text-white mt-0.5 break-words"
+                    style={{ overflowWrap: 'anywhere' }}
+                  >
                     hello@visualvibecreation.com
                   </p>
                 </div>
@@ -219,7 +219,8 @@ export default function ContactSection() {
               <div className="rounded-xl border border-border-standard bg-white/[0.02] p-4 text-xs text-text-secondary flex items-start gap-2.5">
                 <Sparkles className="h-4 w-4 shrink-0 mt-0.5 text-accent-cyan" aria-hidden="true" />
                 <span>
-                  Your message is sent securely to my inbox. I will only use your details to respond to this enquiry.
+                  Your message is sent securely to my inbox. I will only use your details to respond
+                  to this enquiry.
                 </span>
               </div>
 
@@ -240,7 +241,10 @@ export default function ContactSection() {
 
                 {/* Name */}
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-xs font-mono text-text-secondary uppercase tracking-wider block">
+                  <label
+                    htmlFor="name"
+                    className="text-xs font-mono text-text-secondary uppercase tracking-wider block"
+                  >
                     Your Name
                   </label>
                   <input
@@ -256,10 +260,10 @@ export default function ContactSection() {
                       }
                     }}
                     placeholder="e.g. John Doe"
-                    disabled={isSubmitting || submitStatus === "success"}
+                    disabled={isSubmitting || submitStatus === 'success'}
                     className="w-full rounded-xl border border-border-standard bg-white/[0.01] px-4 py-3.5 text-xs text-white placeholder-white/10 outline-none focus:border-accent-cyan focus:ring-1 focus:ring-accent-cyan transition-all min-h-[44px]"
-                    aria-invalid={fieldErrors.name ? "true" : "false"}
-                    aria-describedby={fieldErrors.name ? "name-error" : undefined}
+                    aria-invalid={fieldErrors.name ? 'true' : 'false'}
+                    aria-describedby={fieldErrors.name ? 'name-error' : undefined}
                   />
                   {fieldErrors.name && (
                     <p id="name-error" className="text-xs text-red-400 mt-1" role="alert">
@@ -270,7 +274,10 @@ export default function ContactSection() {
 
                 {/* Email */}
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-xs font-mono text-text-secondary uppercase tracking-wider block">
+                  <label
+                    htmlFor="email"
+                    className="text-xs font-mono text-text-secondary uppercase tracking-wider block"
+                  >
                     Email Address
                   </label>
                   <input
@@ -286,10 +293,10 @@ export default function ContactSection() {
                       }
                     }}
                     placeholder="e.g. john@example.com"
-                    disabled={isSubmitting || submitStatus === "success"}
+                    disabled={isSubmitting || submitStatus === 'success'}
                     className="w-full rounded-xl border border-border-standard bg-white/[0.01] px-4 py-3.5 text-xs text-white placeholder-white/10 outline-none focus:border-accent-cyan focus:ring-1 focus:ring-accent-cyan transition-all min-h-[44px]"
-                    aria-invalid={fieldErrors.email ? "true" : "false"}
-                    aria-describedby={fieldErrors.email ? "email-error" : undefined}
+                    aria-invalid={fieldErrors.email ? 'true' : 'false'}
+                    aria-describedby={fieldErrors.email ? 'email-error' : undefined}
                   />
                   {fieldErrors.email && (
                     <p id="email-error" className="text-xs text-red-400 mt-1" role="alert">
@@ -301,7 +308,10 @@ export default function ContactSection() {
                 {/* Message */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <label htmlFor="message" className="text-xs font-mono text-text-secondary uppercase tracking-wider block">
+                    <label
+                      htmlFor="message"
+                      className="text-xs font-mono text-text-secondary uppercase tracking-wider block"
+                    >
                       Your Message
                     </label>
                     <span className="text-[10px] font-mono text-text-muted" aria-live="polite">
@@ -320,10 +330,10 @@ export default function ContactSection() {
                       }
                     }}
                     placeholder="Describe your design or development goals..."
-                    disabled={isSubmitting || submitStatus === "success"}
+                    disabled={isSubmitting || submitStatus === 'success'}
                     className="w-full rounded-xl border border-border-standard bg-white/[0.01] px-4 py-3.5 text-xs text-white placeholder-white/10 outline-none resize-none focus:border-accent-cyan focus:ring-1 focus:ring-accent-cyan transition-all min-h-[44px]"
-                    aria-invalid={fieldErrors.message ? "true" : "false"}
-                    aria-describedby={fieldErrors.message ? "message-error" : undefined}
+                    aria-invalid={fieldErrors.message ? 'true' : 'false'}
+                    aria-describedby={fieldErrors.message ? 'message-error' : undefined}
                   />
                   {fieldErrors.message && (
                     <p id="message-error" className="text-xs text-red-400 mt-1" role="alert">
@@ -337,35 +347,37 @@ export default function ContactSection() {
                   <div className="w-full overflow-hidden max-w-full min-h-[70px]">
                     <Turnstile
                       ref={turnstileRef}
-                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA"}
+                      siteKey={
+                        process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'
+                      }
                       onLoad={() => {
-                        setVerificationState((current) => (current === "verified" ? current : "ready"));
+                        setVerificationState((current) =>
+                          current === 'verified' ? current : 'ready',
+                        );
                       }}
                       onSuccess={(token: string) => {
                         setTurnstileToken(token);
-                        setVerificationState("verified");
+                        setVerificationState('verified');
                         setVerificationMessage(null);
                       }}
                       onExpire={() => {
-                        setTurnstileToken("");
-                        setVerificationState("expired");
+                        setTurnstileToken('');
+                        setVerificationState('expired');
                         setVerificationMessage(
-                          "The security verification expired. Please verify again."
+                          'The security verification expired. Please verify again.',
                         );
                       }}
                       onError={() => {
-                        setTurnstileToken("");
-                        setVerificationState("error");
-                        setVerificationMessage(
-                          "Verification failed. Please retry."
-                        );
+                        setTurnstileToken('');
+                        setVerificationState('error');
+                        setVerificationMessage('Verification failed. Please retry.');
                       }}
                       options={{
-                        theme: "dark",
-                        size: "flexible",
-                        refreshExpired: "auto",
-                        refreshTimeout: "auto",
-                        retry: "auto",
+                        theme: 'dark',
+                        size: 'flexible',
+                        refreshExpired: 'auto',
+                        refreshTimeout: 'auto',
+                        retry: 'auto',
                       }}
                     />
                   </div>
@@ -382,18 +394,22 @@ export default function ContactSection() {
                     <Button
                       variant="primary"
                       type="submit"
-                      disabled={isSubmitting || verificationState !== "verified" || !turnstileToken}
+                      disabled={isSubmitting || verificationState !== 'verified' || !turnstileToken}
                       className="w-full flex items-center justify-center gap-2 min-h-[44px]"
                       icon={isSubmitting ? undefined : <Send className="h-3.5 w-3.5" />}
                     >
-                      {isSubmitting ? "Sending..." : submitStatus === "success" ? "Message sent" : "Send message"}
+                      {isSubmitting
+                        ? 'Sending...'
+                        : submitStatus === 'success'
+                          ? 'Message sent'
+                          : 'Send message'}
                     </Button>
                   </MagneticWrapper>
 
                   {/* Mailto fallback */}
                   <div className="text-center pt-2">
                     <p className="text-[11px] text-text-secondary">
-                      Prefer email?{" "}
+                      Prefer email?{' '}
                       <a
                         href="mailto:hello@visualvibecreation.com"
                         className="text-accent-teal hover:text-accent-cyan underline transition-colors"
@@ -406,12 +422,12 @@ export default function ContactSection() {
 
                 {/* ARIA live status announcements */}
                 <div aria-live="polite" className="mt-4">
-                  {submitStatus === "success" && (
+                  {submitStatus === 'success' && (
                     <div className="rounded-xl border border-green-500/20 bg-green-500/5 p-4 text-xs text-green-400 font-medium">
                       Thanks — your message has been sent. I&apos;ll respond as soon as I can.
                     </div>
                   )}
-                  {submitStatus === "error" && (
+                  {submitStatus === 'error' && (
                     <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4 text-xs text-red-400 font-medium">
                       {errorMessage}
                     </div>

@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { Calendar } from "lucide-react";
+import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Calendar } from 'lucide-react';
 
 // Reusable card wrapper that adds interactive scale/glow transitions
 function CardWrapper({
   children,
-  className = "",
+  className = '',
   interactive = true,
 }: {
   children: React.ReactNode;
@@ -20,8 +20,8 @@ function CardWrapper({
   return (
     <motion.div
       whileHover={interactive ? { scale: hoverScale } : {}}
-      transition={{ duration: 0.2, ease: "easeOut" }}
-      className={`card-standard ${interactive ? "card-interactive" : ""} ${className}`}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
+      className={`card-standard ${interactive ? 'card-interactive' : ''} ${className}`}
     >
       {children}
     </motion.div>
@@ -50,9 +50,7 @@ export function ExperienceCard({
         <div>
           <h4 className="font-display text-base font-bold text-white">{role}</h4>
           <span className="text-xs text-accent-cyan font-mono tracking-wider">{company}</span>
-          {location && (
-            <span className="text-[10px] text-text-muted block mt-0.5">{location}</span>
-          )}
+          {location && <span className="text-[10px] text-text-muted block mt-0.5">{location}</span>}
         </div>
         <div className="inline-flex items-center gap-1.5 text-[10px] font-mono text-text-secondary bg-white/[0.02] border border-border-subtle px-2.5 py-1 rounded-md max-w-max shrink-0">
           <Calendar className="h-3 w-3 text-accent-teal" />

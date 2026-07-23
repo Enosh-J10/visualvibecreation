@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import TextReveal from "@/components/animations/TextReveal";
+import { motion } from 'framer-motion';
+import TextReveal from '@/components/animations/TextReveal';
 
 export default function Intro() {
   return (
@@ -21,11 +21,13 @@ export default function Intro() {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
+              viewport={{ once: true, margin: '-10%' }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-sm text-text-secondary leading-relaxed max-w-2xl"
             >
-              Visual Vibe Creation is my independent creative studio where I combine design, branding and technology to help ideas become engaging digital experiences. I believe digital builds should not only function cleanly but feel responsive and modern.
+              Visual Vibe Creation is my independent creative studio where I combine design,
+              branding and technology to help ideas become engaging digital experiences. I believe
+              digital builds should not only function cleanly but feel responsive and modern.
             </motion.p>
           </div>
 
@@ -46,20 +48,27 @@ export default function Intro() {
 
             <div className="mt-6 space-y-4 text-xs text-text-secondary leading-relaxed">
               <p>
-                Based in London, United Kingdom (originally from Goa, India), I focus on software development, graphic layout, and digital design.
+                Based in London, United Kingdom (originally from Goa, India), I focus on software
+                development, graphic layout, and digital design.
               </p>
               <p>
-                Currently preparing to begin the second and final year of my BTEC Level 3 Information Technology course at West Thames College, I founded Visual Vibe Creation to channel my creative project work.
+                Currently preparing to begin the second and final year of my BTEC Level 3
+                Information Technology course at West Thames College, I founded Visual Vibe Creation
+                to channel my creative project work.
               </p>
             </div>
 
             <div className="mt-8 pt-6 border-t border-border-subtle grid grid-cols-2 gap-4">
               <div>
-                <p className="text-[10px] font-mono text-text-muted uppercase tracking-wider">Location</p>
+                <p className="text-[10px] font-mono text-text-muted uppercase tracking-wider">
+                  Location
+                </p>
                 <p className="mt-1 text-xs font-semibold text-white">London, UK</p>
               </div>
               <div>
-                <p className="text-[10px] font-mono text-text-muted uppercase tracking-wider">Current Status</p>
+                <p className="text-[10px] font-mono text-text-muted uppercase tracking-wider">
+                  Current Status
+                </p>
                 <p className="mt-1 text-xs font-semibold text-white">Staged for Projects</p>
               </div>
             </div>

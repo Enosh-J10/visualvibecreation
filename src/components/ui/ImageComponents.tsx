@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import Image from "next/image";
-import { Camera, ShieldCheck, Play, Image as ImageIcon } from "lucide-react";
-import { ASSET_REGISTRY, checkAssetKey } from "@/data/assets";
+import React from 'react';
+import Image from 'next/image';
+import { Camera, ShieldCheck, Play, Image as ImageIcon } from 'lucide-react';
+import { ASSET_REGISTRY, checkAssetKey } from '@/data/assets';
 
 interface PlaceholderProps {
   label: string;
@@ -14,9 +14,9 @@ interface PlaceholderProps {
 // Stable placeholder with one DOM structure for both server and client.
 // process.env.NODE_ENV is a build-time constant inlined by Turbopack —
 // identical on server and client, so no hydration mismatch occurs.
-const IS_DEV = process.env.NODE_ENV !== "production";
+const IS_DEV = process.env.NODE_ENV !== 'production';
 
-export function DevAssetPlaceholder({ label, dimensions, className = "" }: PlaceholderProps) {
+export function DevAssetPlaceholder({ label, dimensions, className = '' }: PlaceholderProps) {
   return (
     <div
       className={`flex flex-col items-center justify-center gap-2 p-6 rounded-xl border border-border-subtle bg-bg-secondary/20 text-center select-none ${className}`}
@@ -33,9 +33,7 @@ export function DevAssetPlaceholder({ label, dimensions, className = "" }: Place
             <span className="font-display text-xs font-bold text-text-secondary block">
               {label}
             </span>
-            <span className="text-[10px] font-mono text-text-muted block">
-              {dimensions}
-            </span>
+            <span className="text-[10px] font-mono text-text-muted block">{dimensions}</span>
             <span className="inline-flex items-center px-2 py-0.5 mt-1.5 rounded border border-yellow-500/20 bg-yellow-500/5 text-yellow-500 text-[9px] font-mono uppercase tracking-wider">
               Missing Asset
             </span>
@@ -51,23 +49,31 @@ export function DevAssetPlaceholder({ label, dimensions, className = "" }: Place
 }
 
 // 1. Portrait Image
-export function PortraitImage({ className = "" }: { src?: string; alt: string; className?: string }) {
-  const assetKey = "portrait";
+export function PortraitImage({
+  className = '',
+}: {
+  src?: string;
+  alt: string;
+  className?: string;
+}) {
+  const assetKey = 'portrait';
   checkAssetKey(assetKey);
   const entry = ASSET_REGISTRY[assetKey];
 
-  if (!entry || entry.status === "missing") {
+  if (!entry || entry.status === 'missing') {
     return (
       <DevAssetPlaceholder
-        label={entry?.label || "Professional Portrait"}
-        dimensions={entry?.dimensions || "800 x 1000 px · 4:5 Aspect"}
+        label={entry?.label || 'Professional Portrait'}
+        dimensions={entry?.dimensions || '800 x 1000 px · 4:5 Aspect'}
         className={`aspect-[4/5] w-full ${className}`}
       />
     );
   }
 
   return (
-    <div className={`relative aspect-[4/5] overflow-hidden rounded-2xl bg-bg-secondary ${className}`}>
+    <div
+      className={`relative aspect-[4/5] overflow-hidden rounded-2xl bg-bg-secondary ${className}`}
+    >
       <Image
         src={entry.intendedPath}
         alt={entry.alt}
@@ -81,16 +87,23 @@ export function PortraitImage({ className = "" }: { src?: string; alt: string; c
 }
 
 // 2. Landscape Image
-export function LandscapeImage({ className = "", src = "" }: { src?: string; alt: string; className?: string }) {
-  const assetKey = src.includes("goa") ? "goaLandscape" : "";
+export function LandscapeImage({
+  className = '',
+  src = '',
+}: {
+  src?: string;
+  alt: string;
+  className?: string;
+}) {
+  const assetKey = src.includes('goa') ? 'goaLandscape' : '';
   if (assetKey) checkAssetKey(assetKey);
   const entry = assetKey ? ASSET_REGISTRY[assetKey] : null;
 
-  if (!entry || entry.status === "missing") {
+  if (!entry || entry.status === 'missing') {
     return (
       <DevAssetPlaceholder
-        label={entry?.label || "Landscape Photograph"}
-        dimensions={entry?.dimensions || "1200 x 800 px · 3:2 Aspect"}
+        label={entry?.label || 'Landscape Photograph'}
+        dimensions={entry?.dimensions || '1200 x 800 px · 3:2 Aspect'}
         className={`aspect-[3/2] w-full ${className}`}
       />
     );
@@ -111,18 +124,20 @@ export function LandscapeImage({ className = "", src = "" }: { src?: string; alt
 
 // 3. FinCalc Poster — displayed as a styled poster card (not a phone shell,
 // because the asset is a square launch poster, not a phone screenshot).
-export function PhoneMockup({ className = "" }: { src?: string; alt: string; className?: string }) {
-  const assetKey = "fincalcMockup";
+export function PhoneMockup({ className = '' }: { src?: string; alt: string; className?: string }) {
+  const assetKey = 'fincalcMockup';
   checkAssetKey(assetKey);
   const entry = ASSET_REGISTRY[assetKey];
 
-  if (!entry || entry.status === "missing") {
+  if (!entry || entry.status === 'missing') {
     return (
-      <div className={`relative mx-auto max-w-[280px] w-full aspect-[9/19.5] rounded-[36px] border-[8px] border-bg-secondary bg-black shadow-xl shadow-black/60 ring-1 ring-white/10 overflow-hidden flex items-center justify-center p-4 ${className}`}>
+      <div
+        className={`relative mx-auto max-w-[280px] w-full aspect-[9/19.5] rounded-[36px] border-[8px] border-bg-secondary bg-black shadow-xl shadow-black/60 ring-1 ring-white/10 overflow-hidden flex items-center justify-center p-4 ${className}`}
+      >
         <div className="absolute top-0 left-1/2 -translate-x-1/2 h-4 w-28 bg-bg-secondary rounded-b-xl z-20" />
         <DevAssetPlaceholder
-          label={entry?.label || "FinCalc Launch Poster"}
-          dimensions={entry?.dimensions || "1080 x 1080 px"}
+          label={entry?.label || 'FinCalc Launch Poster'}
+          dimensions={entry?.dimensions || '1080 x 1080 px'}
           className="w-full h-full border-none bg-transparent"
         />
       </div>
@@ -132,7 +147,9 @@ export function PhoneMockup({ className = "" }: { src?: string; alt: string; cla
   // Use explicit width/height — fill mode requires the parent to have a set height
   // which is unreliable inside flex containers. A fixed 340×340 square is simpler.
   return (
-    <div className={`relative mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-black/70 ring-1 ring-white/10 ${className}`}>
+    <div
+      className={`relative mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-black/70 ring-1 ring-white/10 ${className}`}
+    >
       <Image
         src={entry.intendedPath}
         alt={entry.alt}
@@ -146,7 +163,13 @@ export function PhoneMockup({ className = "" }: { src?: string; alt: string; cla
 }
 
 // 4. Laptop Mockup
-export function LaptopMockup({ className = "" }: { src?: string; alt: string; className?: string }) {
+export function LaptopMockup({
+  className = '',
+}: {
+  src?: string;
+  alt: string;
+  className?: string;
+}) {
   return (
     <div className={`relative w-full max-w-[640px] mx-auto ${className}`}>
       <div className="relative aspect-[16/10] w-full bg-black rounded-t-xl border-[6px] border-bg-secondary overflow-hidden shadow-xl ring-1 ring-white/10 flex items-center justify-center p-6">
@@ -192,9 +215,9 @@ export function CertificatePreview({
 
 // 6. Photography Preview
 export function PhotographyPreview({
-  camera = "Sony Alpha",
-  settings = "f/2.8 · 1/160s · ISO 100",
-  category = "Nature",
+  camera = 'Sony Alpha',
+  settings = 'f/2.8 · 1/160s · ISO 100',
+  category = 'Nature',
 }: {
   src?: string;
   alt: string;
@@ -222,7 +245,7 @@ export function PhotographyPreview({
 
 // 7. Video Thumbnail
 export function VideoThumbnail({
-  duration = "02:45",
+  duration = '02:45',
   title,
 }: {
   src?: string;

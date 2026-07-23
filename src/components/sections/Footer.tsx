@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { Mail, ArrowUpRight, Play } from "lucide-react";
-import { GithubIcon, LinkedinIcon, InstagramIcon } from "@/components/ui/BrandIcons";
+import Link from 'next/link';
+import { Mail, ArrowUpRight, Play } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from '@/components/ui/BrandIcons';
 
 const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Projects", href: "/projects" },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "Services", href: "/services" },
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Projects', href: '/projects' },
+  { name: 'Portfolio', href: '/portfolio' },
+  { name: 'Services', href: '/services' },
 ];
 
 const credentialLinks = [
-  { name: "Experience", href: "/#experience" },
-  { name: "Education", href: "/#education" },
-  { name: "Contact", href: "/contact" },
+  { name: 'Experience', href: '/#experience' },
+  { name: 'Education', href: '/#education' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 export default function Footer() {
@@ -25,7 +25,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4 lg:grid-cols-5">
           {/* Identity & Social Badges Column */}
           <div className="md:col-span-2 space-y-5">
-            <Link href="/" className="group flex items-center gap-3 select-none" aria-label="Enosh Jaques Home Page">
+            <Link
+              href="/"
+              className="group flex items-center gap-3 select-none"
+              aria-label="Enosh Jaques Home Page"
+            >
               <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full overflow-hidden ring-1 ring-white/10">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -46,7 +50,8 @@ export default function Footer() {
               </div>
             </Link>
             <p className="max-w-sm text-xs text-text-secondary leading-relaxed">
-              Visual Vibe Creation — the independent creative studio of Enosh Jaques. Building digital systems, visuals, and applications.
+              Visual Vibe Creation — the independent creative studio of Enosh Jaques. Building
+              digital systems, visuals, and applications.
             </p>
             <div className="flex items-center gap-2">
               <a
@@ -96,7 +101,10 @@ export default function Footer() {
             <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-xs text-text-secondary hover:text-white transition-colors duration-200 py-1 block">
+                  <Link
+                    href={link.href}
+                    className="text-xs text-text-secondary hover:text-white transition-colors duration-200 py-1 block"
+                  >
                     {link.name}
                   </Link>
                 </li>
@@ -112,7 +120,10 @@ export default function Footer() {
             <ul className="space-y-2">
               {credentialLinks.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-xs text-text-secondary hover:text-white transition-colors duration-200 py-1 block">
+                  <Link
+                    href={link.href}
+                    className="text-xs text-text-secondary hover:text-white transition-colors duration-200 py-1 block"
+                  >
                     {link.name}
                   </Link>
                 </li>
@@ -130,7 +141,7 @@ export default function Footer() {
                 <a
                   href="mailto:hello@visualvibecreation.com"
                   className="group inline-flex items-center gap-1.5 text-xs text-text-secondary hover:text-white transition-colors duration-200 py-1 max-w-full min-w-0"
-                  style={{ overflowWrap: "anywhere" }}
+                  style={{ overflowWrap: 'anywhere' }}
                 >
                   <Mail className="h-3.5 w-3.5 text-accent-teal shrink-0" />
                   <span className="break-all">hello@visualvibecreation.com</span>
@@ -138,9 +149,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <span className="text-[10px] text-text-muted block mt-2">
-                  Independent Studio:
-                </span>
+                <span className="text-[10px] text-text-muted block mt-2">Independent Studio:</span>
                 <span className="text-xs text-text-secondary block mt-0.5 font-mono">
                   Est. 2022
                 </span>
@@ -152,7 +161,9 @@ export default function Footer() {
         {/* Footer Bottom Details */}
         <div className="mt-16 border-t border-border-subtle pt-8 flex flex-col items-center justify-between gap-4 sm:flex-row text-[11px] text-text-muted">
           <div>
-            Designed and developed by <span className="font-semibold text-text-secondary">Enosh Jaques</span>. &copy; {new Date().getUTCFullYear()}. All rights reserved.
+            Designed and developed by{' '}
+            <span className="font-semibold text-text-secondary">Enosh Jaques</span>. &copy;{' '}
+            {new Date().getUTCFullYear()}. All rights reserved.
           </div>
           <div className="flex items-center gap-1">
             <span>Next.js</span>

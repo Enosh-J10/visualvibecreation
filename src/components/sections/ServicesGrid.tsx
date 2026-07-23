@@ -1,36 +1,58 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { Palette, Terminal, Film, Monitor } from "lucide-react";
+import { motion } from 'framer-motion';
+import { Palette, Terminal, Film, Monitor } from 'lucide-react';
 
 const serviceCategories = [
   {
-    title: "UI/UX & Web Design",
+    title: 'UI/UX & Web Design',
     icon: Monitor,
-    description: "Creating visually clean web interfaces focusing on pixel-perfect layouts, intuitive navigation, and consistent brand typography.",
-    services: ["UI Design", "UX Design", "Website Design", "Frontend Development", "Website Development"],
-    color: "from-accent-cyan/5 to-transparent",
+    description:
+      'Creating visually clean web interfaces focusing on pixel-perfect layouts, intuitive navigation, and consistent brand typography.',
+    services: [
+      'UI Design',
+      'UX Design',
+      'Website Design',
+      'Frontend Development',
+      'Website Development',
+    ],
+    color: 'from-accent-cyan/5 to-transparent',
   },
   {
-    title: "Software & Mobile Apps",
+    title: 'Software & Mobile Apps',
     icon: Terminal,
-    description: "Developing lightweight mobile applications and custom desktop software tailored for optimal performance and native integration.",
-    services: ["Android App Development", "Software Development", "Game Design", "Java/Kotlin systems"],
-    color: "from-accent-teal/5 to-transparent",
+    description:
+      'Developing lightweight mobile applications and custom desktop software tailored for optimal performance and native integration.',
+    services: [
+      'Android App Development',
+      'Software Development',
+      'Game Design',
+      'Java/Kotlin systems',
+    ],
+    color: 'from-accent-teal/5 to-transparent',
   },
   {
-    title: "Graphic Design & Branding",
+    title: 'Graphic Design & Branding',
     icon: Palette,
-    description: "Designing brand identity packages and monogram assets that communicate clearly across digital platforms.",
-    services: ["Logo Design", "Brand Identity", "Poster Design", "Business Cards", "Social Media Design", "Digital Branding"],
-    color: "from-accent-teal/5 to-transparent",
+    description:
+      'Designing brand identity packages and monogram assets that communicate clearly across digital platforms.',
+    services: [
+      'Logo Design',
+      'Brand Identity',
+      'Poster Design',
+      'Business Cards',
+      'Social Media Design',
+      'Digital Branding',
+    ],
+    color: 'from-accent-teal/5 to-transparent',
   },
   {
-    title: "Motion Graphics & Video",
+    title: 'Motion Graphics & Video',
     icon: Film,
-    description: "Editing high-fidelity promotional clips, visual assets, transition kits, and engaging motion sequences.",
-    services: ["Video Editing", "Motion Graphics", "VFX Compositing", "Promotional Videos"],
-    color: "from-white/[0.01] to-transparent",
+    description:
+      'Editing high-fidelity promotional clips, visual assets, transition kits, and engaging motion sequences.',
+    services: ['Video Editing', 'Motion Graphics', 'VFX Compositing', 'Promotional Videos'],
+    color: 'from-white/[0.01] to-transparent',
   },
 ];
 
@@ -46,7 +68,8 @@ export default function ServicesGrid() {
             Digital Services
           </h2>
           <p className="text-sm text-text-secondary leading-relaxed">
-            I provide a focused range of design and development capabilities to help ideas become clean digital products.
+            I provide a focused range of design and development capabilities to help ideas become
+            clean digital products.
           </p>
         </div>
 
@@ -58,12 +81,14 @@ export default function ServicesGrid() {
                 key={cat.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-5%" }}
+                viewport={{ once: true, margin: '-5%' }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="group relative rounded-2xl border border-border-standard bg-bg-secondary p-8 hover:border-accent-teal/20 transition-all duration-300 flex flex-col justify-between"
               >
                 {/* Accent Background Gradient */}
-                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${cat.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
+                <div
+                  className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${cat.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
+                />
 
                 <div>
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.03] border border-border-standard text-white group-hover:text-accent-cyan group-hover:border-accent-teal/20 transition-all duration-300">

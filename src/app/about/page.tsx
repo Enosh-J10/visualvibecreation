@@ -1,11 +1,12 @@
-import { Container } from "@/components/ui/Sections";
-import Intro from "@/components/sections/Intro";
-import Timeline from "@/components/sections/Timeline";
-import Skills from "@/components/sections/Skills";
+import { Container } from '@/components/ui/Sections';
+import Intro from '@/components/sections/Intro';
+import Timeline from '@/components/sections/Timeline';
+import Skills from '@/components/sections/Skills';
 
 export const metadata = {
-  title: "About | Visual Vibe Creation",
-  description: "Learn more about Enosh Jaques and the vision behind the Visual Vibe Creation creative digital studio.",
+  title: 'About | Visual Vibe Creation',
+  description:
+    'Learn more about Enosh Jaques and the vision behind the Visual Vibe Creation creative digital studio.',
 };
 
 export default function AboutPage() {
@@ -16,7 +17,8 @@ export default function AboutPage() {
           The Creative Journey
         </h1>
         <p className="mt-4 text-xs text-text-secondary leading-relaxed max-w-xl mx-auto">
-          Driven by engineering precision and designed with cinematic style. Read about my origins, tools, and technical timeline.
+          Driven by engineering precision and designed with cinematic style. Read about my origins,
+          tools, and technical timeline.
         </p>
       </Container>
 

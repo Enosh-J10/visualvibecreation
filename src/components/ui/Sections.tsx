@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface SectionProps {
   children: React.ReactNode;
@@ -6,7 +6,7 @@ interface SectionProps {
   id?: string;
 }
 
-export function SectionWrapper({ children, className = "", id }: SectionProps) {
+export function SectionWrapper({ children, className = '', id }: SectionProps) {
   return (
     <section
       suppressHydrationWarning
@@ -18,11 +18,15 @@ export function SectionWrapper({ children, className = "", id }: SectionProps) {
   );
 }
 
-export function Container({ children, className = "", variant = "standard" }: SectionProps & { variant?: "standard" | "reading" | "wide" }) {
+export function Container({
+  children,
+  className = '',
+  variant = 'standard',
+}: SectionProps & { variant?: 'standard' | 'reading' | 'wide' }) {
   const containerClasses = {
-    standard: "container-standard",
-    reading: "container-reading",
-    wide: "container-wide",
+    standard: 'container-standard',
+    reading: 'container-reading',
+    wide: 'container-wide',
   };
 
   return (
@@ -36,50 +40,50 @@ export function SectionHeader({
   overline,
   title,
   subtitle,
-  className = "",
-  align = "left",
+  className = '',
+  align = 'left',
 }: {
   overline?: string;
   title: string;
   subtitle?: string;
   className?: string;
-  align?: "left" | "center";
+  align?: 'left' | 'center';
 }) {
-  const alignmentClass = align === "center" ? "text-center mx-auto" : "text-left";
+  const alignmentClass = align === 'center' ? 'text-center mx-auto' : 'text-left';
   return (
     <div className={`max-w-2xl mb-12 ${alignmentClass} ${className}`}>
       {overline && (
-        <span className="text-overline uppercase tracking-widest block mb-2">
-          {overline}
-        </span>
+        <span className="text-overline uppercase tracking-widest block mb-2">{overline}</span>
       )}
-      <h3 className="text-h1 font-bold text-white tracking-tight leading-tight">
-        {title}
-      </h3>
-      {subtitle && (
-        <p className="mt-3 text-sm text-text-secondary leading-relaxed">
-          {subtitle}
-        </p>
-      )}
+      <h3 className="text-h1 font-bold text-white tracking-tight leading-tight">{title}</h3>
+      {subtitle && <p className="mt-3 text-sm text-text-secondary leading-relaxed">{subtitle}</p>}
     </div>
   );
 }
 
-export function Divider({ className = "" }: { className?: string }) {
+export function Divider({ className = '' }: { className?: string }) {
   return <hr className={`border-border-subtle my-[--spacing-lg] ${className}`} />;
 }
 
-export function GlassPanel({ children, className = "" }: SectionProps) {
+export function GlassPanel({ children, className = '' }: SectionProps) {
   return (
-    <div className={`glass-surface p-6 shadow-lg shadow-black/5 ${className}`}>
-      {children}
-    </div>
+    <div className={`glass-surface p-6 shadow-lg shadow-black/5 ${className}`}>{children}</div>
   );
 }
 
-export function StatisticBlock({ value, label, className = "" }: { value: string; label: string; className?: string }) {
+export function StatisticBlock({
+  value,
+  label,
+  className = '',
+}: {
+  value: string;
+  label: string;
+  className?: string;
+}) {
   return (
-    <div className={`flex flex-col gap-1.5 p-6 rounded-xl border border-border-subtle bg-bg-secondary/40 ${className}`}>
+    <div
+      className={`flex flex-col gap-1.5 p-6 rounded-xl border border-border-subtle bg-bg-secondary/40 ${className}`}
+    >
       <span className="font-display text-3xl md:text-4xl font-extrabold text-white tracking-tight">
         {value}
       </span>
@@ -90,11 +94,15 @@ export function StatisticBlock({ value, label, className = "" }: { value: string
   );
 }
 
-export function GridWrapper({ children, className = "", cols = 3 }: SectionProps & { cols?: 2 | 3 | 4 }) {
+export function GridWrapper({
+  children,
+  className = '',
+  cols = 3,
+}: SectionProps & { cols?: 2 | 3 | 4 }) {
   const columnClasses = {
-    2: "grid-cols-1 md:grid-cols-2",
-    3: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
-    4: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
+    2: 'grid-cols-1 md:grid-cols-2',
+    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+    4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
   };
 
   return (
@@ -106,7 +114,10 @@ export function GridWrapper({ children, className = "", cols = 3 }: SectionProps
 
 export function HeroBackground() {
   return (
-    <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none select-none" aria-hidden="true">
+    <div
+      className="absolute inset-0 -z-10 overflow-hidden pointer-events-none select-none"
+      aria-hidden="true"
+    >
       {/* Structural Grids */}
       <div className="absolute inset-0 grid-overlay opacity-30" />
       {/* Subtle Cyan ambient light */}

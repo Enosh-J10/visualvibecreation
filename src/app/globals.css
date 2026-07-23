@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* 
   =========================================
@@ -63,7 +63,7 @@
   --text-primary: #ffffff;
   --text-secondary: #8e8e93;
   --text-muted: #5e5e64;
-  
+
   /* 14. Border and Divider System */
   --border-subtle: rgba(255, 255, 255, 0.04);
   --border-standard: rgba(255, 255, 255, 0.08);
@@ -74,14 +74,14 @@
   --accent-hover: #0f766e;
   --accent-soft: rgba(13, 148, 136, 0.12);
   --accent-cyan: #a5f3fc;
-  
+
   --focus-ring: #0d9488;
 
   /* 15. Status Colours */
   --success: #30d158; /* iOS Green (4.5:1 on #070708) */
   --warning: #ff9f0a; /* iOS Orange (4.5:1 on #070708) */
-  --error: #ff453a;   /* iOS Red (4.5:1 on #070708) */
-  --info: #0a84ff;    /* iOS Blue */
+  --error: #ff453a; /* iOS Red (4.5:1 on #070708) */
+  --info: #0a84ff; /* iOS Blue */
 
   /* --- 6. Shadow & Glow System --- */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
@@ -92,14 +92,14 @@
   --glow-teal-subtle: 0 0 20px rgba(13, 148, 136, 0.08);
 
   /* --- 7. Spacing System --- */
-  --spacing-2xs: 0.25rem;  /* 4px */
-  --spacing-xs: 0.5rem;    /* 8px */
-  --spacing-sm: 0.75rem;   /* 12px */
-  --spacing-md: 1rem;      /* 16px */
-  --spacing-lg: 1.5rem;    /* 24px */
-  --spacing-xl: 2rem;      /* 32px */
-  --spacing-2xl: 3rem;     /* 48px */
-  --spacing-3xl: 4rem;     /* 64px */
+  --spacing-2xs: 0.25rem; /* 4px */
+  --spacing-xs: 0.5rem; /* 8px */
+  --spacing-sm: 0.75rem; /* 12px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+  --spacing-3xl: 4rem; /* 64px */
   --spacing-section: clamp(4rem, 8vw, 8rem);
   --spacing-page-top: clamp(6rem, 12vw, 9rem);
   --spacing-gutter: clamp(1rem, 3vw, 2rem);
@@ -137,7 +137,7 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
-[tabindex="0"]:focus-visible {
+[tabindex='0']:focus-visible {
   outline: 2px solid var(--focus-ring) !important;
   outline-offset: 4px;
 }
@@ -310,7 +310,9 @@ textarea:focus-visible,
   font-family: var(--font-sans);
   font-size: 0.875rem;
   font-weight: 600;
-  transition: border-color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard);
+  transition:
+    border-color var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard);
   cursor: pointer;
 }
 .btn-secondary:hover {
@@ -333,7 +335,9 @@ textarea:focus-visible,
   font-family: var(--font-sans);
   font-size: 0.875rem;
   font-weight: 500;
-  transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard);
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard);
   cursor: pointer;
 }
 .btn-ghost:hover {
@@ -374,7 +378,9 @@ textarea:focus-visible,
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: var(--spacing-gutter);
-  transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
+  transition:
+    border-color var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard);
 }
 .card-interactive:hover {
   border-color: rgba(13, 148, 136, 0.2);
@@ -435,11 +441,21 @@ textarea:focus-visible,
   16. IMAGE SYSTEM
   =========================================
 */
-.image-ratio-portrait { aspect-ratio: 3 / 4; }
-.image-ratio-square { aspect-ratio: 1 / 1; }
-.image-ratio-landscape { aspect-ratio: 3 / 2; }
-.image-ratio-wide { aspect-ratio: 16 / 9; }
-.image-ratio-phone { aspect-ratio: 9 / 19.5; }
+.image-ratio-portrait {
+  aspect-ratio: 3 / 4;
+}
+.image-ratio-square {
+  aspect-ratio: 1 / 1;
+}
+.image-ratio-landscape {
+  aspect-ratio: 3 / 2;
+}
+.image-ratio-wide {
+  aspect-ratio: 16 / 9;
+}
+.image-ratio-phone {
+  aspect-ratio: 9 / 19.5;
+}
 
 .image-wrapper {
   position: relative;
@@ -457,7 +473,7 @@ textarea:focus-visible,
 /* Reusable Grid Overlay Utility */
 .grid-overlay {
   background-size: 40px 40px;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
 }
