@@ -8,6 +8,8 @@ import ScrollProgress from '@/components/ui/ScrollProgress';
 import SplashWrapper from '@/components/SplashWrapper';
 import InteractiveBackground from '@/components/animations/InteractiveBackground';
 import { siteConfig } from '@/lib/site-config';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -120,6 +122,8 @@ export default function RootLayout({
             <Footer />
           </SmoothScroll>
         </SplashWrapper>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
