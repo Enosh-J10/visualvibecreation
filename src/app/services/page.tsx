@@ -1,15 +1,57 @@
 import { Container } from '@/components/ui/Sections';
 import ServicesGrid from '@/components/sections/ServicesGrid';
+import { buildMetadata } from '@/lib/seo';
+import { siteConfig } from '@/lib/site-config';
 
-export const metadata = {
-  title: 'Services | Visual Vibe Creation',
+export const metadata = buildMetadata({
+  title: 'Services',
   description:
     'High-end design, software, video editing, motion graphics, and mobile development services by Visual Vibe Creation.',
-};
+  path: '/services',
+});
 
 export default function ServicesPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Service',
+        '@id': `${siteConfig.url}/services/#service`,
+        name: 'Digital Design & Software Engineering Services',
+        provider: {
+          '@id': `${siteConfig.url}/#studio`,
+        },
+        serviceType: 'Software Development, UI/UX Design, Motion Graphics',
+        areaServed: 'United Kingdom',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${siteConfig.url}/services/#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: siteConfig.url,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Services',
+            item: `${siteConfig.url}/services`,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <main className="flex-grow w-full py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <Container variant="standard" className="text-center mb-16 pt-8">
         <h1 className="font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
           Services & Capabilities
@@ -22,7 +64,7 @@ export default function ServicesPage() {
 
       <ServicesGrid />
 
-      {/* FAQ or Process Section to add visual value */}
+      {/* Work Process Section */}
       <section className="relative px-6 md:px-12 py-16">
         <div className="mx-auto max-w-4xl rounded-2xl border border-border-standard bg-bg-secondary/40 p-8 md:p-12">
           <h2 className="font-display text-2xl font-bold text-white tracking-tight text-center">
@@ -33,21 +75,21 @@ export default function ServicesPage() {
               <span className="text-[10px] font-mono font-bold text-accent-cyan">
                 01 / DISCOVER
               </span>
-              <h4 className="text-sm font-semibold text-white">Understand & Draft</h4>
+              <h3 className="text-sm font-semibold text-white">Understand & Draft</h3>
               <p className="text-xs text-text-secondary leading-relaxed">
                 Detailing requirements, sketching wireframes, and defining colors and architecture.
               </p>
             </div>
             <div className="space-y-2">
               <span className="text-[10px] font-mono font-bold text-accent-teal">02 / CREATE</span>
-              <h4 className="text-sm font-semibold text-white">Code & Render</h4>
+              <h3 className="text-sm font-semibold text-white">Code & Render</h3>
               <p className="text-xs text-text-secondary leading-relaxed">
                 Writing typescript systems, developing interfaces, and compositing graphics layers.
               </p>
             </div>
             <div className="space-y-2">
               <span className="text-[10px] font-mono font-bold text-accent-cyan">03 / LAUNCH</span>
-              <h4 className="text-sm font-semibold text-white">Test & Deploy</h4>
+              <h3 className="text-sm font-semibold text-white">Test & Deploy</h3>
               <p className="text-xs text-text-secondary leading-relaxed">
                 Conducting lighthouse reviews, securing domain routing, and publishing live onto
                 Vercel.
