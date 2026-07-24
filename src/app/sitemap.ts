@@ -3,12 +3,11 @@ import { siteConfig } from '@/lib/site-config';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
-  const routes = ['', '/about', '/portfolio', '/services', '/contact'];
 
-  return routes.map((route) => ({
-    url: `${baseUrl}${route}`,
+  return siteConfig.routes.map((route) => ({
+    url: `${baseUrl}${route.path}`,
     lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: route === '' ? 1.0 : 0.8,
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
   }));
 }

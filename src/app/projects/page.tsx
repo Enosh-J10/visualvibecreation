@@ -1,16 +1,15 @@
 import { Container } from '@/components/ui/Sections';
 import Button from '@/components/ui/Button';
 import { ArrowLeft } from 'lucide-react';
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata = {
-  title: 'Projects | Visual Vibe Creation',
+export const metadata = buildMetadata({
+  title: 'Projects',
   description:
     "Detailed projects content is being prepared. The verified overview of Enosh Jaques' projects is available on the homepage.",
-  robots: {
-    index: false,
-    follow: true,
-  },
-};
+  path: '/projects',
+  noIndex: true,
+});
 
 export default function ProjectsPage() {
   return (

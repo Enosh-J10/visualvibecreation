@@ -25,9 +25,15 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: 'Visual Vibe Creation | Independent Creative Digital Studio',
-  description:
-    'Visual Vibe Creation is the independent creative digital studio founded by Enosh Jaques, offering software development, UI/UX design, mobile app development, motion graphics, and video editing services in the UK.',
+  title: {
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  publisher: siteConfig.name,
+  generator: 'Next.js 16',
+  referrer: 'origin-when-cross-origin',
   keywords: [
     'Visual Vibe Creation',
     'Enosh Jaques',
@@ -39,20 +45,41 @@ export const metadata: Metadata = {
     'Game Developer Goa',
     'Motion Graphics UK',
   ],
-  authors: [{ name: 'Enosh Jaques', url: 'https://github.com/Enosh-J10' }],
-  creator: 'Enosh Jaques',
+  authors: [{ name: siteConfig.founder, url: siteConfig.links.github }],
+  creator: siteConfig.founder,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
-    title: 'Visual Vibe Creation | Independent Creative Digital Studio',
+    title: siteConfig.title,
     description: 'Software engineering and design portfolio by Enosh Jaques.',
     url: siteConfig.url,
-    siteName: 'Visual Vibe Creation',
+    siteName: siteConfig.name,
     locale: 'en_GB',
     type: 'website',
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.name} — ${siteConfig.founder}`,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Visual Vibe Creation | Independent Creative Digital Studio',
+    title: siteConfig.title,
     description: 'Software engineering and design portfolio by Enosh Jaques.',
+    images: [siteConfig.ogImage],
+    creator: '@EnoshJaques',
   },
   alternates: {
     canonical: siteConfig.url,
@@ -60,6 +87,16 @@ export const metadata: Metadata = {
   icons: {
     icon: '/assets/images/ej-logo.jpg',
     apple: '/assets/images/ej-logo.jpg',
+  },
+  verification: {
+    ...(process.env.GOOGLE_SITE_VERIFICATION && {
+      google: process.env.GOOGLE_SITE_VERIFICATION,
+    }),
+    ...(process.env.BING_SITE_VERIFICATION && {
+      other: {
+        'msvalidate.01': [process.env.BING_SITE_VERIFICATION],
+      },
+    }),
   },
 };
 
@@ -82,20 +119,31 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@graph': [
                 {
+                  '@type': 'WebSite',
+                  '@id': `${siteConfig.url}/#website`,
+                  url: siteConfig.url,
+                  name: siteConfig.name,
+                  description: siteConfig.description,
+                  publisher: {
+                    '@id': `${siteConfig.url}/#studio`,
+                  },
+                },
+                {
+                  '@type': 'Person',
+                  '@id': `${siteConfig.url}/#person`,
+                  name: siteConfig.founder,
+                  jobTitle: siteConfig.jobTitle,
+                  url: siteConfig.url,
+                  sameAs: [siteConfig.links.github, siteConfig.links.linkedin],
+                },
+                {
                   '@type': 'ProfessionalService',
                   '@id': `${siteConfig.url}/#studio`,
-                  name: 'Visual Vibe Creation',
+                  name: siteConfig.name,
                   url: siteConfig.url,
-                  description:
-                    'Independent creative digital studio of Enosh Jaques delivering design, software development, video editing, and motion graphics.',
+                  description: siteConfig.description,
                   founder: {
-                    '@type': 'Person',
-                    name: 'Enosh Jaques',
-                    jobTitle: 'Founder & Creative Developer',
-                    sameAs: [
-                      'https://github.com/Enosh-J10',
-                      'https://www.linkedin.com/in/enosh-jaques-b93817302',
-                    ],
+                    '@id': `${siteConfig.url}/#person`,
                   },
                   address: {
                     '@type': 'PostalAddress',
@@ -103,8 +151,17 @@ export default function RootLayout({
                   },
                   contactPoint: {
                     '@type': 'ContactPoint',
-                    email: 'hello@visualvibecreation.com',
+                    email: siteConfig.links.email,
                     contactType: 'customer support',
+                  },
+                },
+                {
+                  '@type': 'ProfilePage',
+                  '@id': `${siteConfig.url}/#profile`,
+                  url: siteConfig.url,
+                  name: `${siteConfig.founder} — ${siteConfig.name}`,
+                  mainEntity: {
+                    '@id': `${siteConfig.url}/#person`,
                   },
                 },
               ],
